@@ -18,8 +18,15 @@ build:
   dockerfile: Dockerfile.api
 ```
 
-Replace COMMIT with a full reviewed commit SHA. Coolify's service start builds
-the image before recreating containers. Keep frontend/admin/space/live/proxy
+Replace COMMIT with a full reviewed commit SHA. A reusable Compose overlay is
+provided in [`backend.override.yml`](backend.override.yml). Render variables
+before saving the merged configuration in Coolify.
+
+For an already running service, use Coolify's `POST /api/v1/deploy` with its
+existing service UUID. This builds the image before recreating containers.
+The `/services/{uuid}/start` endpoint rejects services that are already running;
+the restart endpoint can stop containers before the build finishes.
+Keep frontend/admin/space/live/proxy
 images at `makeplane/plane-*:v1.4.2` for the initial release. No schema changes
 are introduced by Birdplane's initial additions.
 
