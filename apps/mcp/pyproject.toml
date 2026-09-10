@@ -1,0 +1,20 @@
+[project]
+name = "sikku"
+version = "0.1.0"
+description = "A compact, identifier-friendly Plane MCP server"
+requires-python = ">=3.11"
+dependencies = ["mcp==1.26.0", "httpx==0.28.1", "uvicorn==0.52.4", "jsonschema>=4.23,<5", "markdown-it-py>=3,<5"]
+
+[project.scripts]
+sikku = "sikku.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-asyncio>=1,<2", "ruff>=0.12"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+

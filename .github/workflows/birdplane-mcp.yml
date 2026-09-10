@@ -1,0 +1,29 @@
+name: Birdplane MCP
+
+on:
+  push:
+    branches: [birdplane]
+    paths: ["apps/mcp/**", ".github/workflows/birdplane-mcp.yml"]
+  pull_request:
+    paths: ["apps/mcp/**", ".github/workflows/birdplane-mcp.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mcp
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.8.22"
+          python-version: "3.12"
+      - run: uv sync --frozen
+      - run: uv run pytest -q
+      - run: uv run ruff check sikku tests
+      - run: docker build -t birdplane-mcp:ci .

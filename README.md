@@ -1,5 +1,8 @@
 <br /><br />
 
+> **Birdplane fork:** See [BIRDPLANE.md](BIRDPLANE.md) for the upstream baseline,
+> included MCP server, deployment instructions, and update strategy.
+
 <p align="center">
 <a href="https://plane.so">
   <img src="https://media.docs.plane.so/logo/plane_github_readme.png" alt="Plane Logo" width="400">
