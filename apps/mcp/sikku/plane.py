@@ -303,6 +303,30 @@ class Plane:
         }
 
     async def dispatch(self, name, args):
+        if name == "create_project":
+            body = {
+                **args,
+                "name": args["name"].strip(),
+                "identifier": args["identifier"].upper(),
+            }
+            saved = await self.request("POST", "projects", json=body)
+            self.catalogs.pop("projects-lite", None)
+            return {
+                **select(saved, ["id", "name", "identifier", "timezone"]),
+                "action": "created",
+            }
+        if name == "create_label":
+            pid = (await self.project(args["project"]))["id"]
+            body = {k: v for k, v in args.items() if k != "project"}
+            body["name"] = body["name"].strip()
+            saved = await self.request("POST", f"projects/{pid}/labels", json=body)
+            self.catalogs.pop(f"projects/{pid}/labels", None)
+            return {
+                **select(saved, ["id", "name", "color"]),
+                "project": pid,
+                "action": "created",
+            }
+
         if name in (
             "list_recurring_tasks",
             "save_recurring_task",
@@ -365,6 +389,7 @@ class Plane:
                         "id",
                         "name",
                         "display_name",
+                        "color",
                         "email",
                         "group",
                         "is_default",

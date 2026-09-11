@@ -63,6 +63,32 @@ def tool(name, description, properties, required=(), write=False, destructive=Fa
 
 TOOLS = [
     tool(
+        "create_project",
+        "Create a project in the configured workspace. Identifier is a unique ticket prefix (e.g. APP), normalized to uppercase. Description is plain text. Returns a compact receipt.",
+        {
+            "name": string(minLength=1, maxLength=255, pattern=r"\S"),
+            "identifier": string(
+                minLength=1, maxLength=12, pattern="^[A-Za-z][A-Za-z0-9]*$"
+            ),
+            "description": string(maxLength=100000),
+            "timezone": string(),
+        },
+        ["name", "identifier"],
+        write=True,
+    ),
+    tool(
+        "create_label",
+        "Create a label in a project. Name must be unique within that project. Optional color is #RRGGBB. Use list_metadata(kind=labels) to find labels and save_issue to assign them. Returns a compact receipt.",
+        {
+            "project": PROJECT,
+            "name": string(minLength=1, maxLength=255, pattern=r"\S"),
+            "color": string(pattern="^#[0-9A-Fa-f]{6}$"),
+            "description": string(maxLength=100000),
+        },
+        ["project", "name"],
+        write=True,
+    ),
+    tool(
         "list_recurring_tasks",
         "List saved recurring schedules (20 per page), or read one by id. Templates and descriptions excluded.",
         {

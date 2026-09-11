@@ -21,8 +21,17 @@ Existing Sikku environment variables and client configurations remain compatible
 
 ## Tools
 
-`list_projects`, `get_project`, `list_issues`, `get_issue`, `save_issue`,
-`delete_issue`, `list_metadata`, `list_comments`, `get_comment`, `save_comment`.
+`create_project`, `list_projects`, `get_project`, `create_label`,
+`list_issues`, `get_issue`, `save_issue`,
+`delete_issue`, `list_metadata`, `list_comments`, `get_comment`, `save_comment`,
+`list_recurring_tasks`, `save_recurring_task`, `delete_recurring_task`.
+
+Create a project with `create_project(name="My project", identifier="APP")`.
+Create a label with `create_label(project="APP", name="Bug", color="#EF4444")`.
+Project descriptions are plain text; project timezone and label descriptions are
+optional. Ticket prefixes are uppercased. Duplicate names/prefixes and permission
+errors are reported without retrying the write. Labels can then be assigned by
+name with `save_issue(project="APP", title="Example", labels=["Bug"])`.
 
 Create with `save_issue(project="My project", title="Example", state="Todo")`;
 update with `save_issue(id="PROJ-1", priority="high")`.

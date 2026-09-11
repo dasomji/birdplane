@@ -41,7 +41,25 @@ def test_http_authentication_host_and_protocol(monkeypatch):
             json={"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
             headers=headers,
         )
-        assert len(r.json()["result"]["tools"]) == 13
+        assert len(r.json()["result"]["tools"]) == 15
+        for name, arguments in [
+            ("create_project", {"name": "Test"}),
+            ("create_project", {"name": "  ", "identifier": "TEST"}),
+            ("create_project", {"name": "Test", "identifier": "bad/prefix"}),
+            ("create_label", {"project": "TEST", "name": "Bug", "color": "red"}),
+        ]:
+            rejected = client.post(
+                "/mcp/",
+                headers=headers,
+                json={
+                    "jsonrpc": "2.0",
+                    "id": 3,
+                    "method": "tools/call",
+                    "params": {"name": name, "arguments": arguments},
+                },
+            ).json()["result"]
+            assert rejected["isError"]
+            assert '"error":"invalid_arguments"' in rejected["content"][0]["text"]
         r = client.post("/mcp/", json=init, headers={**headers, "host": "evil.example"})
         assert r.status_code == 421
         r = client.post(

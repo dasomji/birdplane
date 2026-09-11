@@ -235,3 +235,114 @@ async def test_recurring_task_resolves_template_and_preserves_omissions():
     assert writes[0][2]["template_issue"] == IID
     assert writes[1][2] == {"status": "paused"}
     assert writes[2][1].endswith(f"/recurring-tasks/{IID}/")
+
+
+async def test_create_project_payload_and_compact_receipt():
+    writes = []
+
+    def handler(request):
+        assert request.method == "POST"
+        assert request.url.path == "/api/v1/workspaces/ws/projects/"
+        writes.append(json.loads(request.content))
+        return httpx.Response(
+            201,
+            json={
+                "id": PID,
+                "name": "New project",
+                "identifier": "NEW",
+                "timezone": "UTC",
+                "description": "large" * 10000,
+                "members": ["hidden"],
+            },
+        )
+
+    async with client(handler) as c:
+        p = Plane(c, "https://plane.test", "ws")
+        p.catalogs["projects-lite"] = []
+        result = await p.dispatch(
+            "create_project",
+            {"name": " New project ", "identifier": "new", "description": "Plain text"},
+        )
+        assert "projects-lite" not in p.catalogs
+    assert writes == [
+        {"name": "New project", "identifier": "NEW", "description": "Plain text"}
+    ]
+    assert result == {
+        "id": PID,
+        "name": "New project",
+        "identifier": "NEW",
+        "timezone": "UTC",
+        "action": "created",
+    }
+
+
+async def test_create_label_resolves_project_and_invalidates_metadata():
+    writes = []
+
+    def handler(request):
+        if request.method == "GET":
+            return httpx.Response(
+                200, json=[{"id": PID, "name": "Test", "identifier": "TEST"}]
+            )
+        assert request.url.path == f"/api/v1/workspaces/ws/projects/{PID}/labels/"
+        writes.append(json.loads(request.content))
+        return httpx.Response(
+            201,
+            json={
+                "id": IID,
+                "name": "Bug",
+                "color": "#EF4444",
+                "description": "hidden" * 1000,
+            },
+        )
+
+    async with client(handler) as c:
+        p = Plane(c, "https://plane.test", "ws")
+        p.catalogs[f"projects/{PID}/labels"] = []
+        result = await p.dispatch(
+            "create_label", {"project": "TEST", "name": " Bug ", "color": "#EF4444"}
+        )
+        assert f"projects/{PID}/labels" not in p.catalogs
+    assert writes == [{"name": "Bug", "color": "#EF4444"}]
+    assert result == {
+        "id": IID,
+        "name": "Bug",
+        "color": "#EF4444",
+        "project": PID,
+        "action": "created",
+    }
+
+
+async def test_ambiguous_project_prevents_label_write():
+    calls = []
+
+    def handler(request):
+        calls.append(request.method)
+        return httpx.Response(
+            200, json=[{"id": PID, "name": "Test"}, {"id": IID, "name": "test"}]
+        )
+
+    async with client(handler) as c:
+        with pytest.raises(PlaneError) as error:
+            await Plane(c, "https://plane.test", "ws").dispatch(
+                "create_label", {"project": "TEST", "name": "Bug"}
+            )
+    assert error.value.payload["error"] == "ambiguous_name"
+    assert calls == ["GET"]
+
+
+@pytest.mark.parametrize("status", [403, 409, 429])
+async def test_create_project_failure_never_retries_or_echoes_response(status):
+    calls = []
+
+    def handler(request):
+        calls.append(request.method)
+        return httpx.Response(status, json={"secret": "private upstream body"})
+
+    async with client(handler) as c:
+        with pytest.raises(PlaneError) as error:
+            await Plane(c, "https://plane.test", "ws").dispatch(
+                "create_project", {"name": "Test", "identifier": "TEST"}
+            )
+    assert calls == ["POST"]
+    assert "private upstream body" not in json.dumps(error.value.payload)
