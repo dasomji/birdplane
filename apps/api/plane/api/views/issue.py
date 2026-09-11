@@ -79,6 +79,8 @@ from plane.db.models import (
     Workspace,
 )
 from plane.settings.storage import S3Storage
+from plane.utils.filters.filter_backend import ComplexFilterBackend
+from plane.utils.filters.filterset import IssueFilterSet
 from plane.utils.path_validator import sanitize_filename
 from plane.utils.order_queryset import (
     ACTIVITY_ORDER_BY_ALLOWLIST,
@@ -258,6 +260,8 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
     This viewset provides `list` and `create` on issue level
     """
 
+    filterset_class = IssueFilterSet
+
     model = Issue
     webhook_event = "issue"
     permission_classes = [ProjectEntityPermission]
@@ -314,13 +318,13 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
         Supports filtering, ordering, and field selection through query parameters.
         """
 
-        unsupported_filters = [param for param in ("pql", "filters") if request.GET.get(param)]
+        unsupported_filters = [param for param in ("pql",) if request.GET.get(param)]
         if unsupported_filters:
             return Response(
                 {
                     "pql": (
-                        "PQL and structured filters are not supported on this Plane edition. "
-                        "Remove the pql/filters parameter and filter results client-side, or use "
+                        "PQL is not supported on this Plane edition. "
+                        "Use the structured filters parameter instead, or use "
                         "a Plane edition that supports work item query filtering."
                     ),
                     "unsupported_parameters": unsupported_filters,
@@ -332,7 +336,7 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
         external_source = request.GET.get("external_source")
 
         if external_id and external_source:
-            issue = Issue.objects.get(
+            issue = ComplexFilterBackend().filter_queryset(request, self.get_queryset(), self).get(
                 external_id=external_id,
                 external_source=external_source,
                 workspace__slug=slug,
@@ -380,7 +384,8 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
             )
         )
 
-        total_issue_queryset = Issue.issue_objects.filter(project_id=project_id, workspace__slug=slug)
+        issue_queryset = ComplexFilterBackend().filter_queryset(request, issue_queryset, self).distinct()
+        total_issue_queryset = issue_queryset
 
         # Priority Ordering
         if order_by_param == "priority" or order_by_param == "-priority":

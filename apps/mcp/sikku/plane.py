@@ -4,6 +4,7 @@ import base64
 import hashlib
 import json
 import re
+from datetime import date
 from html.parser import HTMLParser
 from urllib.parse import quote
 from uuid import UUID
@@ -475,10 +476,90 @@ class Plane:
             }
         raise PlaneError("unknown_tool", "Unknown tool.")
 
+    async def issue_filters(self, conditions, pid):
+        """Translate bounded agent-friendly conditions to Birdplane's shared API filters."""
+        references = {
+            "state": ("state_id", "states"),
+            "assignee": ("assignee_id", "members"),
+            "label": ("label_id", "labels"),
+            "cycle": ("cycle_id", "cycles"),
+            "module": ("module_id", "modules"),
+            "created_by": ("created_by_id", "members"),
+            "subscriber": ("subscriber_id", "members"),
+        }
+        dates = {"start_date", "due_date", "created_at", "updated_at"}
+        result = []
+        for condition in conditions:
+            field, operator = condition["field"], condition["operator"]
+            key = references.get(
+                field,
+                (
+                    {"due_date": "target_date", "parent": "parent_id"}.get(
+                        field, field
+                    ),
+                    None,
+                ),
+            )[0]
+            if operator == "is_empty":
+                if "value" in condition or field in {
+                    "state",
+                    "created_at",
+                    "updated_at",
+                }:
+                    raise PlaneError(
+                        "invalid_filter",
+                        "is_empty takes no value and requires an optional field.",
+                    )
+                result.append({f"{key}__is_empty": True})
+                continue
+            value = condition.get("value")
+            values = value if isinstance(value, list) else [value]
+            if not values or any(
+                not isinstance(v, str) or not v.strip() for v in values
+            ):
+                raise PlaneError(
+                    "invalid_filter",
+                    "is and is_not require a nonempty value or list of values.",
+                )
+            if field in dates:
+                try:
+                    if len(values) != 1 or not re.fullmatch(
+                        r"\d{4}-\d{2}-\d{2}", values[0]
+                    ):
+                        raise ValueError()
+                    date.fromisoformat(values[0])
+                except ValueError:
+                    raise PlaneError(
+                        "invalid_filter", "Date filters require one YYYY-MM-DD value."
+                    ) from None
+                lookup = "exact" if operator == "is" else "not_exact"
+            else:
+                lookup = "in" if operator == "is" else "not_in"
+                if field in references:
+                    kind = references[field][1]
+                    if not pid and any(
+                        not uuid(v) and not (kind == "members" and v == "me")
+                        for v in values
+                    ):
+                        raise PlaneError(
+                            "project_required",
+                            "Name filters require project; UUIDs work workspace-wide.",
+                        )
+                    values = [await self.reference(pid, kind, v) for v in values]
+                elif field == "parent":
+                    values = [(await self.issue(v, pid))["id"] for v in values]
+                elif field == "priority" and any(
+                    v not in {"urgent", "high", "medium", "low", "none"} for v in values
+                ):
+                    raise PlaneError("invalid_filter", "Unknown priority value.")
+            result.append({f"{key}__{lookup}": ",".join(values)})
+        return {"and": result} if result else None
+
     async def list_issues(self, args):
         pid = (
             (await self.project(args["project"]))["id"] if args.get("project") else None
         )
+        structured_filters = await self.issue_filters(args.get("filters", []), pid)
         resolved = {}
         for field, kind in [
             ("state", "states"),
@@ -527,8 +608,8 @@ class Plane:
             }.get(k, k)
             for k in fields
         )
-        # Community Edition rejects PQL. Verify filters here, inside the MCP, and
-        # scan at most 500 sparse rows per call. No workspace dump reaches the LLM.
+        # Structured operators run in Birdplane before pagination. Legacy scalar
+        # filters still scan at most 500 sparse rows; no workspace dump reaches the LLM.
         fingerprint = hashlib.sha256(
             json.dumps(
                 {
@@ -599,6 +680,10 @@ class Plane:
             }
             if cursor:
                 params["cursor"] = cursor
+            if structured_filters:
+                params["filters"] = json.dumps(
+                    structured_filters, separators=(",", ":")
+                )
             data = await self.request(
                 "GET", f"projects/{projects[project_index]}/work-items", params=params
             )

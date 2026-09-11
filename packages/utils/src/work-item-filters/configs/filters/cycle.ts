@@ -8,8 +8,9 @@
 import type { ICycle, TCycleGroups, TFilterProperty, TSupportedOperators } from "@plane/types";
 import { EQUALITY_OPERATOR, COLLECTION_OPERATOR } from "@plane/types";
 // local imports
+import { createFilterConfig } from "../operators";
 import type { TCreateFilterConfigParams, IFilterIconConfig, TCreateFilterConfig } from "../../../rich-filters";
-import { createFilterConfig, getMultiSelectConfig, createOperatorConfigEntry } from "../../../rich-filters";
+import { getMultiSelectConfig, createOperatorConfigEntry } from "../../../rich-filters";
 
 /**
  * Cycle filter specific params

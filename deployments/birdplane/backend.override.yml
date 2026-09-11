@@ -1,6 +1,12 @@
 # Merge into an existing Plane v1.4.2 Compose stack. Preserve its volume names.
 # Set BIRDPLANE_COMMIT to a full reviewed commit SHA before rendering with Compose.
 services:
+  web:
+    image: birdplane-web:${BIRDPLANE_COMMIT:?Set a reviewed Birdplane commit}
+    pull_policy: never
+    build:
+      context: https://github.com/dasomji/birdplane.git#${BIRDPLANE_COMMIT:?Set a reviewed Birdplane commit}
+      dockerfile: apps/web/Dockerfile.web
   api:
     image: birdplane-backend:${BIRDPLANE_COMMIT:?Set a reviewed Birdplane commit}
     pull_policy: never

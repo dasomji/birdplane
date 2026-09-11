@@ -373,7 +373,7 @@ export class FilterInstance<P extends TFilterProperty, E extends TExternalFilter
 
     this.expression = this.helper.addConditionToExpression(this.expression, groupOperator, condition, isNegation);
 
-    if (hasValidValue(conditionValue)) {
+    if (condition.operator === "is_empty" || hasValidValue(conditionValue)) {
       this._notifyExpressionChange();
     }
   });
@@ -439,7 +439,7 @@ export class FilterInstance<P extends TFilterProperty, E extends TExternalFilter
         this.expression = updatedExpression;
       }
 
-      if (hasValidValue(conditionBeforeUpdate.value)) {
+      if (operator === "is_empty" || hasValidValue(conditionBeforeUpdate.value)) {
         this._notifyExpressionChange();
       }
     }

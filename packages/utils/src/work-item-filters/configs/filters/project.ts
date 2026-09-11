@@ -8,8 +8,9 @@
 import type { TFilterProperty } from "@plane/types";
 import { EQUALITY_OPERATOR, COLLECTION_OPERATOR } from "@plane/types";
 // local imports
+import { createFilterConfig } from "../operators";
 import type { TCreateFilterConfig, TCreateProjectFilterParams } from "../../../rich-filters";
-import { createFilterConfig, createOperatorConfigEntry, getProjectMultiSelectConfig } from "../../../rich-filters";
+import { createOperatorConfigEntry, getProjectMultiSelectConfig } from "../../../rich-filters";
 
 // ------------ Project filter ------------
 

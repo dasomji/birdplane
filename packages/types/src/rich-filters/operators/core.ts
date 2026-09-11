@@ -16,6 +16,8 @@ export const CORE_LOGICAL_OPERATOR = {
  */
 export const CORE_EQUALITY_OPERATOR = {
   EXACT: "exact",
+  NOT_EXACT: "not_exact",
+  IS_EMPTY: "is_empty",
 } as const;
 
 /**
@@ -23,6 +25,7 @@ export const CORE_EQUALITY_OPERATOR = {
  */
 export const CORE_COLLECTION_OPERATOR = {
   IN: "in",
+  NOT_IN: "not_in",
 } as const;
 
 /**
@@ -35,7 +38,11 @@ export const CORE_COMPARISON_OPERATOR = {
 /**
  * Core operators that support multiple values
  */
-export const CORE_MULTI_VALUE_OPERATORS = [CORE_COLLECTION_OPERATOR.IN, CORE_COMPARISON_OPERATOR.RANGE] as const;
+export const CORE_MULTI_VALUE_OPERATORS = [
+  CORE_COLLECTION_OPERATOR.IN,
+  CORE_COLLECTION_OPERATOR.NOT_IN,
+  CORE_COMPARISON_OPERATOR.RANGE,
+] as const;
 
 /**
  * All core operators

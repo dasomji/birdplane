@@ -12,6 +12,7 @@ import type { TBaseFilterFieldConfig, IFilterOption } from "./shared";
  * Core filter types
  */
 export const CORE_FILTER_FIELD_TYPE = {
+  EMPTY: "empty",
   DATE: "date",
   DATE_RANGE: "date_range",
   SINGLE_SELECT: "single_select",
@@ -73,12 +74,18 @@ export type TMultiSelectFilterFieldConfig<V extends TFilterValue> = TBaseFilterF
   singleValueOperator: TSupportedOperators;
 };
 
+export type TEmptyFilterFieldConfig = TBaseFilterFieldConfig & {
+  type: typeof CORE_FILTER_FIELD_TYPE.EMPTY;
+  defaultValue: true;
+};
+
 // -------- UNION TYPES --------
 
 /**
  * All core filter configurations
  */
 export type TCoreFilterFieldConfigs<V extends TFilterValue = TFilterValue> =
+  | TEmptyFilterFieldConfig
   | TDateFilterFieldConfig<V>
   | TDateRangeFilterFieldConfig<V>
   | TSingleSelectFilterFieldConfig<V>

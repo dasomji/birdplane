@@ -139,6 +139,39 @@ TOOLS = [
         "Search tickets; descriptions excluded by default. Names resolve internally. State/label/assignee names require project. Follow next_cursor with the same filters.",
         {
             "project": PROJECT,
+            "filters": {
+                "type": "array",
+                "maxItems": 20,
+                "description": "AND conditions. is matches any value; is_not excludes every selected value; is_empty needs no value. Names resolve with project; dates use YYYY-MM-DD. Priority none counts as empty.",
+                "items": {
+                    "type": "object",
+                    "additionalProperties": False,
+                    "required": ["field", "operator"],
+                    "properties": {
+                        "field": string(
+                            enum=[
+                                "state",
+                                "priority",
+                                "assignee",
+                                "label",
+                                "cycle",
+                                "module",
+                                "created_by",
+                                "subscriber",
+                                "parent",
+                                "start_date",
+                                "due_date",
+                                "created_at",
+                                "updated_at",
+                            ]
+                        ),
+                        "operator": string(enum=["is", "is_not", "is_empty"]),
+                        "value": {
+                            "oneOf": [string(minLength=1), {**NAMES, "minItems": 1}]
+                        },
+                    },
+                },
+            },
             "query": string("Title contains this text."),
             "state": string("State name or UUID."),
             "priority": PRIORITY,

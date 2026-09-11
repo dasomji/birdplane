@@ -346,3 +346,57 @@ async def test_create_project_failure_never_retries_or_echoes_response(status):
             )
     assert calls == ["POST"]
     assert "private upstream body" not in json.dumps(error.value.payload)
+
+
+async def test_structured_filters_resolve_names_and_run_upstream():
+    queries = []
+
+    def handler(request):
+        path = request.url.path
+        if path.endswith("/labels/"):
+            return httpx.Response(200, json={"results": [{"id": IID, "name": "Blog"}]})
+        if path.endswith("/work-items/"):
+            queries.append(json.loads(request.url.params["filters"]))
+            return httpx.Response(200, json={"results": [], "next_page_results": False})
+        return httpx.Response(200, json={"id": PID, "identifier": "TEST"})
+
+    async with client(handler) as c:
+        p = Plane(c, "https://plane.test", "ws")
+        result = await p.list_issues(
+            {
+                "project": PID,
+                "filters": [
+                    {"field": "label", "operator": "is_not", "value": "Blog"},
+                    {"field": "assignee", "operator": "is_empty"},
+                    {"field": "due_date", "operator": "is", "value": "2026-09-20"},
+                ],
+            }
+        )
+    assert result == {"results": [], "next_cursor": None}
+    assert queries == [
+        {
+            "and": [
+                {"label_id__not_in": IID},
+                {"assignee_id__is_empty": True},
+                {"target_date__exact": "2026-09-20"},
+            ]
+        }
+    ]
+
+
+@pytest.mark.parametrize(
+    "condition",
+    [
+        {"field": "label", "operator": "is_not"},
+        {"field": "label", "operator": "is", "value": []},
+        {"field": "label", "operator": "is_empty", "value": "Blog"},
+        {"field": "state", "operator": "is_empty"},
+        {"field": "due_date", "operator": "is", "value": "2026-02-30"},
+        {"field": "due_date", "operator": "is", "value": ["2026-09-01", "2026-09-02"]},
+        {"field": "priority", "operator": "is_not", "value": "critical"},
+    ],
+)
+async def test_invalid_structured_filters_fail_before_listing(condition):
+    async with client(lambda request: pytest.fail("Unexpected upstream request")) as c:
+        with pytest.raises(PlaneError):
+            await Plane(c, "https://plane.test", "ws").issue_filters([condition], PID)

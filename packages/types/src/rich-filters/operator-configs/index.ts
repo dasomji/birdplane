@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+import type { TEmptyFilterFieldConfig } from "../field-types";
 import type { EQUALITY_OPERATOR, COLLECTION_OPERATOR, COMPARISON_OPERATOR } from "../operators";
 import type { TCoreExactOperatorConfigs, TCoreInOperatorConfigs, TCoreRangeOperatorConfigs } from "./core";
 import type {
@@ -38,6 +39,9 @@ export type TRangeOperatorConfigs = TCoreRangeOperatorConfigs | TExtendedRangeOp
  */
 export type TOperatorSpecificConfigs = {
   [EQUALITY_OPERATOR.EXACT]: TExactOperatorConfigs;
+  [EQUALITY_OPERATOR.NOT_EXACT]: TExactOperatorConfigs;
+  [EQUALITY_OPERATOR.IS_EMPTY]: TEmptyFilterFieldConfig;
+  [COLLECTION_OPERATOR.NOT_IN]: TInOperatorConfigs;
   [COLLECTION_OPERATOR.IN]: TInOperatorConfigs;
   [COMPARISON_OPERATOR.RANGE]: TRangeOperatorConfigs;
 } & TExtendedOperatorSpecificConfigs;

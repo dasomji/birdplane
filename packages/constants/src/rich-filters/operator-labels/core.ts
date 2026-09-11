@@ -12,7 +12,10 @@ import { CORE_EQUALITY_OPERATOR, CORE_COLLECTION_OPERATOR, CORE_COMPARISON_OPERA
  */
 export const CORE_OPERATOR_LABELS_MAP: Record<TCoreSupportedOperators, string> = {
   [CORE_EQUALITY_OPERATOR.EXACT]: "is",
-  [CORE_COLLECTION_OPERATOR.IN]: "is any of",
+  [CORE_EQUALITY_OPERATOR.NOT_EXACT]: "is not",
+  [CORE_COLLECTION_OPERATOR.IN]: "is",
+  [CORE_COLLECTION_OPERATOR.NOT_IN]: "is not",
+  [CORE_EQUALITY_OPERATOR.IS_EMPTY]: "is empty",
   [CORE_COMPARISON_OPERATOR.RANGE]: "between",
 } as const;
 
@@ -21,5 +24,6 @@ export const CORE_OPERATOR_LABELS_MAP: Record<TCoreSupportedOperators, string> =
  */
 export const CORE_DATE_OPERATOR_LABELS_MAP: Record<TCoreSupportedDateFilterOperators, string> = {
   [CORE_EQUALITY_OPERATOR.EXACT]: "is",
+  [CORE_EQUALITY_OPERATOR.NOT_EXACT]: "is not",
   [CORE_COMPARISON_OPERATOR.RANGE]: "between",
 } as const;

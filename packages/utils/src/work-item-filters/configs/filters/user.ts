@@ -8,8 +8,9 @@
 import type { TFilterProperty } from "@plane/types";
 import { EQUALITY_OPERATOR, COLLECTION_OPERATOR } from "@plane/types";
 // local imports
+import { createFilterConfig } from "../operators";
 import type { TCreateFilterConfig, TCreateUserFilterParams } from "../../../rich-filters";
-import { createFilterConfig, createOperatorConfigEntry, getMemberMultiSelectConfig } from "../../../rich-filters";
+import { createOperatorConfigEntry, getMemberMultiSelectConfig } from "../../../rich-filters";
 
 // ------------ Assignee filter ------------
 

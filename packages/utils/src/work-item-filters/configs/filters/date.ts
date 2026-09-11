@@ -7,8 +7,9 @@
 // plane imports
 import type { TFilterProperty } from "@plane/types";
 // local imports
+import { createFilterConfig } from "../operators";
 import type { TCreateFilterConfig, TCreateDateFilterParams } from "../../../rich-filters";
-import { createFilterConfig, getSupportedDateOperators } from "../../../rich-filters";
+import { getSupportedDateOperators } from "../../../rich-filters";
 
 // ------------ Date filters ------------
 

@@ -31,6 +31,8 @@ export const FilterValueInput = observer(function FilterValueInput<P extends TFi
 ) {
   const { condition, filterFieldConfig, isDisabled = false, onChange } = props;
 
+  if (filterFieldConfig?.type === FILTER_FIELD_TYPE.EMPTY) return null;
+
   // Single select input
   if (filterFieldConfig?.type === FILTER_FIELD_TYPE.SINGLE_SELECT) {
     return (

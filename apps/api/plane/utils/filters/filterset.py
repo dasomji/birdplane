@@ -88,7 +88,7 @@ class BaseFilterSet(FilterSet):
                 # Custom filter method - call it to get Q object
                 res = f.filter(self.queryset, value)
                 if isinstance(res, Q):
-                    q_piece = res
+                    q_piece = Q(pk__in=self.queryset.filter(res).order_by().values("pk"))
                 elif isinstance(res, models.QuerySet):
                     # Backward compatibility: wrap QuerySet as subquery
                     q_piece = Q(pk__in=res.values("pk"))
@@ -133,6 +133,57 @@ class BaseFilterSet(FilterSet):
 
 
 class IssueFilterSet(BaseFilterSet):
+    # Birdplane operators reuse each positive filter's validation and lookup.
+    # Membership complements use a subquery: negating joined predicates directly
+    # can accidentally combine different (including soft-deleted) relation rows.
+    relation_fields = {
+        "assignee_id": "issue_assignee__assignee_id",
+        "label_id": "label_issue__label_id",
+        "cycle_id": "issue_cycle__cycle_id",
+        "module_id": "issue_module__module_id",
+        "mention_id": "issue_mention__mention_id",
+        "subscriber_id": "issue_subscribers__subscriber_id",
+    }
+
+    @classmethod
+    def get_filters(cls):
+        result = super().get_filters()
+        for key, positive in list(result.items()):
+            if key.endswith("__exact") or key.endswith("__in"):
+                field, operator = key.rsplit("__", 1)
+                negative = copy.deepcopy(positive)
+                negative.field_name = key
+                negative.method = "filter_not"
+                negative.exclude = False
+                result[f"{field}__not_{operator}"] = negative
+        for field in [*cls.relation_fields, "priority", "start_date", "target_date", "parent_id", "created_by_id"]:
+            result[f"{field}__is_empty"] = filters.BooleanFilter(field_name=field, method="filter_empty")
+        return result
+
+    def filter_not(self, queryset, name, value):
+        positive = self.filters[name]
+        if positive.method:
+            matched = positive.filter(queryset, value)
+            if isinstance(matched, Q):
+                matched = queryset.filter(matched)
+        else:
+            matched = queryset.filter(**{f"{positive.field_name}__{positive.lookup_expr}": value})
+        return ~Q(pk__in=matched.order_by().values("pk"))
+
+    def filter_empty(self, queryset, name, value):
+        if name in self.relation_fields:
+            relation = self.relation_fields[name]
+            active = queryset.filter(**{
+                f"{relation}__isnull": False,
+                f"{relation.rsplit('__', 1)[0]}__deleted_at__isnull": True,
+            })
+            empty = ~Q(pk__in=active.order_by().values("pk"))
+        elif name == "priority":
+            empty = Q(priority="none") | Q(priority__isnull=True)
+        else:
+            empty = Q(**{f"{name}__isnull": True})
+        return empty if value else ~empty
+
     # Custom filter methods to handle soft delete exclusion for relations
 
     assignee_id = filters.UUIDFilter(method="filter_assignee_id")
@@ -151,6 +202,9 @@ class IssueFilterSet(BaseFilterSet):
     label_id__in = UUIDInFilter(method="filter_label_id_in", lookup_expr="in")
 
     # Direct field lookups remain the same
+    parent_id = filters.UUIDFilter(field_name="parent_id")
+    parent_id__in = UUIDInFilter(field_name="parent_id", lookup_expr="in")
+
     created_by_id = filters.UUIDFilter(field_name="created_by_id")
     created_by_id__in = UUIDInFilter(field_name="created_by_id", lookup_expr="in")
 

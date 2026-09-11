@@ -195,7 +195,7 @@ export class FilterInstanceHelper<
     operator,
     isNegation
   ) => {
-    const payload = { property, operator, value: undefined };
+    const payload = { property, operator, value: operator === "is_empty" ? true : undefined };
 
     return this._updateCondition(expression, conditionId, payload, isNegation);
   };
@@ -218,7 +218,12 @@ export class FilterInstanceHelper<
     isNegation,
     shouldResetValue
   ) => {
-    const payload = shouldResetValue ? { operator: newOperator, value: undefined } : { operator: newOperator };
+    const payload =
+      newOperator === "is_empty"
+        ? { operator: newOperator, value: true }
+        : shouldResetValue
+          ? { operator: newOperator, value: undefined }
+          : { operator: newOperator };
 
     return this._updateCondition(expression, conditionId, payload, isNegation);
   };
@@ -235,7 +240,10 @@ export class FilterInstanceHelper<
     condition: TFilterConditionPayload<P, TFilterValue>,
     _isNegation: boolean
   ): TFilterExpression<P> => {
-    const conditionNode = createConditionNode(condition);
+    const conditionNode = createConditionNode({
+      ...condition,
+      value: condition.operator === "is_empty" ? true : condition.value,
+    });
 
     return conditionNode;
   };

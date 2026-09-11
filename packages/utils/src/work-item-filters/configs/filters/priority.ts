@@ -10,8 +10,9 @@ import { ISSUE_PRIORITIES } from "@plane/constants";
 import type { TFilterProperty, TSupportedOperators } from "@plane/types";
 import { EQUALITY_OPERATOR, COLLECTION_OPERATOR } from "@plane/types";
 // local imports
+import { createFilterConfig } from "../operators";
 import type { TCreateFilterConfigParams, IFilterIconConfig, TCreateFilterConfig } from "../../../rich-filters";
-import { createFilterConfig, getMultiSelectConfig, createOperatorConfigEntry } from "../../../rich-filters";
+import { getMultiSelectConfig, createOperatorConfigEntry } from "../../../rich-filters";
 
 // ------------ Priority filter ------------
 

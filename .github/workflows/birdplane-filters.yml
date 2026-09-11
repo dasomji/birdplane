@@ -1,0 +1,23 @@
+name: Birdplane filter UI
+on:
+  push:
+    branches: [birdplane]
+    paths: ["packages/**", "apps/web/**", "pnpm-lock.yaml", ".github/workflows/birdplane-filters.yml"]
+  pull_request:
+    paths: ["packages/**", "apps/web/**", "pnpm-lock.yaml", ".github/workflows/birdplane-filters.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm turbo run check:types --filter=web --filter=@plane/shared-state --filter=@plane/utils --filter=@plane/types
+      - run: node --test packages/shared-state/filters.test.mjs
+      - run: pnpm turbo run build --filter=web
