@@ -26,9 +26,9 @@ function path(){return 'projects/'+$('project').value+'/recurring-tasks/'}
 function options(el,rows){el.replaceChildren();for(const r of rows){const o=document.createElement('option');o.value=r.id;o.textContent=r.name;el.append(o)}}
 async function templates(){options($('template'),await api('recurring-catalog/?project='+$('project').value+'&q='+encodeURIComponent($('search').value)))}
 function handle(fn){return async e=>{try{$('message').textContent='';await fn(e)}catch(err){$('message').textContent=err.message}}}
-$('load').onclick=handle(async()=>{localStorage.setItem('birdplane-workspace',$('workspace').value);options($('project'),await api('recurring-catalog/'));if($('project').value){await templates();await listing()}});
+$('load').onclick=handle(async()=>{reset();localStorage.setItem('birdplane-workspace',$('workspace').value);options($('project'),await api('recurring-catalog/'));if($('project').value){await templates();await listing()}});
 $('project').onchange=handle(async()=>{reset();await templates();await listing()});$('search').onchange=handle(templates);
-function reset(){editing=null;$('scheduleId').value='';$('heading').textContent='New schedule';$('editor').reset();$('template').required=true;$('zone').value=Intl.DateTimeFormat().resolvedOptions().timeZone}
+function reset(){editing=null;$('scheduleId').value='';$('heading').textContent='New schedule';$('editor').reset();$('template').querySelectorAll('option[value=""]').forEach(o=>o.remove());$('template').required=true;$('zone').value=Intl.DateTimeFormat().resolvedOptions().timeZone}
 $('cancel').onclick=reset;
 function localText(iso,zone){if(!iso)return '';const parts=Object.fromEntries(new Intl.DateTimeFormat('sv-SE',{timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(iso)).map(p=>[p.type,p.value]));return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`}
 // Convert a wall-clock input with its IANA timezone, independent of browser timezone.
