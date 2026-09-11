@@ -187,3 +187,51 @@ async def test_project_description_continuation():
             {"project": PID, "description_offset": first["description"]["next_offset"]},
         )
         assert last["description"]["text"] == "tail"
+
+
+async def test_recurring_task_resolves_template_and_preserves_omissions():
+    calls = []
+
+    def handler(request):
+        calls.append(
+            (
+                request.method,
+                request.url.path,
+                json.loads(request.content) if request.content else None,
+            )
+        )
+        if request.method == "POST":
+            return httpx.Response(201, json={"id": IID, "status": "active"})
+        if request.method == "PATCH":
+            return httpx.Response(200, json={"id": IID, "status": "paused"})
+        if request.method == "DELETE":
+            return httpx.Response(204)
+        if request.url.path.endswith(f"/projects/{PID}/"):
+            return httpx.Response(
+                200, json={"id": PID, "name": "Test", "identifier": "TEST"}
+            )
+        if "projects-lite" in request.url.path:
+            return httpx.Response(
+                200, json=[{"id": PID, "name": "Test", "identifier": "TEST"}]
+            )
+        return httpx.Response(200, json={"id": IID, "project": PID})
+
+    async with client(handler) as c:
+        p = Plane(c, "https://plane.test", "ws")
+        await p.dispatch(
+            "save_recurring_task",
+            {
+                "project": "TEST",
+                "template_issue": "TEST-1",
+                "frequency": "weekly",
+                "starts_at": "2030-01-01T09:00:00Z",
+            },
+        )
+        await p.dispatch(
+            "save_recurring_task", {"project": "TEST", "id": IID, "status": "paused"}
+        )
+        await p.dispatch("delete_recurring_task", {"project": "TEST", "id": IID})
+    writes = [x for x in calls if x[0] in ("POST", "PATCH", "DELETE")]
+    assert writes[0][2]["template_issue"] == IID
+    assert writes[1][2] == {"status": "paused"}
+    assert writes[2][1].endswith(f"/recurring-tasks/{IID}/")

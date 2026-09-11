@@ -34,5 +34,6 @@ The initial deployment builds the backend and MCP from this repository, while
 using the unchanged upstream v1.4.2 web, admin, space, live and proxy images.
 The application UI remains Plane's UI in this first milestone.
 
-Recurring tasks are tracked for future implementation; this milestone does not
-add recurrence behavior or change the database schema.
+Recurring tasks are implemented in the isolated `plane.recurrence` Django app,
+with a management page and compact MCP tools. See
+[recurrence documentation](deployments/birdplane/recurrence.md).

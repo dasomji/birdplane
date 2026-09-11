@@ -42,6 +42,10 @@ app = Celery("plane")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
 app.conf.beat_schedule = {
+    "birdplane-recurring-tasks": {
+        "task": "plane.recurrence.tasks.generate_due",
+        "schedule": crontab(minute="*"),
+    },
     # Intra day recurring jobs
     "check-every-five-minutes-to-send-email-notifications": {
         "task": "plane.bgtasks.email_notification_task.stack_email_notification",

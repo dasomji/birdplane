@@ -1,0 +1,20 @@
+name: Birdplane recurrence
+on:
+  push:
+    branches: [birdplane]
+    paths: ["apps/api/**", "deployments/birdplane/recurrence-test.yml", ".github/workflows/birdplane-recurrence.yml"]
+  pull_request:
+    paths: ["apps/api/**", "deployments/birdplane/recurrence-test.yml", ".github/workflows/birdplane-recurrence.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t birdplane-backend:verify -f apps/api/Dockerfile.api apps/api
+      - run: docker compose -p birdplane-recurrence-tests -f deployments/birdplane/recurrence-test.yml up -d redis
+      - run: docker compose -p birdplane-recurrence-tests -f deployments/birdplane/recurrence-test.yml run --rm tests
+      - if: always()
+        run: docker compose -p birdplane-recurrence-tests -f deployments/birdplane/recurrence-test.yml down -v

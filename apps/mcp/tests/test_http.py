@@ -41,7 +41,7 @@ def test_http_authentication_host_and_protocol(monkeypatch):
             json={"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
             headers=headers,
         )
-        assert len(r.json()["result"]["tools"]) == 10
+        assert len(r.json()["result"]["tools"]) == 13
         r = client.post("/mcp/", json=init, headers={**headers, "host": "evil.example"})
         assert r.status_code == 421
         r = client.post(

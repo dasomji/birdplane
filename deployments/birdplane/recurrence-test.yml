@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:15.7-alpine
+    environment:
+      POSTGRES_USER: plane
+      POSTGRES_PASSWORD: plane
+      POSTGRES_DB: plane
+    tmpfs: [/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U plane]
+      interval: 2s
+      retries: 30
+  redis:
+    image: valkey/valkey:7.2.11-alpine
+  tests:
+    image: birdplane-backend:verify
+    volumes: ["../../apps/api:/code"]
+    environment:
+      DJANGO_SETTINGS_MODULE: plane.settings.test
+      DATABASE_URL: postgresql://plane:plane@db:5432/plane
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: isolated-test-only
+      AMQP_URL: memory://
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: [/bin/sh, -c]
+    command: ["pip install -q -r requirements/test.txt && pytest plane/recurrence/tests.py --migrations -q"]

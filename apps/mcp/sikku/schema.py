@@ -63,6 +63,41 @@ def tool(name, description, properties, required=(), write=False, destructive=Fa
 
 TOOLS = [
     tool(
+        "list_recurring_tasks",
+        "List saved recurring schedules (20 per page), or read one by id. Templates and descriptions excluded.",
+        {
+            "project": PROJECT,
+            "id": string(format="uuid"),
+            "offset": {"type": "integer", "minimum": 0},
+        },
+        ["project"],
+    ),
+    tool(
+        "save_recurring_task",
+        "Create from a template ticket (template_issue, frequency, starts_at required), or edit by id. Snapshot copies title/body/priority/labels/assignees; dates shift from each run. starts_at is a future ISO timestamp with offset; timezone is IANA. Daily/weekly/monthly/yearly wall time. Missed runs coalesce to latest. Pause/resume with status; ended is final. Timing edits require a future starts_at. Omitted fields unchanged.",
+        {
+            "project": PROJECT,
+            "id": string(format="uuid"),
+            "template_issue": ISSUE,
+            "frequency": string(enum=["daily", "weekly", "monthly", "yearly"]),
+            "interval": {"type": "integer", "minimum": 1, "maximum": 365},
+            "timezone": string(),
+            "starts_at": string(format="date-time"),
+            "ends_at": {"type": ["string", "null"], "format": "date-time"},
+            "status": string(enum=["active", "paused", "ended"]),
+        },
+        ["project"],
+        write=True,
+    ),
+    tool(
+        "delete_recurring_task",
+        "Delete a recurring schedule. Already generated tickets remain.",
+        {"project": PROJECT, "id": string(format="uuid")},
+        ["project", "id"],
+        write=True,
+        destructive=True,
+    ),
+    tool(
         "list_projects",
         "Find projects. Compact results; query matches name or prefix.",
         {"query": string(), **PAGE},

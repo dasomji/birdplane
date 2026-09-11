@@ -110,6 +110,7 @@ INSTALLED_APPS = [
     "plane.middleware",
     "plane.license",
     "plane.api",
+    "plane.recurrence",
     "plane.authentication",
     # Third-party things
     "rest_framework",
@@ -336,6 +337,7 @@ CELERY_ACCEPT_CONTENT = ["application/json"]
 
 
 CELERY_IMPORTS = (
+    "plane.recurrence.tasks",
     # scheduled tasks
     "plane.bgtasks.issue_automation_task",
     "plane.bgtasks.exporter_expired_task",

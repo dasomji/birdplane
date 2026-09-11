@@ -51,3 +51,14 @@ docker build -t birdplane-mcp .
 After dependency changes, update the lock and regenerate production requirements:
 `uv export --frozen --no-dev --no-emit-project -o requirements.txt`.
 Credentials, deployment snapshots, and live test output belong outside this repository.
+
+### Recurring tasks (Birdplane)
+
+Use `save_issue` to create a template, then `save_recurring_task` with `project`,
+`template_issue` (for example `BIRD-1`), `frequency`, `starts_at` (an ISO timestamp
+with UTC offset), and an IANA `timezone`. Supported frequencies: daily, weekly,
+monthly, yearly; `interval` defaults to 1. The template is a saved snapshot.
+Use `list_recurring_tasks` to inspect schedules and their last generated ticket.
+Use `save_recurring_task` with `id` to edit, pause/resume, or end a schedule;
+`delete_recurring_task` removes the schedule and keeps generated tickets.
+See [recurrence semantics](../../deployments/birdplane/recurrence.md).

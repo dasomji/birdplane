@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recurring tasks · Birdplane</title>
+<style>
+body{font:16px system-ui;background:#f7f8fa;color:#192234;max-width:960px;margin:40px auto;padding:0 24px}a{color:#3456bc}h1{margin-bottom:8px}label{display:flex;flex-direction:column;gap:6px}input,select,button{font:inherit;padding:10px;border:1px solid #aeb8ca;border-radius:6px}button{cursor:pointer;background:#fff}button.primary{background:#3456bc;color:white;border:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}form,article{background:white;border:1px solid #dce1ea;border-radius:10px;padding:24px;margin:20px 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}#message{white-space:pre-wrap;color:#8b2635}small{color:#536078}article h2{font-size:18px;margin-top:0}
+</style>
+<a href="/">← Plane workspace</a><h1>Recurring tasks</h1>
+<p>Create schedules from existing tickets. Each run creates a new ticket using a saved copy of the template.</p>
+{% if not request.user.is_authenticated %}<p><a href="/">Sign in to Plane</a>, then return to this page.</p>{% else %}
+<div class="grid"><label>Workspace slug<input id="workspace" placeholder="personal"></label><label>Project<select id="project"><option value="">Load your workspace first</option></select></label></div>
+<div class="actions"><button id="load">Load workspace</button></div><p id="message" role="status"></p>
+<form id="editor"><h2 id="heading">New schedule</h2><input id="scheduleId" type="hidden">
+<div class="grid"><label>Find template ticket<input id="search" placeholder="Search ticket title"></label><label>Template ticket<select id="template" required></select></label>
+<label>Frequency<select id="frequency"><option value="daily">Daily</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option><option value="yearly">Yearly</option></select></label>
+<label>Every N periods<input id="interval" type="number" min="1" max="365" value="1" required></label>
+<label>Timezone<input id="zone" value="UTC" required></label><label>First run (in timezone)<input id="start" type="datetime-local" required></label>
+<label>End (optional, in timezone)<input id="end" type="datetime-local"></label></div>
+<p><small>Keep the original ticket as a template or delete it after creating the schedule. Changes to that ticket do not change this saved schedule. Edit the schedule to copy a template again. After downtime or a pause, only the latest missed occurrence is created. Month ends clamp to the last day; daylight-saving gaps move forward and repeated times run once.</small></p>
+<div class="actions"><button class="primary" type="submit">Save schedule</button><button id="cancel" type="button">Reset</button></div></form>
+<section id="schedules" aria-label="Schedules"></section><button id="more" hidden>Load more</button>
+<script>
+const $=id=>document.getElementById(id); let offset=0, editing=null;
+$('zone').value=Intl.DateTimeFormat().resolvedOptions().timeZone;
+$('workspace').value=localStorage.getItem('birdplane-workspace')||'';
+async function api(path,method='GET',data){const r=await fetch('/api/v1/workspaces/'+encodeURIComponent($('workspace').value)+'/'+path,{method,headers:{'Content-Type':'application/json','X-CSRFToken':'{{ csrf_token }}'},body:data?JSON.stringify(data):undefined});if(!r.ok)throw Error(r.status===403?'Sign in and check project membership.':JSON.stringify(await r.json()));return r.status===204?null:r.json()}
+function path(){return 'projects/'+$('project').value+'/recurring-tasks/'}
+function options(el,rows){el.replaceChildren();for(const r of rows){const o=document.createElement('option');o.value=r.id;o.textContent=r.name;el.append(o)}}
+async function templates(){options($('template'),await api('recurring-catalog/?project='+$('project').value+'&q='+encodeURIComponent($('search').value)))}
+function handle(fn){return async e=>{try{$('message').textContent='';await fn(e)}catch(err){$('message').textContent=err.message}}}
+$('load').onclick=handle(async()=>{localStorage.setItem('birdplane-workspace',$('workspace').value);options($('project'),await api('recurring-catalog/'));if($('project').value){await templates();await listing()}});
+$('project').onchange=handle(async()=>{reset();await templates();await listing()});$('search').onchange=handle(templates);
+function reset(){editing=null;$('scheduleId').value='';$('heading').textContent='New schedule';$('editor').reset();$('template').required=true;$('zone').value=Intl.DateTimeFormat().resolvedOptions().timeZone}
+$('cancel').onclick=reset;
+function localText(iso,zone){if(!iso)return '';const parts=Object.fromEntries(new Intl.DateTimeFormat('sv-SE',{timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(iso)).map(p=>[p.type,p.value]));return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`}
+// Convert a wall-clock input with its IANA timezone, independent of browser timezone.
+function instant(text,zone){if(!text)return null;let target=Date.parse(text+'Z'),guess=target;for(let n=0;n<4;n++){const shown=Date.parse(localText(new Date(guess).toISOString(),zone)+'Z');const delta=target-shown;if(!delta)return new Date(guess).toISOString();guess+=delta}throw Error('That local time does not exist due to daylight saving. Choose another time.')}
+$('editor').onsubmit=handle(async e=>{e.preventDefault();const data={frequency:$('frequency').value,interval:Number($('interval').value),timezone:$('zone').value,starts_at:instant($('start').value,$('zone').value),ends_at:instant($('end').value,$('zone').value)};
+if(editing){if($('start').value===localText(editing.starts_at,editing.timezone)&&data.timezone===editing.timezone)data.starts_at=editing.starts_at;for(const k of ['frequency','interval','timezone','starts_at'])if(data[k]===editing[k]||(k==='starts_at'&&Date.parse(data[k])===Date.parse(editing[k])))delete data[k];if($('template').value)data.template_issue=$('template').value}else data.template_issue=$('template').value;
+await api(path()+($('scheduleId').value?$('scheduleId').value+'/':''),$('scheduleId').value?'PATCH':'POST',data);reset();await listing()});
+async function listing(append=false){if(!append){offset=0;$('schedules').replaceChildren()}const data=await api(path()+'?offset='+offset);for(const s of data.results){const card=document.createElement('article'),title=document.createElement('h2'),details=document.createElement('p'),actions=document.createElement('div');title.textContent=s.title;details.textContent=`Every ${s.interval} ${s.frequency} · ${s.timezone} · ${s.status}. Next: ${s.next_run_at?new Date(s.next_run_at).toLocaleString():'—'}`;actions.className='actions';card.append(title,details,actions);
+const button=(label,fn)=>{const b=document.createElement('button');b.textContent=label;b.onclick=handle(fn);actions.append(b)};
+if(s.status!=='ended'){button('Edit',()=>{editing=s;$('scheduleId').value=s.id;$('heading').textContent='Edit schedule';for(const [id,key] of [['frequency','frequency'],['interval','interval'],['zone','timezone']])$(id).value=s[key];$('start').value=localText(s.starts_at,s.timezone);$('end').value=localText(s.ends_at,s.timezone);$('template').required=false;const o=document.createElement('option');o.value='';o.textContent='Keep saved template';$('template').prepend(o);$('template').value='';$('editor').scrollIntoView()});button(s.status==='paused'?'Resume':'Pause',async()=>{await api(path()+s.id+'/','PATCH',{status:s.status==='paused'?'active':'paused'});await listing()});button('End',async()=>{if(confirm('End this schedule permanently? Existing tickets remain.')){await api(path()+s.id+'/','PATCH',{status:'ended'});await listing()}})}
+button('Delete schedule',async()=>{if(confirm('Delete this schedule? Existing tickets remain.')){await api(path()+s.id+'/','DELETE');await listing()}});$('schedules').append(card)}offset=data.next_offset;$('more').hidden=offset===null}
+$('more').onclick=handle(()=>listing(true));
+</script>{% endif %}</html>

@@ -303,6 +303,31 @@ class Plane:
         }
 
     async def dispatch(self, name, args):
+        if name in (
+            "list_recurring_tasks",
+            "save_recurring_task",
+            "delete_recurring_task",
+        ):
+            pid = (await self.project(args["project"]))["id"]
+            path = f"projects/{pid}/recurring-tasks"
+            if args.get("id"):
+                path += f"/{args['id']}"
+            if name == "list_recurring_tasks":
+                return await self.request(
+                    "GET", path, params={"offset": args.get("offset", 0)}
+                )
+            if name == "delete_recurring_task":
+                await self.request("DELETE", path)
+                return {"id": args["id"], "action": "deleted"}
+            body = {k: v for k, v in args.items() if k not in ("id", "project")}
+            if "template_issue" in body:
+                body["template_issue"] = (
+                    await self.issue(body["template_issue"], pid)
+                )["id"]
+            return await self.request(
+                "PATCH" if args.get("id") else "POST", path, json=body
+            )
+
         if name == "list_projects":
             rows = [
                 select(r, ["id", "name", "identifier"])
