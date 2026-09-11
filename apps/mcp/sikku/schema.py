@@ -173,6 +173,11 @@ TOOLS = [
                 },
             },
             "query": string("Title contains this text."),
+            "pql": string(
+                "PQL combined with filters using AND. Fields: createdAt, updatedAt, startDate, dueDate, priority, stateGroup. Example: createdAt >= daysAgo(7). Calendar functions use the configured Plane user's timezone; hoursAgo(24) is a rolling timestamp window for createdAt/updatedAt.",
+                minLength=1,
+                maxLength=500,
+            ),
             "state": string("State name or UUID."),
             "priority": PRIORITY,
             "assignee": string("Name, email, UUID or me."),

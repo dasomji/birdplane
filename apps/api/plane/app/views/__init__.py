@@ -85,6 +85,7 @@ from .workspace.sticky import WorkspaceStickyViewSet
 
 from .state.base import StateViewSet, IntakeStateEndpoint
 from .view.base import (
+    PQLValidationEndpoint,
     WorkspaceViewViewSet,
     WorkspaceViewIssuesViewSet,
     IssueViewViewSet,

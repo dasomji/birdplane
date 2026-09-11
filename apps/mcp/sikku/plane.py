@@ -684,6 +684,8 @@ class Plane:
                 params["filters"] = json.dumps(
                     structured_filters, separators=(",", ":")
                 )
+            if "pql" in args:
+                params["pql"] = args["pql"]
             data = await self.request(
                 "GET", f"projects/{projects[project_index]}/work-items", params=params
             )

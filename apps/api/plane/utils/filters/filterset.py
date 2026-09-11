@@ -156,7 +156,16 @@ class IssueFilterSet(BaseFilterSet):
                 negative.method = "filter_not"
                 negative.exclude = False
                 result[f"{field}__not_{operator}"] = negative
-        for field in [*cls.relation_fields, "priority", "start_date", "target_date", "parent_id", "created_by_id"]:
+        for field in [
+            *cls.relation_fields,
+            "priority",
+            "start_date",
+            "target_date",
+            "created_at",
+            "updated_at",
+            "parent_id",
+            "created_by_id",
+        ]:
             result[f"{field}__is_empty"] = filters.BooleanFilter(field_name=field, method="filter_empty")
         return result
 
@@ -173,10 +182,12 @@ class IssueFilterSet(BaseFilterSet):
     def filter_empty(self, queryset, name, value):
         if name in self.relation_fields:
             relation = self.relation_fields[name]
-            active = queryset.filter(**{
-                f"{relation}__isnull": False,
-                f"{relation.rsplit('__', 1)[0]}__deleted_at__isnull": True,
-            })
+            active = queryset.filter(
+                **{
+                    f"{relation}__isnull": False,
+                    f"{relation.rsplit('__', 1)[0]}__deleted_at__isnull": True,
+                }
+            )
             empty = ~Q(pk__in=active.order_by().values("pk"))
         elif name == "priority":
             empty = Q(priority="none") | Q(priority__isnull=True)
@@ -236,11 +247,37 @@ class IssueFilterSet(BaseFilterSet):
     # silently dropped every row created during the final day of the range.
     created_at = filters.DateFilter(field_name="created_at", lookup_expr="date")
     created_at__exact = filters.DateFilter(field_name="created_at", lookup_expr="date")
+    created_at__lt = filters.DateFilter(field_name="created_at", lookup_expr="date__lt")
+    created_at__lte = filters.DateFilter(field_name="created_at", lookup_expr="date__lte")
+    created_at__gt = filters.DateFilter(field_name="created_at", lookup_expr="date__gt")
+    created_at__gte = filters.DateFilter(field_name="created_at", lookup_expr="date__gte")
+    created_at__lt_datetime = filters.IsoDateTimeFilter(field_name="created_at", lookup_expr="lt")
+    created_at__lte_datetime = filters.IsoDateTimeFilter(field_name="created_at", lookup_expr="lte")
+    created_at__gt_datetime = filters.IsoDateTimeFilter(field_name="created_at", lookup_expr="gt")
+    created_at__gte_datetime = filters.IsoDateTimeFilter(field_name="created_at", lookup_expr="gte")
     created_at__range = DateCSVRangeFilter(field_name="created_at", lookup_expr="date__range")
 
     updated_at = filters.DateFilter(field_name="updated_at", lookup_expr="date")
     updated_at__exact = filters.DateFilter(field_name="updated_at", lookup_expr="date")
+    updated_at__lt = filters.DateFilter(field_name="updated_at", lookup_expr="date__lt")
+    updated_at__lte = filters.DateFilter(field_name="updated_at", lookup_expr="date__lte")
+    updated_at__gt = filters.DateFilter(field_name="updated_at", lookup_expr="date__gt")
+    updated_at__gte = filters.DateFilter(field_name="updated_at", lookup_expr="date__gte")
+    updated_at__lt_datetime = filters.IsoDateTimeFilter(field_name="updated_at", lookup_expr="lt")
+    updated_at__lte_datetime = filters.IsoDateTimeFilter(field_name="updated_at", lookup_expr="lte")
+    updated_at__gt_datetime = filters.IsoDateTimeFilter(field_name="updated_at", lookup_expr="gt")
+    updated_at__gte_datetime = filters.IsoDateTimeFilter(field_name="updated_at", lookup_expr="gte")
     updated_at__range = DateCSVRangeFilter(field_name="updated_at", lookup_expr="date__range")
+
+    start_date__lt = filters.DateFilter(field_name="start_date", lookup_expr="lt")
+    start_date__lte = filters.DateFilter(field_name="start_date", lookup_expr="lte")
+    start_date__gt = filters.DateFilter(field_name="start_date", lookup_expr="gt")
+    start_date__gte = filters.DateFilter(field_name="start_date", lookup_expr="gte")
+
+    target_date__lt = filters.DateFilter(field_name="target_date", lookup_expr="lt")
+    target_date__lte = filters.DateFilter(field_name="target_date", lookup_expr="lte")
+    target_date__gt = filters.DateFilter(field_name="target_date", lookup_expr="gt")
+    target_date__gte = filters.DateFilter(field_name="target_date", lookup_expr="gte")
 
     class Meta:
         model = Issue

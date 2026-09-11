@@ -25,4 +25,4 @@ services:
       db:
         condition: service_healthy
     entrypoint: [/bin/sh, -c]
-    command: ["pip install -q -r requirements/test.txt && pytest plane/recurrence/tests.py plane/tests/unit/utils/test_birdplane_filters.py plane/tests/unit/utils/test_issue_datetime_filters.py --migrations --create-db -q"]
+    command: ["pip install -q -r requirements/test.txt && pytest plane/recurrence/tests.py plane/tests/unit/utils/test_birdplane_filters.py plane/tests/unit/utils/test_issue_datetime_filters.py plane/tests/unit/utils/test_pql.py --migrations --create-db -q"]

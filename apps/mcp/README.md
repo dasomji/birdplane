@@ -47,6 +47,15 @@ Birdplane supports server-side `filters` on `list_issues`, with `is`, `is_not`,
 and `is_empty` operators. Names resolve internally; conditions combine with AND.
 See [filter examples and semantics](../../deployments/birdplane/filters.md).
 
+`list_issues` also accepts relative-date PQL, alone or alongside `filters`. For
+example, use `pql="createdAt >= daysAgo(7)"` or
+`pql="dueDate < today() AND priority IN (High, Urgent)"`. Calendar functions
+such as `today()`, `daysAgo()`, and `startOfWeek()` use the requesting user's
+timezone and calendar boundaries. `hoursAgo()` and `hoursFromNow()` are rolling
+timestamp windows supported only for `createdAt` and `updatedAt`. Follow
+`next_cursor` with the identical PQL and other arguments.
+See the [full supported PQL syntax](../api/plane/utils/filters/README.md).
+
 Legacy scalar search arguments scan project pages internally, at most 500 tickets per
 call. Follow `next_cursor` with identical arguments when `scan_limited=true`, even
 if the result is empty. Pagination is live rather than a snapshot. Project-list

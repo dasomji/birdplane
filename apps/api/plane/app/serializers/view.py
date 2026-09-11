@@ -2,12 +2,16 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
+# Python imports
+from types import SimpleNamespace
+
 # Third party imports
 from rest_framework import serializers
 
 # Module imports
 from .base import DynamicBaseSerializer
-from plane.db.models import IssueView
+from plane.db.models import Issue, IssueView
+from plane.utils.filters import ComplexFilterBackend, IssueFilterSet
 from plane.utils.issue_filters import issue_filters
 
 
@@ -67,6 +71,15 @@ class IssueViewSerializer(DynamicBaseSerializer):
             "access",
             "is_locked",
         ]
+
+    def validate_rich_filters(self, value):
+        ComplexFilterBackend().filter_queryset(
+            None,
+            Issue.issue_objects.none(),
+            SimpleNamespace(filterset_class=IssueFilterSet),
+            filter_data=value,
+        )
+        return value
 
     def create(self, validated_data):
         query_params = validated_data.get("filters", {})

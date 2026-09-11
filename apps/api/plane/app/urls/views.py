@@ -6,6 +6,7 @@ from django.urls import path
 
 
 from plane.app.views import (
+    PQLValidationEndpoint,
     IssueViewViewSet,
     WorkspaceViewViewSet,
     WorkspaceViewIssuesViewSet,
@@ -14,6 +15,11 @@ from plane.app.views import (
 
 
 urlpatterns = [
+    path(
+        "workspaces/<str:slug>/pql/",
+        PQLValidationEndpoint.as_view(),
+        name="pql-validation",
+    ),
     path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/views/",
         IssueViewViewSet.as_view({"get": "list", "post": "create"}),
