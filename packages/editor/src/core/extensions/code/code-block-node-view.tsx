@@ -18,6 +18,7 @@ import { cn } from "@plane/utils";
 // types
 import type { TCodeBlockAttributes } from "./types";
 import { ECodeBlockAttributeNames } from "./types";
+import { MermaidPreview } from "./mermaid-preview";
 
 // we just have ts support for now
 const lowlight = createLowlight(common);
@@ -29,8 +30,10 @@ type Props = {
 
 export function CodeBlockComponent({ node }: Props) {
   const [copied, setCopied] = useState(false);
+  const [showSource, setShowSource] = useState(false);
   // derived values
   const attrs = node.attrs as TCodeBlockAttributes;
+  const isMermaid = attrs.language?.trim().toLowerCase() === "mermaid";
 
   const copyToClipboard = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     try {
@@ -46,9 +49,23 @@ export function CodeBlockComponent({ node }: Props) {
 
   return (
     <NodeViewWrapper key={attrs[ECodeBlockAttributeNames.ID]} className="code-block group/code relative">
+      {isMermaid && (
+        <div contentEditable={false} className="text-sm flex items-center gap-3 pt-2">
+          <span className="text-secondary">Mermaid diagram</span>
+          <button
+            type="button"
+            aria-pressed={showSource}
+            className="text-primary underline"
+            onClick={() => setShowSource(!showSource)}
+          >
+            {showSource ? "Show diagram" : "Show source"}
+          </button>
+        </div>
+      )}
       <Tooltip tooltipContent="Copy code">
         <button
           type="button"
+          aria-label="Copy code"
           className={cn(
             "group/button absolute top-2 right-2 z-10 hidden size-8 items-center justify-center rounded-md border border-subtle bg-layer-1 backdrop-blur-sm transition duration-150 ease-in-out group-hover/code:flex",
             {
@@ -65,7 +82,8 @@ export function CodeBlockComponent({ node }: Props) {
         </button>
       </Tooltip>
 
-      <pre className="my-2 rounded-lg bg-layer-3 p-4 text-primary">
+      {isMermaid && !showSource && <MermaidPreview source={node.textContent} />}
+      <pre hidden={isMermaid && !showSource} className="my-2 rounded-lg bg-layer-3 p-4 text-primary">
         <NodeViewContent as="code" className="whitespace-pre-wrap" />
       </pre>
     </NodeViewWrapper>

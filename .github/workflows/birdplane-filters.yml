@@ -18,6 +18,7 @@ jobs:
           node-version: 22
       - run: corepack enable
       - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @plane/editor test
       - run: pnpm turbo run check:types --filter=web --filter=@plane/shared-state --filter=@plane/utils --filter=@plane/types
       - run: node --test packages/shared-state/filters.test.mjs
       - run: pnpm turbo run build --filter=web

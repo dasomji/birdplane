@@ -23,6 +23,7 @@
     "./styles": "./dist/styles/index.css"
   },
   "scripts": {
+    "test": "vitest run",
     "build": "tsc && tsdown",
     "dev": "tsdown --watch --no-clean",
     "check:lint": "oxlint --max-warnings=416 .",
@@ -74,6 +75,7 @@
     "lodash-es": "catalog:",
     "lowlight": "catalog:",
     "lucide-react": "catalog:",
+    "mermaid": "catalog:",
     "prosemirror-codemark": "catalog:",
     "tippy.js": "catalog:",
     "tiptap-markdown": "catalog:",
@@ -90,9 +92,11 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "jsdom": "catalog:",
     "postcss": "catalog:",
     "tsdown": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "react": "catalog:",
