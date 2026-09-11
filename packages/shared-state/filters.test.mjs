@@ -54,3 +54,23 @@ test("saved filters round-trip negative lists, empty, and dates", () => {
   filter.updateConditionOperator(filter.allConditions[0].id, "not_exact", false);
   assert.equal(filter.allConditions[0].value, undefined);
 });
+
+test("PQL saved views reopen as active and preserve the query when saved", async () => {
+  const query = "createdAt >= daysAgo(7)";
+  const savedExpressions = [];
+  const filter = new FilterInstance({
+    adapter: workItemFiltersAdapter,
+    initialExpression: { pql__exact: query },
+    options: {
+      expression: {
+        saveViewOptions: {
+          onViewSave: async (expression) => savedExpressions.push(expression),
+        },
+      },
+    },
+  });
+
+  assert.equal(filter.hasActiveFilters, true);
+  await filter.saveView();
+  assert.deepEqual(savedExpressions, [{ pql__exact: query }]);
+});

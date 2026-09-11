@@ -8,6 +8,7 @@ import json
 # Django imports
 from django.db.models import Q
 from django.http import QueryDict
+from django.utils import timezone
 
 # Third party imports
 from django_filters.utils import translate_validation
@@ -15,6 +16,7 @@ from rest_framework import filters
 from rest_framework.exceptions import ValidationError as DRFValidationError
 
 from plane.utils.exception_logger import log_exception
+from plane.utils.filters.pql import PQLSyntaxError, parse_pql, resolve_relative_dates
 
 
 class ComplexFilterBackend(filters.BaseFilterBackend):
@@ -29,22 +31,31 @@ class ComplexFilterBackend(filters.BaseFilterBackend):
     default_max_depth = 5
 
     def filter_queryset(self, request, queryset, view, filter_data=None):
-        """Normalize filter input and apply JSON-based filtering.
+        """Normalize rich filters and PQL, then narrow the supplied queryset.
 
         Accepts explicit `filter_data` (dict or JSON string) or reads the
-        `filter` query parameter. Enforces JSON-only filtering.
+        `filters` query parameter, combined with an optional `pql` query.
+        Saved `pql__exact` conditions are expanded at request time.
         """
         try:
+            reference_time = timezone.now()
             if filter_data is not None:
                 normalized = self._normalize_filter_data(filter_data, "filter_data")
-                return self._apply_json_filter(queryset, normalized, view)
+                return self._apply_json_filter(queryset, normalized, view, reference_time=reference_time)
 
             filter_string = request.query_params.get(self.filter_param, None)
-            if not filter_string:
+            pql_string = request.query_params.get("pql", None)
+            if not filter_string and not pql_string:
                 return queryset
 
-            normalized = self._normalize_filter_data(filter_string, "filter")
-            return self._apply_json_filter(queryset, normalized, view)
+            normalized = self._normalize_filter_data(filter_string, "filter") if filter_string else None
+            if pql_string:
+                try:
+                    pql_filter = resolve_relative_dates(parse_pql(pql_string), reference_time=reference_time)
+                except PQLSyntaxError as exc:
+                    raise DRFValidationError({"message": str(exc), "code": "invalid_pql"}) from exc
+                normalized = {"and": [normalized, pql_filter]} if normalized else pql_filter
+            return self._apply_json_filter(queryset, normalized, view, reference_time=reference_time)
         except DRFValidationError:
             # Propagate validation errors unchanged
             raise
@@ -77,13 +88,16 @@ class ComplexFilterBackend(filters.BaseFilterBackend):
                 }
             )
 
-    def _apply_json_filter(self, queryset, filter_data, view):
+    def _apply_json_filter(self, queryset, filter_data, view, reference_time=None):
         """Process a JSON filter structure using Q object composition."""
         if not filter_data:
             return queryset
 
         # Validate structure and depth before field allowlist checks
         max_depth = self._get_max_depth(view)
+        self._validate_structure(filter_data, max_depth=max_depth, current_depth=1)
+
+        filter_data = self._expand_pql_nodes(filter_data, reference_time=reference_time)
         self._validate_structure(filter_data, max_depth=max_depth, current_depth=1)
 
         # Validate against the view's FilterSet (only declared filters are allowed)
@@ -96,6 +110,34 @@ class ComplexFilterBackend(filters.BaseFilterBackend):
 
         # Apply the combined Q object to the queryset once
         return queryset.filter(combined_q)
+
+    def _expand_pql_nodes(self, node, reference_time=None):
+        """Replace saved PQL conditions with their rich-filter expression."""
+        reference_time = reference_time or timezone.now()
+        if not isinstance(node, dict):
+            return node
+        if "pql__exact" in node:
+            if len(node) != 1 or not isinstance(node["pql__exact"], str):
+                raise DRFValidationError(
+                    {
+                        "message": "A PQL condition must contain only a query string",
+                        "code": "invalid_pql_node",
+                    }
+                )
+            try:
+                return resolve_relative_dates(parse_pql(node["pql__exact"]), reference_time=reference_time)
+            except PQLSyntaxError as exc:
+                raise DRFValidationError({"message": str(exc), "code": "invalid_pql"}) from exc
+        return {
+            key.lower() if isinstance(key, str) and key.lower() in ("and", "or", "not") else key: (
+                [self._expand_pql_nodes(child, reference_time) for child in value]
+                if isinstance(value, list)
+                else self._expand_pql_nodes(value, reference_time)
+                if isinstance(value, dict)
+                else value
+            )
+            for key, value in node.items()
+        }
 
     def _validate_fields(self, filter_data, view):
         """Validate that filtered fields are defined in the view's FilterSet."""

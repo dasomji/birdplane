@@ -16,6 +16,7 @@ import { AddFilterButton } from "@/components/rich-filters/add-filters/button";
 
 type TFiltersToggleProps<P extends TFilterProperty, E extends TExternalFilter> = {
   filter: IFilterInstance<P, E> | undefined;
+  openRowOnEmpty?: boolean;
 };
 
 const COMMON_CLASSNAME =
@@ -24,13 +25,13 @@ const COMMON_CLASSNAME =
 export const FiltersToggle = observer(function FiltersToggle<P extends TFilterProperty, E extends TExternalFilter>(
   props: TFiltersToggleProps<P, E>
 ) {
-  const { filter } = props;
+  const { filter, openRowOnEmpty = false } = props;
   // derived values
   const hasAnyConditions = (filter?.allConditionsForDisplay.length ?? 0) > 0;
   const isFilterRowVisible = filter?.isVisible ?? false;
   const hasUpdates = filter?.canUpdateView === true && filter?.hasChanges === true;
   const showFilterRowChangesPill = hasUpdates || hasAnyConditions === true;
-  const showAddFilterButton = !hasAnyConditions && !isFilterRowVisible && !hasUpdates;
+  const showAddFilterButton = !openRowOnEmpty && !hasAnyConditions && !isFilterRowVisible && !hasUpdates;
 
   const handleToggleFilter = () => {
     if (!filter) {

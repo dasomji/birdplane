@@ -11,7 +11,7 @@ import { Transition } from "@headlessui/react";
 // plane imports
 import { Button } from "@plane/propel/button";
 import type { IFilterInstance } from "@plane/shared-state";
-import type { TExternalFilter, TFilterProperty } from "@plane/types";
+import type { TExternalFilter, TFilterConditionNodeForDisplay, TFilterProperty, TFilterValue } from "@plane/types";
 import { cn, EHeaderVariant, Header, Loader } from "@plane/ui";
 // local imports
 import type { TAddFilterButtonProps } from "./add-filters/button";
@@ -19,9 +19,15 @@ import { AddFilterButton } from "./add-filters/button";
 import { FilterItem } from "./filter-item/root";
 
 export type TFiltersRowProps<K extends TFilterProperty, E extends TExternalFilter> = {
+  additionalControls?: (isDisabled: boolean) => React.ReactNode;
   buttonConfig?: TAddFilterButtonProps<K, E>["buttonConfig"];
   disabledAllOperations?: boolean;
   filter: IFilterInstance<K, E>;
+  renderCondition?: (
+    condition: TFilterConditionNodeForDisplay<K, TFilterValue>,
+    defaultCondition: React.ReactNode,
+    isDisabled: boolean
+  ) => React.ReactNode;
   variant?: "modal" | "header";
   trackerElements?: {
     clearFilter?: string;
@@ -34,9 +40,11 @@ export const FiltersRow = observer(function FiltersRow<K extends TFilterProperty
   props: TFiltersRowProps<K, E>
 ) {
   const {
+    additionalControls,
     buttonConfig,
     disabledAllOperations: disabledAllOperationsProp = false,
     filter,
+    renderCondition,
     variant = "header",
     trackerElements,
   } = props;
@@ -67,9 +75,18 @@ export const FiltersRow = observer(function FiltersRow<K extends TFilterProperty
 
   const leftContent = (
     <>
-      {filter.allConditionsForDisplay.map((condition) => (
-        <FilterItem key={condition.id} filter={filter} condition={condition} isDisabled={disabledAllOperations} />
-      ))}
+      {filter.allConditionsForDisplay.map((condition) => {
+        const defaultCondition = (
+          <FilterItem filter={filter} condition={condition} isDisabled={disabledAllOperations} />
+        );
+
+        return (
+          <React.Fragment key={condition.id}>
+            {renderCondition ? renderCondition(condition, defaultCondition, disabledAllOperations) : defaultCondition}
+          </React.Fragment>
+        );
+      })}
+      {additionalControls?.(disabledAllOperations)}
       <AddFilterButton
         filter={filter}
         buttonConfig={{

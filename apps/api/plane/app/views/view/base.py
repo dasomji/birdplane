@@ -20,6 +20,7 @@ from django.db import transaction
 
 # Third party imports
 from rest_framework import status
+from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework.response import Response
 
 # Module imports
@@ -43,10 +44,33 @@ from plane.db.models import (
 from plane.utils.issue_filters import issue_filters
 from plane.utils.order_queryset import VIEW_ORDER_BY_ALLOWLIST, order_issue_queryset, sanitize_order_by
 from plane.bgtasks.recent_visited_task import recent_visited_task
-from .. import BaseViewSet
+from .. import BaseAPIView, BaseViewSet
 from plane.db.models import UserFavorite
 from plane.utils.filters import ComplexFilterBackend
 from plane.utils.filters import IssueFilterSet
+from plane.utils.filters.pql import parse_pql
+
+
+class PQLValidationEndpoint(BaseAPIView):
+    filterset_class = IssueFilterSet
+
+    @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST], level="WORKSPACE")
+    def post(self, request, slug):
+        if not isinstance(request.data, dict):
+            raise DRFValidationError(
+                {
+                    "message": "Request body must be an object containing a query string",
+                    "code": "invalid_pql",
+                }
+            )
+        query = request.data.get("query")
+        ComplexFilterBackend().filter_queryset(
+            request,
+            Issue.issue_objects.filter(workspace__slug=slug).none(),
+            self,
+            filter_data={"pql__exact": query},
+        )
+        return Response({"filters": parse_pql(query)}, status=status.HTTP_200_OK)
 
 
 class WorkspaceViewViewSet(BaseViewSet):

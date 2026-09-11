@@ -11,11 +11,28 @@ import type { TWorkItemFilterExpression, TWorkItemFilterProperty } from "@plane/
 // components
 import type { TFiltersRowProps } from "@/components/rich-filters/filters-row";
 import { FiltersRow } from "@/components/rich-filters/filters-row";
+import { PQLEditor } from "./pql-editor";
 
 type TWorkItemFiltersRowProps = TFiltersRowProps<TWorkItemFilterProperty, TWorkItemFilterExpression> & {
   filter: IWorkItemFilterInstance;
 };
 
 export const WorkItemFiltersRow = observer(function WorkItemFiltersRow(props: TWorkItemFiltersRowProps) {
-  return <FiltersRow {...props} />;
+  const hasPQLCondition = props.filter.allConditionsForDisplay.some((condition) => condition.property === "pql");
+
+  return (
+    <FiltersRow
+      {...props}
+      renderCondition={(condition, defaultCondition, isDisabled) =>
+        condition.property === "pql" ? (
+          <PQLEditor condition={condition} filter={props.filter} isDisabled={isDisabled} />
+        ) : (
+          defaultCondition
+        )
+      }
+      additionalControls={(isDisabled) =>
+        !hasPQLCondition && <PQLEditor filter={props.filter} isDisabled={isDisabled} />
+      }
+    />
+  );
 });

@@ -318,20 +318,6 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
         Supports filtering, ordering, and field selection through query parameters.
         """
 
-        unsupported_filters = [param for param in ("pql",) if request.GET.get(param)]
-        if unsupported_filters:
-            return Response(
-                {
-                    "pql": (
-                        "PQL is not supported on this Plane edition. "
-                        "Use the structured filters parameter instead, or use "
-                        "a Plane edition that supports work item query filtering."
-                    ),
-                    "unsupported_parameters": unsupported_filters,
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
         external_id = request.GET.get("external_id")
         external_source = request.GET.get("external_source")
 
