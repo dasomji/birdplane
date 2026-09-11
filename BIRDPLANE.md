@@ -30,9 +30,10 @@ Do not merge upstream's moving preview branch directly into production.
 ## Deployment
 
 See [`deployments/birdplane/README.md`](deployments/birdplane/README.md).
-The initial deployment builds the backend and MCP from this repository, while
-using the unchanged upstream v1.4.2 web, admin, space, live and proxy images.
-The application UI remains Plane's UI in this first milestone.
+The deployment builds the backend, web app, and MCP from this repository, while
+using upstream v1.4.2 admin, space, live, and proxy images. Birdplane adds
+`is`, `is not`, and `is empty` to Plane's existing filter UI and MCP; see
+[filter documentation](deployments/birdplane/filters.md).
 
 Recurring tasks are implemented in the isolated `plane.recurrence` Django app,
 with a management page and compact MCP tools. See

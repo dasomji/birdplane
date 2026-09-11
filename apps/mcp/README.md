@@ -43,7 +43,11 @@ Lists default to 10 results, maximum 50; descriptions are omitted by default.
 Detail bodies default to 4,000 characters with continuation offsets. Responses
 use a single text JSON representation, avoiding duplicate payloads.
 
-Community Edition search scans project pages internally, at most 500 tickets per
+Birdplane supports server-side `filters` on `list_issues`, with `is`, `is_not`,
+and `is_empty` operators. Names resolve internally; conditions combine with AND.
+See [filter examples and semantics](../../deployments/birdplane/filters.md).
+
+Legacy scalar search arguments scan project pages internally, at most 500 tickets per
 call. Follow `next_cursor` with identical arguments when `scan_limited=true`, even
 if the result is empty. Pagination is live rather than a snapshot. Project-list
 changes invalidate workspace cursors. Commercial-only operations and archive

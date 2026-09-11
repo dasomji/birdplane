@@ -26,9 +26,11 @@ For an already running service, use Coolify's `POST /api/v1/deploy` with its
 existing service UUID. This builds the image before recreating containers.
 The `/services/{uuid}/start` endpoint rejects services that are already running;
 the restart endpoint can stop containers before the build finishes.
-Keep frontend/admin/space/live/proxy
-images at `makeplane/plane-*:v1.4.2` for the initial release. No schema changes
-are introduced by Birdplane's initial additions.
+Build `web` from the same pinned commit using `apps/web/Dockerfile.web` and the
+repository root as build context; use `birdplane-web:COMMIT` with `pull_policy: never`.
+The overlay includes this definition. Keep admin/space/live/proxy images at
+`makeplane/plane-*:v1.4.2`. The filter additions introduce no database migration;
+recurring tasks have their own additive migration.
 
 The MCP is a separate Coolify application from this same repository, with base
 directory `/apps/mcp` and Dockerfile `/Dockerfile`. Retain its runtime environment
