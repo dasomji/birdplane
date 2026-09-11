@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import React, { Fragment, useEffect, useId, useState } from "react";
+import React, { Fragment, useId, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { Braces, X } from "lucide-react";
 import { useParams } from "next/navigation";
@@ -40,10 +40,25 @@ const PQL_MAX_LENGTH = 500;
 const pqlService = new PQLService();
 
 export function PQLEditor(props: TPQLEditorProps) {
-  const { condition, filter, isDisabled } = props;
+  const savedQuery = typeof props.condition?.value === "string" ? props.condition.value : "";
+
+  return (
+    <PQLEditorContent
+      key={JSON.stringify([props.condition?.id ?? null, savedQuery])}
+      {...props}
+      savedQuery={savedQuery}
+    />
+  );
+}
+
+type TPQLEditorContentProps = TPQLEditorProps & {
+  savedQuery: string;
+};
+
+function PQLEditorContent(props: TPQLEditorContentProps) {
+  const { condition, filter, isDisabled, savedQuery } = props;
   const { workspaceSlug } = useParams();
   const queryFieldId = useId();
-  const savedQuery = typeof condition?.value === "string" ? condition.value : "";
   const [draft, setDraft] = useState(savedQuery);
   const [error, setError] = useState<string>();
   const [isValidating, setIsValidating] = useState(false);
@@ -61,11 +76,6 @@ export function PQLEditor(props: TPQLEditorProps) {
       { name: "preventOverflow", options: { padding: 8 } },
     ],
   });
-
-  useEffect(() => {
-    setDraft(savedQuery);
-    setError(undefined);
-  }, [condition?.id, savedQuery]);
 
   if (isDisabled && !condition) return null;
 
