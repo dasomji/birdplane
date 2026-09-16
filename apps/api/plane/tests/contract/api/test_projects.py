@@ -50,6 +50,26 @@ class TestProjectListCreateAPIEndpoint:
         return f"/api/v1/workspaces/{workspace_slug}/projects/"
 
     @pytest.mark.django_db
+    def test_create_and_update_hyphenated_project_name(self, api_key_client, workspace):
+        url = self.get_url(workspace.slug)
+        response = api_key_client.post(url, {"name": "me-tracker-ts", "identifier": "METRACKER"}, format="json")
+        assert response.status_code == status.HTTP_201_CREATED, response.data
+        project = Project.objects.get(id=response.data["id"])
+        assert project.name == "me-tracker-ts"
+        response = api_key_client.patch(f"{url}{project.id}/", {"name": "me-tracker-ts-next"}, format="json")
+        assert response.status_code == status.HTTP_200_OK, response.data
+        project.refresh_from_db()
+        assert project.name == "me-tracker-ts-next"
+
+    @pytest.mark.django_db
+    def test_hyphenated_identifier_still_rejected(self, api_key_client, workspace):
+        response = api_key_client.post(
+            self.get_url(workspace.slug), {"name": "Valid name", "identifier": "ME-TRACK"}, format="json"
+        )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert not Project.objects.filter(identifier="ME-TRACK").exists()
+
+    @pytest.mark.django_db
     def test_create_project_with_lead_as_creator(self, api_key_client, workspace, create_user):
         """Regression for the ghost-create bug.
 

@@ -1,5 +1,22 @@
 # Agent Development Guide
 
+<!-- BEGIN PLANE PROJECT -->
+
+## Plane project
+
+- Name: Birdplane
+- Identifier: BIRD
+<!-- END PLANE PROJECT -->
+
+## Upstream updates and temporary fixes
+
+Before merging or deploying an upstream Plane update, complete
+[`deployments/birdplane/upstream-update-checklist.md`](deployments/birdplane/upstream-update-checklist.md)
+and record the disposition of each active temporary fix in the update PR.
+When adding a temporary upstream workaround, add its removal condition and
+regression checks to that document's register. Retire redundant local patches
+only after verifying equivalent behavior in the selected upstream release.
+
 ## Commands
 
 - `pnpm dev` - Start all dev servers (web:3000, admin:3001)

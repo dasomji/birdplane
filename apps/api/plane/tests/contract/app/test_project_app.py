@@ -49,6 +49,20 @@ class TestProjectAPIPost(TestProjectBase):
     """Test project POST operations"""
 
     @pytest.mark.django_db
+    def test_hyphenated_project_name(self, session_client, workspace):
+        url = self.get_project_url(workspace.slug)
+        response = session_client.post(url, {"name": "me-tracker-ts", "identifier": "METRACKER"}, format="json")
+        assert response.status_code == status.HTTP_201_CREATED, response.data
+        project = Project.objects.get(id=response.data["id"])
+        assert project.name == "me-tracker-ts"
+        response = session_client.patch(
+            self.get_project_url(workspace.slug, project.id), {"name": "me-tracker-ts-next"}, format="json"
+        )
+        assert response.status_code == status.HTTP_200_OK, response.data
+        project.refresh_from_db()
+        assert project.name == "me-tracker-ts-next"
+
+    @pytest.mark.django_db
     def test_create_project_empty_data(self, session_client, workspace):
         """Test creating a project with empty data"""
 

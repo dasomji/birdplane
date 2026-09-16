@@ -141,6 +141,9 @@ class Project(BaseModel):
         return f"{self.name} <{self.workspace.name}>"
 
     FORBIDDEN_IDENTIFIER_CHARS_PATTERN = r"^.*[&+,:;$^}{*=?@#|'<>.()%!-].*$"
+    # Display names may contain hyphens, e.g. repository names. Ticket
+    # identifiers retain their existing character restrictions.
+    FORBIDDEN_NAME_CHARS_PATTERN = r"^.*[&+,:;$^}{*=?@#|'<>.()%!].*$"
 
     class Meta:
         unique_together = [
