@@ -1,5 +1,9 @@
 # Birdplane on an existing Coolify Plane stack
 
+For upstream Plane version updates, complete the
+[upstream update checklist](upstream-update-checklist.md) before rollout,
+including review and retirement of temporary local fixes.
+
 Preserve the existing Coolify service UUID, Compose service names, named volumes,
 database credentials, application secrets, object storage configuration and domain.
 Changing a service UUID can silently create empty volumes. Never run `down -v`.

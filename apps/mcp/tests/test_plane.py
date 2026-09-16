@@ -331,7 +331,31 @@ async def test_ambiguous_project_prevents_label_write():
     assert calls == ["GET"]
 
 
-@pytest.mark.parametrize("status", [403, 409, 429])
+async def test_project_name_validation_reports_safe_actionable_error():
+    calls = []
+
+    def handler(request):
+        calls.append(request.method)
+        return httpx.Response(
+            400,
+            json={
+                "non_field_errors": ["Project name cannot contain special characters."],
+                "secret": "private upstream body",
+            },
+        )
+
+    async with client(handler) as c:
+        with pytest.raises(PlaneError) as error:
+            await Plane(c, "https://plane.test", "ws").dispatch(
+                "create_project", {"name": "me-tracker-ts", "identifier": "METRACKER"}
+            )
+    assert calls == ["POST"]
+    assert error.value.payload["field"] == "name"
+    assert "project name" in error.value.payload["message"]
+    assert "private upstream body" not in json.dumps(error.value.payload)
+
+
+@pytest.mark.parametrize("status", [400, 403, 409, 429])
 async def test_create_project_failure_never_retries_or_echoes_response(status):
     calls = []
 

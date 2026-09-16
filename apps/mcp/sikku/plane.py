@@ -100,6 +100,21 @@ class Plane:
                 429: "Plane rate limit reached; retry later.",
             }
             details = {"status": response.status_code}
+            if response.status_code == 400 and path.strip("/") == "projects":
+                try:
+                    validation = response.json()
+                except ValueError:
+                    validation = None
+                if isinstance(validation, dict) and validation.get(
+                    "non_field_errors"
+                ) == ["Project name cannot contain special characters."]:
+                    # Translate only this known validation response; never echo
+                    # arbitrary upstream content into the agent's context.
+                    hints[400] = (
+                        "Plane rejected the project name: it contains characters "
+                        "this server does not allow."
+                    )
+                    details["field"] = "name"
             if response.status_code == 429:
                 retry = response.headers.get("retry-after", "")
                 if retry.isdigit():

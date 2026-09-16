@@ -14,6 +14,8 @@ preserved. This is an independent community fork, not an official Plane release.
 
 Keep fork-specific components in `apps/mcp` and `deployments/birdplane` where
 possible. Avoid broad renaming of upstream packages or database tables.
+For every update, complete the
+[upstream update checklist and temporary-fix review](deployments/birdplane/upstream-update-checklist.md).
 Fetch upstream releases and merge a selected release into a review branch:
 
 ```sh
