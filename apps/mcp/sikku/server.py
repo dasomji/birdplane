@@ -30,7 +30,7 @@ def build_server(client, base_url, workspace):
     server = Server(
         "sikku",
         version="0.1.0",
-        instructions="Plane tickets: list_issues to search, get_issue for detail, save_issue to create/update. Use project names and ticket identifiers. Results are bounded; follow cursors/offsets when present.",
+        instructions="Use list_workspaces to discover accessible workspaces, then pass its slug as workspace on each call. Omitted workspace uses the configured default; selection never changes other calls. Plane tickets: list_issues to search, get_issue for detail, save_issue to create/update. Use project names and ticket identifiers. Results are bounded; follow cursors/offsets when present.",
     )
 
     @server.list_tools()
@@ -49,7 +49,16 @@ def build_server(client, base_url, workspace):
                 BY_NAME[name].inputSchema,
                 format_checker=jsonschema.FormatChecker(),
             )
-            result = await Plane(client, base_url, workspace).dispatch(name, arguments)
+            arguments = dict(arguments)
+            selected = arguments.pop("workspace", workspace)
+            if name != "list_workspaces" and not selected:
+                raise PlaneError(
+                    "workspace_required",
+                    "Pass a workspace slug from list_workspaces; no default is configured.",
+                )
+            result = await Plane(client, base_url, selected or "").dispatch(
+                name, arguments
+            )
         except jsonschema.ValidationError as exc:
             failed = True
             result = {
@@ -91,7 +100,7 @@ def config():
     base = os.environ["PLANE_BASE_URL"].rstrip("/")
     if not base.startswith("https://") and not base.startswith("http://127.0.0.1:"):
         raise ValueError("PLANE_BASE_URL must use HTTPS (except local testing)")
-    return base, os.environ["PLANE_WORKSPACE_SLUG"], os.environ["PLANE_API_KEY"]
+    return base, os.getenv("PLANE_WORKSPACE_SLUG", ""), os.environ["PLANE_API_KEY"]
 
 
 def create_app():

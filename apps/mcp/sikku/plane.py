@@ -79,10 +79,11 @@ class Plane:
         # Per-tool-call cache only: no cross-user or stale write resolution.
         self.catalogs = {}
 
-    async def request(self, method, path, **kwargs):
+    async def request(self, method, path, *, account=False, **kwargs):
+        root = f"{self.base_url}/api/v1/" if account else self.root
         try:
             response = await self.client.request(
-                method, self.root + path.strip("/") + "/", **kwargs
+                method, root + path.strip("/") + "/", **kwargs
             )
         except httpx.RequestError:
             raise PlaneError(
@@ -288,8 +289,7 @@ class Plane:
                 result[key] = value
         return result
 
-    @staticmethod
-    def page(rows, args, scope):
+    def page(self, rows, args, scope):
         query = args.get("query", "").casefold()
         if query:
             rows = [
@@ -301,7 +301,9 @@ class Plane:
                     for k in ["name", "identifier", "display_name", "email"]
                 ).casefold()
             ]
-        fingerprint = hashlib.sha256((scope + query).encode()).hexdigest()[:10]
+        fingerprint = hashlib.sha256(
+            json.dumps([self.workspace, scope, query]).encode()
+        ).hexdigest()[:10]
         offset = 0
         if args.get("cursor"):
             match = re.fullmatch(r"local:([a-f0-9]{10}):(\d+)", args["cursor"])
@@ -319,6 +321,26 @@ class Plane:
         }
 
     async def dispatch(self, name, args):
+        if name == "list_workspaces":
+            data = await self.request(
+                "GET",
+                "workspaces",
+                account=True,
+                params={
+                    "per_page": args.get("limit", 10),
+                    "query": args.get("query", ""),
+                    **({"cursor": args["cursor"]} if args.get("cursor") else {}),
+                },
+            )
+            return {
+                "results": [
+                    select(row, ["id", "name", "slug"]) for row in data["results"]
+                ],
+                "next_cursor": data.get("next_cursor")
+                if data.get("next_page_results")
+                else None,
+                "default_workspace": self.workspace or None,
+            }
         if name == "create_project":
             body = {
                 **args,
@@ -630,6 +652,7 @@ class Plane:
                 {
                     "args": {k: v for k, v in args.items() if k != "cursor"},
                     "projects": projects,
+                    "workspace": self.workspace,
                 },
                 sort_keys=True,
             ).encode()

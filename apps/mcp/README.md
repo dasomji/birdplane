@@ -8,20 +8,44 @@ Part of [Birdplane](../../BIRDPLANE.md), licensed under [AGPL-3.0](../../LICENSE
 
 ```sh
 uv sync --frozen
-# Set PLANE_BASE_URL, PLANE_WORKSPACE_SLUG and PLANE_API_KEY.
+# Set PLANE_BASE_URL and PLANE_API_KEY.
+# Optionally set PLANE_WORKSPACE_SLUG as the default workspace.
 uv run sikku                 # stdio
 uv run sikku --http          # Streamable HTTP: /mcp/, health: /healthz
 ```
 
 HTTP requires `SIKKU_MCP_TOKEN` (at least 32 random characters) and
 `SIKKU_ALLOWED_HOSTS` (comma-separated hostnames). Clients send
-`Authorization: Bearer <token>`. Use HTTPS in production. This is a single-workspace
-integration with the configured Plane account's permissions, without multi-user OAuth.
+`Authorization: Bearer <token>`. Use HTTPS in production. This integration can access
+all workspaces available to the configured Plane account, without multi-user OAuth.
+Everyone holding the MCP bearer token uses that account's permissions.
 Existing Sikku environment variables and client configurations remain compatible.
+
+Call `list_workspaces()` to discover workspace IDs, names and slugs. It accepts
+`query` (name or slug), `limit` (default 10, maximum 50) and `cursor`. Its response
+also identifies `default_workspace`, or null when none is configured.
+Every other tool accepts an optional `workspace` slug:
+
+```python
+list_projects(workspace="audiopoesis")
+save_issue(workspace="personal", project="TODO", title="Book appointment")
+```
+
+Use the actual slugs returned by discovery. Selection applies only to that call;
+there is no shared switch-workspace state. Omitted workspace uses
+`PLANE_WORKSPACE_SLUG`; without a default, tools require an explicit workspace.
+Searches operate within one workspace per call. To search across workspaces,
+discover them and call `list_issues` for each. Keep the workspace unchanged when
+following pagination cursors. Existing cursors should be restarted after upgrading.
+
+Discovery requires Birdplane's `GET /api/v1/workspaces/` endpoint: deploy the API
+and MCP changes together (API first). The endpoint returns only active, undeleted
+memberships and workspaces; project operations retain their existing permissions.
+Reconnect MCP clients after upgrading to refresh the tool schemas.
 
 ## Tools
 
-`create_project`, `list_projects`, `get_project`, `create_label`,
+`list_workspaces`, `create_project`, `list_projects`, `get_project`, `create_label`,
 `list_issues`, `get_issue`, `save_issue`,
 `delete_issue`, `list_metadata`, `list_comments`, `get_comment`, `save_comment`,
 `list_recurring_tasks`, `save_recurring_task`, `delete_recurring_task`.

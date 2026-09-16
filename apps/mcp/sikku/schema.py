@@ -48,7 +48,21 @@ def tool(name, description, properties, required=(), write=False, destructive=Fa
         description=description,
         inputSchema={
             "type": "object",
-            "properties": properties,
+            "properties": {
+                **(
+                    {
+                        "workspace": string(
+                            "Workspace slug from list_workspaces; omitted uses the configured default.",
+                            minLength=1,
+                            maxLength=80,
+                            pattern=r"^[a-zA-Z0-9_-]+$",
+                        )
+                    }
+                    if name != "list_workspaces"
+                    else {}
+                ),
+                **properties,
+            },
             "required": list(required),
             "additionalProperties": False,
         },
@@ -63,8 +77,13 @@ def tool(name, description, properties, required=(), write=False, destructive=Fa
 
 TOOLS = [
     tool(
+        "list_workspaces",
+        "Discover workspaces accessible to the configured Plane account. Returns IDs, names and slugs. Query matches name or slug; follow next_cursor with the same query and limit.",
+        {"query": string(), **PAGE},
+    ),
+    tool(
         "create_project",
-        "Create a project in the configured workspace. Identifier is a unique ticket prefix (e.g. APP), normalized to uppercase. Description is plain text. Returns a compact receipt.",
+        "Create a project in the selected workspace. Identifier is a unique ticket prefix (e.g. APP), normalized to uppercase. Description is plain text. Returns a compact receipt.",
         {
             "name": string(minLength=1, maxLength=255, pattern=r"\S"),
             "identifier": string(
