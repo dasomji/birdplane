@@ -4,8 +4,12 @@
 
 ## Plane project
 
+- Workspace: Personal
+- Workspace slug: personal
+- Workspace ID: c51280e8-6121-4a07-b25a-244d6dc466b2
 - Name: Birdplane
 - Identifier: BIRD
+- Project ID: a5b675f4-e0b9-41f8-9600-cf0ad45daeb6
 <!-- END PLANE PROJECT -->
 
 ## Upstream updates and temporary fixes
