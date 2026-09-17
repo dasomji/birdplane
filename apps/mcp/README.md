@@ -45,6 +45,22 @@ Reconnect MCP clients after upgrading to refresh the tool schemas.
 
 ## Tools
 
+### Bundled agent guidance
+
+The server ships its [project-management skill](sikku/skills/plane-project-management/SKILL.md)
+inside the Python package and Docker image. Its body is sent in MCP initialization
+`instructions` on every connection; the complete file is also available through
+`resources/list` and `resources/read` at
+`birdplane://skills/plane-project-management`. No separate local skill installation
+is required. Clients must expose MCP server instructions or resources to their agent.
+
+The guidance tells agents to persist verified workspace and project identifiers
+in the repository's root `AGENTS.md`, use the workspace explicitly on every call,
+and resolve ambiguity with the user. The agent writes that configuration using
+its host's filesystem capabilities; the MCP server itself does not edit client files.
+
+### Available tools
+
 `list_workspaces`, `create_project`, `list_projects`, `get_project`, `create_label`,
 `list_issues`, `get_issue`, `save_issue`,
 `delete_issue`, `list_metadata`, `list_comments`, `get_comment`, `save_comment`,

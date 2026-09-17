@@ -8,14 +8,16 @@ import logging
 import os
 import sys
 import time
+from importlib.resources import files
 
 import httpx
 import jsonschema
 from mcp.server.lowlevel import Server
+from mcp.server.lowlevel.helper_types import ReadResourceContents
 from mcp.server.stdio import stdio_server
 from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 from mcp.server.transport_security import TransportSecuritySettings
-from mcp.types import CallToolResult, TextContent
+from mcp.types import CallToolResult, Resource, TextContent
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
 from starlette.routing import Mount, Route
@@ -25,13 +27,37 @@ from .schema import BY_NAME, TOOLS
 
 log = logging.getLogger("sikku")
 
+GUIDE_URI = "birdplane://skills/plane-project-management"
+GUIDE = (
+    files("sikku")
+    .joinpath("skills/plane-project-management/SKILL.md")
+    .read_text(encoding="utf-8")
+)
+
 
 def build_server(client, base_url, workspace):
     server = Server(
         "sikku",
         version="0.1.0",
-        instructions="Use list_workspaces to discover accessible workspaces, then pass its slug as workspace on each call. Omitted workspace uses the configured default; selection never changes other calls. Plane tickets: list_issues to search, get_issue for detail, save_issue to create/update. Use project names and ticket identifiers. Results are bounded; follow cursors/offsets when present.",
+        instructions=GUIDE.split("---", 2)[2].strip(),
     )
+
+    @server.list_resources()
+    async def list_resources():
+        return [
+            Resource(
+                uri=GUIDE_URI,
+                name="plane-project-management",
+                description="Bundled Birdplane usage and persistent workspace/project mapping guidance.",
+                mimeType="text/markdown",
+            )
+        ]
+
+    @server.read_resource()
+    async def read_resource(uri):
+        if str(uri) != GUIDE_URI:
+            raise ValueError("Unknown Birdplane resource.")
+        return [ReadResourceContents(content=GUIDE, mime_type="text/markdown")]
 
     @server.list_tools()
     async def list_tools():

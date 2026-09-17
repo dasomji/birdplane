@@ -26,4 +26,16 @@ jobs:
       - run: uv sync --frozen
       - run: uv run pytest -q
       - run: uv run ruff check sikku tests
+      - run: uv build --wheel
+      - name: Verify bundled guidance in wheel
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          path = "sikku/skills/plane-project-management/SKILL.md"
+          with ZipFile(next(Path("dist").glob("*.whl"))) as wheel:
+              assert wheel.read(path) == Path(path).read_bytes()
+          PY
       - run: docker build -t birdplane-mcp:ci .
+      - name: Verify bundled guidance in Docker image
+        run: docker run --rm --entrypoint python birdplane-mcp:ci -c 'from sikku.server import GUIDE; assert "Workspace slug:" in GUIDE and "AGENTS.md" in GUIDE'
