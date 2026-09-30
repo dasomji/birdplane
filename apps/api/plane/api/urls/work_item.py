@@ -148,7 +148,7 @@ new_url_patterns = [
     ),
     path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/work-items/<uuid:issue_id>/relations/",
-        IssueRelationListCreateAPIEndpoint.as_view(http_method_names=["get", "post"]),
+        IssueRelationListCreateAPIEndpoint.as_view(http_method_names=["get", "post", "delete", "options"]),
         name="work-item-relation-list",
     ),
 ]

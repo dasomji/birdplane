@@ -41,6 +41,17 @@ FIELDS = {
     "uniqueItems": True,
 }
 
+RELATION_TYPES = [
+    "blocked_by",
+    "blocking",
+    "duplicate",
+    "relates_to",
+    "start_before",
+    "start_after",
+    "finish_before",
+    "finish_after",
+]
+
 
 def tool(name, description, properties, required=(), write=False, destructive=False):
     return Tool(
@@ -265,6 +276,22 @@ TOOLS = [
         ["project", "kind"],
     ),
     tool(
+        "workitem_relation",
+        "Discover supported relations with list_definitions, list a ticket's relations, or create/delete one directed edge. issue is required for capability detection. blocked_by means issue depends on related_issue; blocking is its inverse. related_project is needed for a related UUID in another project. Unsupported servers return an explicit error. Mutations are never retried.",
+        {
+            "action": string(enum=["list_definitions", "list", "create", "delete"]),
+            "issue": ISSUE,
+            "project": PROJECT,
+            "related_issue": ISSUE,
+            "related_project": PROJECT,
+            "relation_type": string(enum=RELATION_TYPES),
+            **PAGE,
+        },
+        ["action", "issue"],
+        write=True,
+        destructive=True,
+    ),
+    tool(
         "list_comments",
         "Read a page of ticket comments. Long bodies are truncated explicitly; get_comment reads chunks.",
         {"issue": ISSUE, "project": PROJECT, **PAGE},
@@ -301,3 +328,9 @@ TOOLS = [
     ),
 ]
 BY_NAME = {t.name: t for t in TOOLS}
+BY_NAME["workitem_relation"].inputSchema["allOf"] = [
+    {
+        "if": {"properties": {"action": {"enum": ["create", "delete"]}}},
+        "then": {"required": ["related_issue", "relation_type"]},
+    }
+]

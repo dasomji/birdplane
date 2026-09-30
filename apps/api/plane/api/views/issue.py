@@ -59,6 +59,7 @@ from plane.api.serializers import (
     LabelCreateUpdateSerializer,
     RelatedIssueSerializer,
 )
+from plane.api.serializers.issue import IssueRelationRemoveSerializer
 from plane.app.permissions import (
     ProjectEntityPermission,
     ProjectLitePermission,
@@ -90,7 +91,7 @@ from plane.utils.order_queryset import (
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from .base import BaseAPIView
 from plane.utils.host import base_host
-from plane.utils.issue_relation_mapper import get_actual_relation
+from plane.utils.issue_relation_mapper import get_actual_relation, get_inverse_relation
 from plane.bgtasks.webhook_task import model_activity
 from plane.app.permissions import ROLE
 from plane.utils.openapi import (
@@ -2291,12 +2292,29 @@ class IssueSearchEndpoint(BaseAPIView):
 
 
 class IssueRelationListCreateAPIEndpoint(BaseAPIView):
-    """Issue Relation List and Create Endpoint"""
+    """Public relation discovery, listing, creation and directed deletion."""
 
     serializer_class = IssueRelationSerializer
     model = IssueRelation
     permission_classes = [ProjectEntityPermission]
     use_read_replica = True
+
+    def initial(self, request, *args, **kwargs):
+        super().initial(request, *args, **kwargs)
+        # Project permissions alone do not establish that this source exists
+        # in the requested project/workspace (including OPTIONS discovery).
+        Issue.issue_objects.get(pk=kwargs["issue_id"], project_id=kwargs["project_id"], workspace__slug=kwargs["slug"])
+
+    def options(self, request, slug, project_id, issue_id):
+        return Response(
+            {
+                "relation_types": [
+                    {"relation_type": value, "label": label, "inverse": get_inverse_relation(value)}
+                    for value, label in IssueRelationCreateSerializer.RELATION_TYPE_CHOICES
+                ],
+            },
+            status=status.HTTP_200_OK,
+        )
 
     @work_item_relation_docs(
         operation_id="list_work_item_relations",
@@ -2578,3 +2596,51 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
             serializer_class(refetched_relations, many=True).data,
             status=status.HTTP_201_CREATED,
         )
+
+    @work_item_relation_docs(
+        operation_id="delete_work_item_relation",
+        summary="Delete a directed work item relation",
+        description="Remove only the specified relation type and direction. blocking is the inverse of blocked_by.",
+        parameters=[ISSUE_ID_PARAMETER],
+        request=IssueRelationRemoveSerializer,
+        responses={204: OpenApiResponse(description="Relation removed"), 404: ISSUE_NOT_FOUND_RESPONSE},
+    )
+    def delete(self, request, slug, project_id, issue_id):
+        serializer = IssueRelationRemoveSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        relation_type = serializer.validated_data["relation_type"]
+        related_id = serializer.validated_data["related_issue"]
+        # Do not mutate relations to an inaccessible or cross-workspace target.
+        Issue.issue_objects.get(
+            pk=related_id,
+            workspace__slug=slug,
+            project_id__in=ProjectMember.objects.filter(
+                workspace__slug=slug, member=request.user, is_active=True
+            ).values("project_id"),
+        )
+        if relation_type in ("blocking", "start_after", "finish_after"):
+            pair = Q(issue_id=related_id, related_issue_id=issue_id)
+        else:
+            pair = Q(issue_id=issue_id, related_issue_id=related_id)
+        if relation_type in ("duplicate", "relates_to"):
+            pair |= Q(issue_id=related_id, related_issue_id=issue_id)
+        relations = IssueRelation.objects.filter(
+            pair, workspace__slug=slug, relation_type=get_actual_relation(relation_type)
+        ).select_related("related_issue__state")
+        relation = relations.first()
+        if relation is None:
+            return Response({"error": "The requested relation does not exist."}, status=status.HTTP_404_NOT_FOUND)
+        current_instance = json.dumps(IssueRelationSerializer(relation).data, cls=DjangoJSONEncoder)
+        relations.delete()
+        issue_activity.delay(
+            type="issue_relation.activity.deleted",
+            requested_data=json.dumps(request.data, cls=DjangoJSONEncoder),
+            actor_id=str(request.user.id),
+            issue_id=str(issue_id),
+            project_id=str(project_id),
+            current_instance=current_instance,
+            epoch=int(timezone.now().timestamp()),
+            notification=True,
+            origin=base_host(request=request, is_app=True),
+        )
+        return Response(status=status.HTTP_204_NO_CONTENT)

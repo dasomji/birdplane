@@ -578,6 +578,11 @@ class IssueRelationRemoveSerializer(serializers.Serializer):
     related_issue = serializers.UUIDField(
         required=True, help_text="ID of the related work item to remove relation with"
     )
+    relation_type = serializers.ChoiceField(
+        choices=IssueRelationCreateSerializer.RELATION_TYPE_CHOICES,
+        required=True,
+        help_text="Directed relation type as seen from the source work item",
+    )
 
 
 class IssueRelationSerializer(BaseSerializer):

@@ -12,6 +12,8 @@ from uuid import UUID
 import httpx
 from markdown_it import MarkdownIt
 
+from .schema import RELATION_TYPES
+
 
 class PlaneError(Exception):
     def __init__(self, code, message, **details):
@@ -79,7 +81,7 @@ class Plane:
         # Per-tool-call cache only: no cross-user or stale write resolution.
         self.catalogs = {}
 
-    async def request(self, method, path, *, account=False, **kwargs):
+    async def request(self, method, path, *, account=False, raw=False, **kwargs):
         root = f"{self.base_url}/api/v1/" if account else self.root
         try:
             response = await self.client.request(
@@ -101,6 +103,12 @@ class Plane:
                 429: "Plane rate limit reached; retry later.",
             }
             details = {"status": response.status_code}
+            if response.status_code in (404, 405, 501):
+                details["allowed_methods"] = [
+                    m.strip()
+                    for m in response.headers.get("allow", "").split(",")
+                    if m.strip() in {"GET", "POST", "DELETE", "OPTIONS"}
+                ]
             if response.status_code == 400 and path.strip("/") == "projects":
                 try:
                     validation = response.json()
@@ -128,6 +136,8 @@ class Plane:
                 ),
                 **details,
             )
+        if raw:
+            return response
         if response.status_code == 204 or not response.content:
             return {}
         return response.json()
@@ -321,6 +331,8 @@ class Plane:
         }
 
     async def dispatch(self, name, args):
+        if name == "workitem_relation":
+            return await self.workitem_relation(args)
         if name == "list_workspaces":
             data = await self.request(
                 "GET",
@@ -762,6 +774,122 @@ class Plane:
             "results": results,
             "next_cursor": encode(cursor, 0),
             "scan_limited": True,
+        }
+
+    @staticmethod
+    def unsupported_relation(action):
+        return PlaneError(
+            "unsupported",
+            "This server does not support the requested public work-item relation operation. "
+            "Upgrade the Birdplane API for directed deletion; otherwise record dependencies "
+            "in ticket descriptions or manage them in the web UI.",
+            feature="work_item_relations",
+            action=action,
+        )
+
+    async def relation_request(self, method, path, action, **kwargs):
+        try:
+            return await self.request(method, path, **kwargs)
+        except PlaneError as exc:
+            status = exc.payload.get("status")
+            if status in (405, 501) or (status == 404 and method == "GET"):
+                raise self.unsupported_relation(action) from None
+            raise
+
+    async def workitem_relation(self, args):
+        action = args["action"]
+        # Resolve the real source first: a missing ticket is not an unsupported API.
+        row = await self.issue(args["issue"], args.get("project"))
+        pid, iid = ident(row["project"]), row["id"]
+        path = f"projects/{pid}/work-items/{iid}/relations"
+        methods, definitions, groups = [], None, None
+        try:
+            response = await self.request("OPTIONS", path, raw=True)
+            methods = [m.strip() for m in response.headers.get("allow", "").split(",")]
+            metadata = response.json()
+            definitions = metadata.get("relation_types")
+        except PlaneError as exc:
+            if exc.payload.get("status") not in (404, 405, 501):
+                raise
+            methods = exc.payload.get("allowed_methods", [])
+        if definitions is None:
+            # v1.4.2 has GET/POST but no definition endpoint or OPTIONS handler.
+            groups = await self.relation_request("GET", path, action)
+            if not isinstance(groups, dict) or not any(
+                k in groups for k in RELATION_TYPES
+            ):
+                raise self.unsupported_relation(action)
+            inverses = {
+                "blocked_by": "blocking",
+                "blocking": "blocked_by",
+                "start_before": "start_after",
+                "start_after": "start_before",
+                "finish_before": "finish_after",
+                "finish_after": "finish_before",
+            }
+            definitions = [
+                {"relation_type": name, "inverse": inverses.get(name, name)}
+                for name in RELATION_TYPES
+                if name in groups
+            ]
+            # GET was just verified; never infer write support from a failed probe.
+            methods = list(dict.fromkeys(["GET", *methods]))
+            source = "legacy_relations"
+        else:
+            source = "options"
+        actions = [
+            a
+            for a, m in [("list", "GET"), ("create", "POST"), ("delete", "DELETE")]
+            if m in methods
+        ]
+        if action == "list_definitions":
+            return {"results": definitions, "actions": actions, "source": source}
+        if action not in actions:
+            raise self.unsupported_relation(action)
+        relation_type = args.get("relation_type")
+        if relation_type and relation_type not in [
+            d["relation_type"] for d in definitions
+        ]:
+            raise self.unsupported_relation(action)
+        if action == "list":
+            if groups is None:
+                groups = await self.relation_request("GET", path, action)
+            rows = [
+                {"relation_type": name, **select(ref, ["issue_id", "project_id"])}
+                for name in RELATION_TYPES
+                if not relation_type or name == relation_type
+                for ref in groups.get(name, [])
+            ]
+            return self.page(rows, args, [pid, iid, relation_type])
+        related_project = args.get("related_project")
+        if uuid(args["related_issue"]) and not related_project:
+            related_project = pid
+        related = await self.issue(args["related_issue"], related_project)
+        if related["id"] == iid:
+            raise PlaneError("invalid_relation", "A ticket cannot relate to itself.")
+        body = {"relation_type": relation_type}
+        if action == "create":
+            body["issues"] = [related["id"]]
+        else:
+            body["related_issue"] = related["id"]
+        saved = await self.relation_request(
+            "POST" if action == "create" else "DELETE", path, action, json=body
+        )
+        if action == "create" and (
+            not isinstance(saved, list)
+            or not any(ref.get("id") == related["id"] for ref in saved)
+        ):
+            raise PlaneError(
+                "relation_conflict",
+                "Plane did not return the requested relation. Read the relations before retrying; "
+                "another relation may already exist between these tickets.",
+            )
+        return {
+            "issue": iid,
+            "project": pid,
+            "related_issue": related["id"],
+            "relation_type": relation_type,
+            "action": "created" if action == "create" else "deleted",
         }
 
     async def save_issue(self, args):

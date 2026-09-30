@@ -64,7 +64,8 @@ its host's filesystem capabilities; the MCP server itself does not edit client f
 `list_workspaces`, `create_project`, `list_projects`, `get_project`, `create_label`,
 `list_issues`, `get_issue`, `save_issue`,
 `delete_issue`, `list_metadata`, `list_comments`, `get_comment`, `save_comment`,
-`list_recurring_tasks`, `save_recurring_task`, `delete_recurring_task`.
+`list_recurring_tasks`, `save_recurring_task`, `delete_recurring_task`,
+`workitem_relation`.
 
 Create a project with `create_project(name="My project", identifier="APP")`.
 Create a label with `create_label(project="APP", name="Bug", color="#EF4444")`.
@@ -102,6 +103,43 @@ if the result is empty. Pagination is live rather than a snapshot. Project-list
 changes invalidate workspace cursors. Commercial-only operations and archive
 workflows are outside this server's scope.
 
+### Work item relations
+
+`workitem_relation` supports `list_definitions`, `list`, `create`, and `delete`.
+Every action requires an existing `issue` (identifier or UUID plus `project`),
+so capability discovery runs within the caller's actual permissions:
+
+```python
+workitem_relation(workspace="personal", issue="APP-1", action="list_definitions")
+workitem_relation(workspace="personal", issue="APP-1", action="create",
+                  relation_type="blocked_by", related_issue="APP-2")
+workitem_relation(workspace="personal", issue="APP-2", action="list")
+workitem_relation(workspace="personal", issue="APP-1", action="delete",
+                  relation_type="blocked_by", related_issue="APP-2")
+```
+
+Here APP-1 depends on APP-2; APP-2 lists the inverse `blocking` relation.
+Deletion specifies the type and direction, preserving unrelated edges. Related
+identifiers can refer to another accessible project in the same workspace;
+related UUIDs default to the source project, or use `related_project` explicitly.
+Self-relations are rejected. Lists are bounded with `limit`/`cursor` and an optional
+`relation_type` filter; retain workspace, issue and filter when continuing.
+
+The supported API is `/api/v1/workspaces/{slug}/projects/{project_id}/work-items/{issue_id}/relations/`.
+Birdplane exposes definitions and inverse names through authenticated `OPTIONS`,
+and supported methods through `Allow`. It adds directed `DELETE` with a JSON body
+containing `relation_type` and `related_issue`; `POST` uses `relation_type` and
+`issues`. Deploy the API before the MCP and reconnect clients to refresh tools.
+
+On older Plane servers, discovery falls back to the keys returned by `GET` on
+this route, using `Allow` to detect write support. It does not call a separate
+commercial/version-specific definitions endpoint or use browser-session APIs.
+If the route or action is absent, the tool returns `error="unsupported"` with a
+description/UI workaround. Authentication, permission, rate-limit and server
+errors remain errors; writes are never automatically retried. A missing ticket
+or missing edge retains its resource error. Definitions describe API support,
+while individual writes still enforce the caller's permissions.
+
 ## Verify and build
 
 ```sh
@@ -113,6 +151,19 @@ docker build -t birdplane-mcp .
 After dependency changes, update the lock and regenerate production requirements:
 `uv export --frozen --no-dev --no-emit-project -o requirements.txt`.
 Credentials, deployment snapshots, and live test output belong outside this repository.
+
+For an isolated local API with a disposable project, run the real MCP/API
+integration smoke test (it creates and cleans up two tickets):
+
+```sh
+PLANE_BASE_URL=http://127.0.0.1:8000 PLANE_API_KEY=local-test-key \
+PLANE_WORKSPACE_SLUG=test SIKKU_TEST_PROJECT=PROJECT_UUID \
+uv run python scripts/smoke_relations.py
+```
+
+The backend regression suite is
+`plane/tests/contract/api/test_work_item_relations.py`. It covers discovery,
+directed and inverse deletion, validation and permission/project isolation.
 
 ### Recurring tasks (Birdplane)
 
