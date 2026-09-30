@@ -28,6 +28,7 @@ import { List } from "./default";
 import type { IQuickActionProps, TRenderQuickActions } from "./list-view-types";
 
 type ListStoreType =
+  | EIssuesStoreType.GLOBAL
   | EIssuesStoreType.PROJECT
   | EIssuesStoreType.MODULE
   | EIssuesStoreType.CYCLE

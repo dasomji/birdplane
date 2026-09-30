@@ -194,12 +194,40 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       list: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
+          group_by: ["state_detail.group", "priority", "project", "labels", "assignees", null],
+          order_by: ["-created_at", "-updated_at", "start_date", "-priority", "target_date"],
           type: ["active", "backlog"],
         },
         extra_options: {
-          access: false,
-          values: [],
+          access: true,
+          values: ["show_empty_groups", "sub_issue"],
         },
+      },
+      kanban: {
+        display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
+        display_filters: {
+          group_by: ["state_detail.group", "priority", "project", "labels", "assignees"],
+          sub_group_by: ["state_detail.group", "priority", "project", "labels", "assignees", null],
+          order_by: ["-created_at", "-updated_at", "start_date", "-priority", "target_date"],
+          type: ["active", "backlog"],
+        },
+        extra_options: {
+          access: true,
+          values: ["show_empty_groups", "sub_issue"],
+        },
+      },
+      calendar: {
+        display_properties: ["key", "issue_type"],
+        display_filters: { type: ["active", "backlog"] },
+        extra_options: { access: true, values: ["sub_issue"] },
+      },
+      gantt_chart: {
+        display_properties: ["key", "issue_type"],
+        display_filters: {
+          order_by: ["-created_at", "-updated_at", "start_date", "-priority"],
+          type: ["active", "backlog"],
+        },
+        extra_options: { access: true, values: ["sub_issue"] },
       },
     },
   },

@@ -15,6 +15,7 @@ import { useIssues } from "./store/use-issues";
 import { useIssuesActions } from "./use-issues-actions";
 
 type DNDStoreType =
+  | EIssuesStoreType.GLOBAL
   | EIssuesStoreType.PROJECT
   | EIssuesStoreType.MODULE
   | EIssuesStoreType.CYCLE

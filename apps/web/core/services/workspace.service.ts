@@ -282,7 +282,8 @@ export class WorkspaceService extends APIService {
     )
       .then((response) => response?.data)
       .catch((error) => {
-        throw error?.response?.data;
+        // Keep cancellations recognizable when another layout supersedes this request.
+        throw error?.response?.data ?? error;
       });
   }
 

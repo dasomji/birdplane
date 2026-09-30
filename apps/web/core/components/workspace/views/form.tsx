@@ -15,10 +15,11 @@ import { EViewAccess, EIssueLayoutTypes, EIssuesStoreType } from "@plane/types";
 import { Input, TextArea } from "@plane/ui";
 import { getComputedDisplayFilters, getComputedDisplayProperties } from "@plane/utils";
 // components
-import { DisplayFiltersSelection, FiltersDropdown } from "@/components/issues/issue-layouts/filters";
+import { DisplayFiltersSelection, FiltersDropdown, LayoutSelection } from "@/components/issues/issue-layouts/filters";
 import { WorkspaceLevelWorkItemFiltersHOC } from "@/components/work-item-filters/filters-hoc/workspace-level";
 // plane web imports
 import { WorkItemFiltersRow } from "@/components/work-item-filters/filters-row";
+import { getWorkspaceDisplayFilters } from "@/helpers/workspace-view";
 
 type Props = {
   handleFormSubmit: (values: Partial<IWorkspaceView>) => Promise<void>;
@@ -132,25 +133,39 @@ export const WorkspaceViewForm = observer(function WorkspaceViewForm(props: Prop
                   control={control}
                   name="display_properties"
                   render={({ field: { onChange: onDisplayPropertiesChange, value: displayProperties } }) => (
-                    <FiltersDropdown title={t("common.display")}>
-                      <DisplayFiltersSelection
-                        layoutDisplayFiltersOptions={ISSUE_DISPLAY_FILTERS_BY_PAGE.my_issues.layoutOptions.spreadsheet}
-                        displayFilters={displayFilters ?? {}}
-                        handleDisplayFiltersUpdate={(updatedDisplayFilter: Partial<IIssueDisplayFilterOptions>) => {
-                          onDisplayFiltersChange({
-                            ...displayFilters,
-                            ...updatedDisplayFilter,
-                          });
-                        }}
-                        displayProperties={displayProperties ?? {}}
-                        handleDisplayPropertiesUpdate={(updatedDisplayProperties: Partial<IIssueDisplayProperties>) => {
-                          onDisplayPropertiesChange({
-                            ...displayProperties,
-                            ...updatedDisplayProperties,
-                          });
-                        }}
+                    <>
+                      <LayoutSelection
+                        layouts={Object.values(EIssueLayoutTypes)}
+                        selectedLayout={displayFilters?.layout ?? EIssueLayoutTypes.SPREADSHEET}
+                        onChange={(layout) =>
+                          onDisplayFiltersChange(getWorkspaceDisplayFilters(displayFilters ?? {}, { layout }))
+                        }
                       />
-                    </FiltersDropdown>
+                      <FiltersDropdown title={t("common.display")}>
+                        <DisplayFiltersSelection
+                          layoutDisplayFiltersOptions={
+                            ISSUE_DISPLAY_FILTERS_BY_PAGE.my_issues.layoutOptions[
+                              displayFilters?.layout ?? EIssueLayoutTypes.SPREADSHEET
+                            ]
+                          }
+                          displayFilters={displayFilters ?? {}}
+                          handleDisplayFiltersUpdate={(updatedDisplayFilter: Partial<IIssueDisplayFilterOptions>) => {
+                            onDisplayFiltersChange(
+                              getWorkspaceDisplayFilters(displayFilters ?? {}, updatedDisplayFilter)
+                            );
+                          }}
+                          displayProperties={displayProperties ?? {}}
+                          handleDisplayPropertiesUpdate={(
+                            updatedDisplayProperties: Partial<IIssueDisplayProperties>
+                          ) => {
+                            onDisplayPropertiesChange({
+                              ...displayProperties,
+                              ...updatedDisplayProperties,
+                            });
+                          }}
+                        />
+                      </FiltersDropdown>
+                    </>
                   )}
                 />
               )}

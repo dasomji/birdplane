@@ -23,7 +23,7 @@ import { Breadcrumbs, Header, BreadcrumbNavigationSearchDropdown } from "@plane/
 // components
 import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
 import { SwitcherLabel } from "@/components/common/switcher-label";
-import { DisplayFiltersSelection, FiltersDropdown } from "@/components/issues/issue-layouts/filters";
+import { DisplayFiltersSelection, FiltersDropdown, LayoutSelection } from "@/components/issues/issue-layouts/filters";
 import { WorkItemFiltersToggle } from "@/components/work-item-filters/filters-toggle";
 import { DefaultWorkspaceViewQuickActions } from "@/components/workspace/views/default-view-quick-action";
 import { CreateUpdateWorkspaceViewModal } from "@/components/workspace/views/modal";
@@ -136,6 +136,13 @@ export const GlobalIssuesHeader = observer(function GlobalIssuesHeader() {
         </Header.LeftItem>
 
         <Header.RightItem className="items-center">
+          {globalViewId && !isLocked && (
+            <LayoutSelection
+              layouts={Object.values(EIssueLayoutTypes)}
+              selectedLayout={activeLayout ?? EIssueLayoutTypes.SPREADSHEET}
+              onChange={(layout) => handleDisplayFilters({ layout })}
+            />
+          )}
           {globalViewId && <WorkItemFiltersToggle entityType={EIssuesStoreType.GLOBAL} entityId={globalViewId} />}
           {!isLocked && (
             <FiltersDropdown title={t("common.display")} placement="bottom-end">

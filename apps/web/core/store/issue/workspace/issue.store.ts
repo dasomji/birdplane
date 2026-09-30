@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+import { isCancel } from "axios";
 import { action, makeObservable, runInAction } from "mobx";
 // base class
 import type {
@@ -119,6 +120,8 @@ export class WorkspaceIssues extends BaseIssuesStore implements IWorkspaceIssues
       this.onfetchIssues(response, options, workspaceSlug, undefined, undefined, !isExistingPaginationOptions);
       return response;
     } catch (error) {
+      // clear() aborts the previous layout's request; its replacement owns the loader.
+      if (isCancel(error)) return undefined;
       // set loader to undefined if errored out
       this.setLoader(undefined);
       throw error;

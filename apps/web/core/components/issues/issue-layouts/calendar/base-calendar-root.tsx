@@ -25,6 +25,7 @@ import { CalendarChart } from "./calendar";
 import { handleDragDrop } from "./utils";
 
 export type CalendarStoreType =
+  | EIssuesStoreType.GLOBAL
   | EIssuesStoreType.PROJECT
   | EIssuesStoreType.MODULE
   | EIssuesStoreType.CYCLE

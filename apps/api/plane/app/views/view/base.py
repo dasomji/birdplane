@@ -42,7 +42,14 @@ from plane.db.models import (
     ModuleIssue,
 )
 from plane.utils.issue_filters import issue_filters
-from plane.utils.order_queryset import VIEW_ORDER_BY_ALLOWLIST, order_issue_queryset, sanitize_order_by
+from plane.utils.order_queryset import (
+    ISSUE_GROUP_BY_ALLOWLIST,
+    VIEW_ORDER_BY_ALLOWLIST,
+    order_issue_queryset,
+    sanitize_order_by,
+)
+from plane.utils.grouper import issue_group_values, issue_on_results, issue_queryset_grouper
+from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.bgtasks.recent_visited_task import recent_visited_task
 from .. import BaseAPIView, BaseViewSet
 from plane.db.models import UserFavorite
@@ -272,6 +279,48 @@ class WorkspaceViewIssuesViewSet(BaseViewSet):
         issue_queryset, order_by_param = order_issue_queryset(
             issue_queryset=issue_queryset, order_by_param=order_by_param
         )
+
+        group_by = request.GET.get("group_by")
+        sub_group_by = request.GET.get("sub_group_by")
+        if any(field and field not in ISSUE_GROUP_BY_ALLOWLIST for field in (group_by, sub_group_by)):
+            return Response({"error": "Invalid group by field"}, status=status.HTTP_400_BAD_REQUEST)
+        if sub_group_by and (not group_by or group_by == sub_group_by):
+            return Response(
+                {"error": "Sub group by requires a different group by field"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if group_by:
+            issue_queryset = issue_queryset_grouper(issue_queryset, group_by, sub_group_by)
+
+            def group_values(field):
+                if field in ("priority", "state__group"):
+                    return issue_group_values(field=field, slug=slug)
+                # Relational group IDs must come from the permission-filtered scope,
+                # rather than enumerating metadata across every workspace project.
+                values = issue_queryset.order_by().values_list(field, flat=True).distinct()
+                return [value if value is not None else "None" for value in values]
+
+            pagination_options = {
+                "paginator_cls": SubGroupedOffsetPaginator if sub_group_by else GroupedOffsetPaginator,
+                "group_by_fields": group_values(group_by),
+                "group_by_field_name": group_by,
+                "count_filter": Q(),
+            }
+            if sub_group_by:
+                pagination_options.update(
+                    sub_group_by_fields=group_values(sub_group_by),
+                    sub_group_by_field_name=sub_group_by,
+                )
+
+            return self.paginate(
+                order_by=order_by_param,
+                request=request,
+                queryset=issue_queryset,
+                total_count_queryset=total_issue_count_queryset,
+                on_results=lambda issues: issue_on_results(issues, group_by, sub_group_by),
+                **pagination_options,
+            )
 
         # List Paginate
         return self.paginate(
