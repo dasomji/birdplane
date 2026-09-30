@@ -4,6 +4,7 @@
 
 ## Plane project
 
+- Instance URL: https://plane.audiopoesis.com
 - Workspace: Personal
 - Workspace slug: personal
 - Workspace ID: c51280e8-6121-4a07-b25a-244d6dc466b2
