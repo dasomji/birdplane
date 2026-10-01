@@ -10,15 +10,23 @@ services:
   api:
     image: birdplane-backend:${BIRDPLANE_COMMIT:?Set a reviewed Birdplane commit}
     pull_policy: never
+    environment:
+      API_KEY_RATE_LIMIT: ${API_KEY_RATE_LIMIT:-300/minute}
     build:
       context: https://github.com/dasomji/birdplane.git#${BIRDPLANE_COMMIT:?Set a reviewed Birdplane commit}:apps/api
       dockerfile: Dockerfile.api
   worker:
     image: birdplane-backend:${BIRDPLANE_COMMIT:?Set a reviewed Birdplane commit}
     pull_policy: never
+    environment:
+      API_KEY_RATE_LIMIT: ${API_KEY_RATE_LIMIT:-300/minute}
   beat-worker:
     image: birdplane-backend:${BIRDPLANE_COMMIT:?Set a reviewed Birdplane commit}
     pull_policy: never
+    environment:
+      API_KEY_RATE_LIMIT: ${API_KEY_RATE_LIMIT:-300/minute}
   migrator:
     image: birdplane-backend:${BIRDPLANE_COMMIT:?Set a reviewed Birdplane commit}
     pull_policy: never
+    environment:
+      API_KEY_RATE_LIMIT: ${API_KEY_RATE_LIMIT:-300/minute}
