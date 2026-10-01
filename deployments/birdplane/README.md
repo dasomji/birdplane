@@ -53,3 +53,40 @@ volumes. Do not restore an older database over new user writes unless a migratio
 requires it and an explicit recovery plan accounts for those writes.
 
 Production credentials, database dumps and uploads must never be committed.
+
+## API key rate limit
+
+Birdplane production uses `API_KEY_RATE_LIMIT=300/minute` per API key. Set the
+same value on `api`, `worker`, `beat-worker`, and `migrator`; the backend overlay
+includes all four. Explicitly set `API_KEY_RATE_LIMIT=300/minute` when rendering
+the overlay if your environment file still contains the upstream `60/minute`
+default. This deployment setting is read by `ApiKeyRateThrottle` at process
+startup, so recreate the backend containers after saving it in Coolify.
+
+For an existing stack, update only those four environment values in its saved
+Compose configuration. Preserve its pinned images, build contexts, secrets,
+service names, resource UUIDs, volumes, and routes. Coolify accepts base64-encoded
+Compose through its [service update endpoint](https://coolify.io/docs/api/endpoints/services/update-service-by-uuid).
+Save with `instant_deploy: false`, read back the configuration and compare it
+against the snapshot, then deploy the same service UUID through `POST /api/v1/deploy`.
+Coolify may also refresh its own generated version labels during parsing.
+
+Copy [`verify-api-rate-limit.py`](verify-api-rate-limit.py) into the running API
+container, then run it from `/code` with `PYTHONPATH=/code`:
+
+```sh
+PYTHONPATH=/code python /tmp/verify-api-rate-limit.py --expect 300/minute
+```
+
+The check reads the real Django setting and loaded throttle class. It uses
+synthetic requests and an instance-local memory cache to check the allowance,
+remaining-request header, rejection and wait time, independent keys, and window
+expiry. It sends no HTTP requests and never touches production Redis histories.
+Follow it with a few authenticated API/MCP reads and writes, public health checks,
+and observation of normal Clockwork polling and HTTP 429 logs during agent activity.
+Keep Clockwork's metadata caching, server-side filters, and Retry-After handling.
+
+To roll back, restore `API_KEY_RATE_LIMIT=60/minute` on all four services and
+redeploy the same UUID. `API_KEY_RATE_LIMIT=60/minute` also overrides the overlay
+default. A rate-only rollback requires no image, credential, volume, or database
+restore. See the [BIRD-25 deployment evidence](api-rate-limit-2026-10-01.md).
