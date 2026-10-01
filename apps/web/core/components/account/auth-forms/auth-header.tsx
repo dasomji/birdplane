@@ -28,29 +28,29 @@ const Titles = {
   [EAuthModes.SIGN_IN]: {
     [EAuthSteps.EMAIL]: {
       header: "Work in all dimensions.",
-      subHeader: "Welcome back to Plane.",
+      subHeader: "Welcome back to Birdplane.",
     },
     [EAuthSteps.PASSWORD]: {
       header: "Work in all dimensions.",
-      subHeader: "Welcome back to Plane.",
+      subHeader: "Welcome back to Birdplane.",
     },
     [EAuthSteps.UNIQUE_CODE]: {
       header: "Work in all dimensions.",
-      subHeader: "Welcome back to Plane.",
+      subHeader: "Welcome back to Birdplane.",
     },
   },
   [EAuthModes.SIGN_UP]: {
     [EAuthSteps.EMAIL]: {
       header: "Work in all dimensions.",
-      subHeader: "Create your Plane account.",
+      subHeader: "Create your Birdplane account.",
     },
     [EAuthSteps.PASSWORD]: {
       header: "Work in all dimensions.",
-      subHeader: "Create your Plane account.",
+      subHeader: "Create your Birdplane account.",
     },
     [EAuthSteps.UNIQUE_CODE]: {
       header: "Work in all dimensions.",
-      subHeader: "Create your Plane account.",
+      subHeader: "Create your Birdplane account.",
     },
   },
 };

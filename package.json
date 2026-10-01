@@ -1,11 +1,12 @@
 {
-  "name": "plane",
+  "name": "birdplane",
   "version": "1.4.2",
   "private": true,
-  "description": "Open-source project management that unlocks customer value",
+  "description": "Birdplane, a personal fork of Plane for open-source project management",
   "license": "AGPL-3.0",
-  "repository": "https://github.com/makeplane/plane.git",
+  "repository": "https://github.com/dasomji/birdplane.git",
   "scripts": {
+    "test:branding": "node --test tests/branding.test.mjs",
     "build": "turbo run build",
     "dev": "turbo run dev --concurrency=18",
     "start": "turbo run start",

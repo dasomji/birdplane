@@ -1,6 +1,6 @@
-# Contributing to Plane
+# Contributing to Birdplane
 
-Thank you for showing an interest in contributing to Plane! All kinds of contributions are valuable to us. In this guide, we will cover how you can quickly onboard and make your first contribution.
+Birdplane is a personal fork of Plane. Submit fork-specific issues and pull requests to [dasomji/birdplane](https://github.com/dasomji/birdplane). The development and translation conventions below come from upstream Plane.
 
 ## Submitting an issue
 
@@ -53,7 +53,7 @@ The backend is a django project which is kept inside apps/api
 1. Clone the repo
 
 ```bash
-git clone https://github.com/makeplane/plane.git [folder-name]
+git clone https://github.com/dasomji/birdplane.git [folder-name]
 cd [folder-name]
 chmod +x setup.sh
 ```

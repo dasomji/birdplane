@@ -12,16 +12,15 @@ SPECTACULAR_SETTINGS = {
     # ========================================================================
     # Basic API Information
     # ========================================================================
-    "TITLE": "The Plane REST API",
+    "TITLE": "The Birdplane REST API",
     "DESCRIPTION": (
-        "The Plane REST API\n\n"
-        "Visit our quick start guide and full API documentation at "
+        "The Birdplane REST API\n\n"
+        "Fork of Plane. See the upstream API documentation at "
         "[developers.plane.so](https://developers.plane.so/api-reference/introduction)."
     ),
     "CONTACT": {
-        "name": "Plane",
-        "url": "https://plane.so",
-        "email": "support@plane.so",
+        "name": "Birdplane",
+        "url": "https://github.com/dasomji/birdplane",
     },
     "VERSION": "0.0.1",
     "LICENSE": {
