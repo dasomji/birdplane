@@ -48,7 +48,7 @@ def test_http_authentication_host_and_protocol(monkeypatch):
             json={"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
             headers=headers,
         )
-        assert len(r.json()["result"]["tools"]) == 16
+        assert len(r.json()["result"]["tools"]) == 17
         for name, arguments in [
             ("create_project", {"name": "Test"}),
             ("create_project", {"name": "  ", "identifier": "TEST"}),
