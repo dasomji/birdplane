@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import { act, createElement } from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import type { Root } from "react-dom/client";
 import { renderToString } from "react-dom/server";
 import { action, observable } from "mobx";
@@ -92,6 +92,17 @@ describe("startup hydration", () => {
 
   it("shows the loading indicator after the first client commit", async () => {
     await act(() => root.render(createElement(HydrateFallback)));
+    expect(container.textContent).toBe("Loading");
+  });
+
+  it("hydrates the server fallback without a mismatch when the theme is already resolved", async () => {
+    await act(() => root.unmount());
+    container.innerHTML = renderToString(createElement(HydrateFallback));
+    const onRecoverableError = vi.fn();
+    await act(() => {
+      root = hydrateRoot(container, createElement(HydrateFallback), { onRecoverableError });
+    });
+    expect(onRecoverableError).not.toHaveBeenCalled();
     expect(container.textContent).toBe("Loading");
   });
 });

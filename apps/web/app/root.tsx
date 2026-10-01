@@ -6,7 +6,7 @@
 
 import type { ReactNode } from "react";
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Links, Meta, Outlet, Scripts } from "react-router";
 import type { LinksFunction } from "react-router";
 import { ThemeProvider, useTheme } from "next-themes";
@@ -138,17 +138,17 @@ export default function Root() {
   );
 }
 
+const subscribeToHydration = () => () => undefined;
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export function HydrateFallback() {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const hydrated = useSyncExternalStore(subscribeToHydration, getClientSnapshot, getServerSnapshot);
 
   // Match the prerendered shell on the first client render, even when the theme
   // was resolved before React starts hydrating.
-  if (!mounted || resolvedTheme === undefined) return <div />;
+  if (!hydrated || resolvedTheme === undefined) return <div />;
 
   return (
     <div className="relative flex h-screen w-full items-center justify-center bg-canvas">
