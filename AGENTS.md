@@ -10,6 +10,7 @@
 - Name: Birdplane
 - Identifier: BIRD
 - Project ID: a5b675f4-e0b9-41f8-9600-cf0ad45daeb6
+- Instance URL: https://plane.audiopoesis.com
 <!-- END PLANE PROJECT -->
 
 ## Upstream updates and temporary fixes

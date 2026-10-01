@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { observer } from "mobx-react";
 // plane constants
 import { ALL_ISSUES, EIssueFilterType, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
@@ -48,11 +48,15 @@ export const WorkspaceSpreadsheetRoot = observer(function WorkspaceSpreadsheetRo
     issuesFilter: { filters, updateFilters },
     issues: { getIssueLoader, getPaginationData, groupedIssueIds },
   } = useIssues(EIssuesStoreType.GLOBAL);
-  const { updateIssue, removeIssue, archiveIssue } = useIssuesActions(EIssuesStoreType.GLOBAL);
+  const { fetchIssues, updateIssue, removeIssue, archiveIssue } = useIssuesActions(EIssuesStoreType.GLOBAL);
   const { allowPermissions } = useUserPermissions();
 
   // Derived values
   const issueFilters = globalViewId ? filters?.[globalViewId.toString()] : undefined;
+
+  useEffect(() => {
+    fetchIssues("init-loader", { canGroup: false, perPageCount: 100 });
+  }, [fetchIssues]);
 
   // Permission checker
   const canEditProperties = useCallback(

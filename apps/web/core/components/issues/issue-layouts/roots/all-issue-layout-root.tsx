@@ -16,6 +16,7 @@ import { EIssuesStoreType, STATIC_VIEW_TYPES } from "@plane/types";
 // assets
 // components
 import { IssuePeekOverview } from "@/components/issues/peek-overview";
+import { SpreadsheetLayoutLoader } from "@/components/ui/loader/layouts/spreadsheet-layout-loader";
 import { WorkspaceActiveLayout } from "@/components/views/helper";
 import { WorkspaceLevelWorkItemFiltersHOC } from "@/components/work-item-filters/filters-hoc/workspace-level";
 import { WorkItemFiltersRow } from "@/components/work-item-filters/filters-row";
@@ -44,7 +45,7 @@ export const AllIssueLayoutRoot = observer(function AllIssueLayoutRoot(props: Pr
   // store hooks
   const {
     issuesFilter: { filters, fetchFilters, updateFilterExpression },
-    issues: { clear, groupedIssueIds, fetchIssues, fetchNextIssues },
+    issues: { clear, fetchNextIssues },
   } = useIssues(EIssuesStoreType.GLOBAL);
   const { fetchAllGlobalViews, getViewDetailsById } = useGlobalView();
   // Derived values
@@ -93,19 +94,18 @@ export const AllIssueLayoutRoot = observer(function AllIssueLayoutRoot(props: Pr
     { revalidateIfStale: false, revalidateOnFocus: false }
   );
 
-  // Fetch issues
+  // Load preferences before mounting the layout that owns issue pagination.
   const { isLoading: issuesLoading } = useSWR(
     workspaceSlug && globalViewId ? `WORKSPACE_GLOBAL_VIEW_ISSUES_${workspaceSlug}_${globalViewId}` : null,
     async () => {
       if (workspaceSlug && globalViewId) {
         clear();
         toggleLoading(true);
-        await fetchFilters(workspaceSlug, globalViewId);
-        await fetchIssues(workspaceSlug, globalViewId, groupedIssueIds ? "mutation" : "init-loader", {
-          canGroup: false,
-          perPageCount: 100,
-        });
-        toggleLoading(false);
+        try {
+          await fetchFilters(workspaceSlug, globalViewId);
+        } finally {
+          toggleLoading(false);
+        }
       }
     },
     { revalidateIfStale: false, revalidateOnFocus: false }
@@ -156,18 +156,22 @@ export const AllIssueLayoutRoot = observer(function AllIssueLayoutRoot(props: Pr
                   }}
                 />
               )}
-              <WorkspaceActiveLayout
-                activeLayout={activeLayout}
-                isDefaultView={isDefaultView}
-                isLoading={isLoading}
-                toggleLoading={toggleLoading}
-                workspaceSlug={workspaceSlug}
-                globalViewId={globalViewId}
-                routeFilters={routeFilters}
-                fetchNextPages={fetchNextPages}
-                globalViewsLoading={globalViewsLoading}
-                issuesLoading={issuesLoading}
-              />
+              {isLoading || issuesLoading || !workItemFilters ? (
+                <SpreadsheetLayoutLoader />
+              ) : (
+                <WorkspaceActiveLayout
+                  activeLayout={activeLayout}
+                  isDefaultView={isDefaultView}
+                  isLoading={isLoading}
+                  toggleLoading={toggleLoading}
+                  workspaceSlug={workspaceSlug}
+                  globalViewId={globalViewId}
+                  routeFilters={routeFilters}
+                  fetchNextPages={fetchNextPages}
+                  globalViewsLoading={globalViewsLoading}
+                  issuesLoading={issuesLoading}
+                />
+              )}
             </div>
             {/* peek overview */}
             <IssuePeekOverview />

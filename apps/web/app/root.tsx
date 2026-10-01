@@ -6,6 +6,7 @@
 
 import type { ReactNode } from "react";
 import Script from "next/script";
+import { useSyncExternalStore } from "react";
 import { Links, Meta, Outlet, Scripts } from "react-router";
 import type { LinksFunction } from "react-router";
 import { ThemeProvider, useTheme } from "next-themes";
@@ -30,10 +31,10 @@ import { isStaleAssetError, recoverFromStaleAsset } from "@/lib/stale-asset-erro
 import { CustomErrorComponent } from "./error";
 import { AppProvider } from "./provider";
 // fonts
-import "@fontsource-variable/inter";
+import interStyles from "@fontsource-variable/inter/index.css?url";
 import interVariableWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
-import "@fontsource/material-symbols-rounded";
-import "@fontsource/ibm-plex-mono";
+import symbolStyles from "@fontsource/material-symbols-rounded/index.css?url";
+import monoStyles from "@fontsource/ibm-plex-mono/index.css?url";
 
 const APP_TITLE = "Plane | Simple, extensible, open-source project management tool.";
 
@@ -47,6 +48,9 @@ export const links: LinksFunction = () => [
   { rel: "apple-touch-icon", sizes: "512x512", href: icon512 },
   { rel: "manifest", href: "/manifest.json" },
   { rel: "stylesheet", href: globalStyles },
+  { rel: "stylesheet", href: interStyles },
+  { rel: "stylesheet", href: symbolStyles },
+  { rel: "stylesheet", href: monoStyles },
   {
     rel: "preload",
     href: interVariableWoff2,
@@ -134,11 +138,17 @@ export default function Root() {
   );
 }
 
+const subscribeToHydration = () => () => undefined;
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export function HydrateFallback() {
   const { resolvedTheme } = useTheme();
+  const hydrated = useSyncExternalStore(subscribeToHydration, getClientSnapshot, getServerSnapshot);
 
-  // if we are on the server or the theme is not resolved, return an empty div
-  if (typeof window === "undefined" || resolvedTheme === undefined) return <div />;
+  // Match the prerendered shell on the first client render, even when the theme
+  // was resolved before React starts hydrating.
+  if (!hydrated || resolvedTheme === undefined) return <div />;
 
   return (
     <div className="relative flex h-screen w-full items-center justify-center bg-canvas">

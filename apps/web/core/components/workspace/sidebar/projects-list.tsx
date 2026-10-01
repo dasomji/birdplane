@@ -70,7 +70,7 @@ export const SidebarProjectsList = observer(function SidebarProjectsList() {
 
   const handleCopyText = (projectId: string) => {
     copyUrlToClipboard(`${workspaceSlug}/projects/${projectId}/issues`).then(() => {
-      setToast({
+      return setToast({
         type: TOAST_TYPE.SUCCESS,
         title: t("link_copied"),
         message: t("project_link_copied_to_clipboard"),
@@ -130,7 +130,8 @@ export const SidebarProjectsList = observer(function SidebarProjectsList() {
   }, [containerRef]);
 
   useEffect(() => {
-    const element = containerRef.current;
+    // Register the shared sidebar viewport rather than the unscrollable list.
+    const element = containerRef.current?.closest<HTMLElement>("[data-slot='scroll-area-viewport']");
 
     if (!element) return;
 
@@ -229,8 +230,8 @@ export const SidebarProjectsList = observer(function SidebarProjectsList() {
             >
               {loader === "init-loader" && (
                 <Loader className="w-full space-y-1.5">
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <Loader.Item key={index} height="28px" />
+                  {["first", "second", "third", "fourth"].map((placeholderId) => (
+                    <Loader.Item key={placeholderId} height="28px" />
                   ))}
                 </Loader>
               )}
