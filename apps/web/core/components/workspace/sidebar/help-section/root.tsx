@@ -31,9 +31,10 @@ export const HelpMenuRoot = observer(function HelpMenuRoot() {
       <ProductUpdatesModal isOpen={isProductUpdatesModalOpen} handleClose={() => setProductUpdatesModalOpen(false)} />
 
       <CustomMenu
+        ariaLabel={t("help")}
         customButton={
           <AppSidebarItem
-            variant="button"
+            variant="content"
             item={{
               icon: <HelpCircle className="size-5" />,
               isActive: isNeedHelpOpen,

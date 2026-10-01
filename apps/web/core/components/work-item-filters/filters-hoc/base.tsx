@@ -61,7 +61,7 @@ const WorkItemFilterRoot = observer(function WorkItemFilterRoot(props: TWorkItem
     ...entityConfigProps
   } = props;
   // store hooks
-  const { getOrCreateFilter, deleteFilter } = useWorkItemFilters();
+  const { getFilter, getOrCreateFilter, deleteFilter } = useWorkItemFilters();
   // derived values
   const workItemEntityID = useMemo(
     () => (isTemporary ? `TEMP-${entityId ?? uuidv4()}` : entityId),
@@ -73,23 +73,32 @@ const WorkItemFilterRoot = observer(function WorkItemFilterRoot(props: TWorkItem
     allowedFilters: filtersToShowByLayout ? filtersToShowByLayout : [],
     ...entityConfigProps,
   });
-  // get or create filter instance
-  const workItemLayoutFilter = useMemo(
-    () =>
-      getOrCreateFilter({
-        entityType,
-        entityId: workItemEntityID,
-        initialExpression: initialUserFilters,
-        onExpressionChange: updateFilters,
-        expressionOptions: {
-          saveViewOptions,
-          updateViewOptions,
-        },
-        showOnMount,
-      }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [entityType, workItemEntityID, saveViewOptions, updateViewOptions, updateFilters]
-  );
+  const workItemLayoutFilter = getFilter(entityType, workItemEntityID);
+
+  // Register and update the observable filter after rendering so subscribers
+  // such as the header toggle are notified outside React's render phase.
+  useEffect(() => {
+    getOrCreateFilter({
+      entityType,
+      entityId: workItemEntityID,
+      initialExpression: initialUserFilters,
+      onExpressionChange: updateFilters,
+      expressionOptions: {
+        saveViewOptions,
+        updateViewOptions,
+      },
+      showOnMount,
+    });
+  }, [
+    getOrCreateFilter,
+    entityType,
+    workItemEntityID,
+    initialUserFilters,
+    saveViewOptions,
+    updateViewOptions,
+    updateFilters,
+    showOnMount,
+  ]);
 
   // delete filter instance when component unmounts
   useEffect(
@@ -100,13 +109,12 @@ const WorkItemFilterRoot = observer(function WorkItemFilterRoot(props: TWorkItem
   );
 
   useEffect(() => {
+    if (!workItemLayoutFilter) return;
     workItemLayoutFilter.configManager.setAreConfigsReady(workItemFiltersConfig.areAllConfigsInitialized);
     workItemLayoutFilter.configManager.registerAll(workItemFiltersConfig.configs);
-  }, [
-    workItemFiltersConfig.areAllConfigsInitialized,
-    workItemFiltersConfig.configs,
-    workItemLayoutFilter.configManager,
-  ]);
+  }, [workItemFiltersConfig.areAllConfigsInitialized, workItemFiltersConfig.configs, workItemLayoutFilter]);
+
+  if (!workItemLayoutFilter) return null;
 
   return <>{typeof children === "function" ? children({ filter: workItemLayoutFilter }) : children}</>;
 });

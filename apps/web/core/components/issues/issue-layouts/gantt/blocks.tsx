@@ -10,7 +10,7 @@ import { useParams } from "next/navigation";
 import { Popover } from "@plane/propel/popover";
 import { Tooltip } from "@plane/propel/tooltip";
 import { ControlLink } from "@plane/ui";
-import { findTotalDaysInRange, generateWorkItemLink } from "@plane/utils";
+import { generateWorkItemLink } from "@plane/utils";
 // components
 import { SIDEBAR_WIDTH } from "@/components/gantt-chart/constants";
 import { IssueIdentifier } from "@/components/issues/issue-detail/issue-identifier";
@@ -55,15 +55,13 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
 
   const handleIssuePeekOverview = () => handleRedirection(workspaceSlug, issueDetails, isMobile);
 
-  const duration = findTotalDaysInRange(issueDetails?.start_date, issueDetails?.target_date) || 0;
-
   return (
     <Popover delay={100} openOnHover>
       <Popover.Button
         className="w-full"
         render={
-          // oxlint-disable-next-line jsx_a11y/click-events-have-key-events oxlint-disable-next-line jsx_a11y/no-static-element-interactions
-          <div
+          <button
+            type="button"
             id={`issue-${issueId}`}
             className="space-between relative flex h-full w-full cursor-pointer items-center rounded-sm"
             style={blockStyle}
@@ -76,7 +74,7 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
             >
               {issueDetails?.name}
             </div>
-          </div>
+          </button>
         }
       />
       <Popover.Panel side="bottom" align="start">

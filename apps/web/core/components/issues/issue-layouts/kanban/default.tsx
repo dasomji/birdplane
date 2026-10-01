@@ -150,7 +150,7 @@ export const KanBan = observer(function KanBan(props: IKanBan) {
         list.map((subList: IGroupByColumn, groupIndex) => {
           const groupByVisibilityToggle = visibilityGroupBy(subList);
 
-          if (groupByVisibilityToggle.showGroup === false) return <></>;
+          if (groupByVisibilityToggle.showGroup === false) return null;
 
           const issueIds = isSubGroup
             ? ((groupedIssueIds as TSubGroupedIssues)?.[subList.id]?.[sub_group_id] ?? [])
