@@ -335,6 +335,7 @@ services:
       - coolify.pullRequestId=0
     container_name: plane-minio-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
       in Coolify}
+    pull_policy: never
   proxy:
     image: makeplane/plane-proxy:v1.4.2
     environment:
