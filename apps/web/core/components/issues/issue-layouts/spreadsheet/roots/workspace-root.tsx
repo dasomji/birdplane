@@ -133,7 +133,7 @@ export const WorkspaceSpreadsheetRoot = observer(function WorkspaceSpreadsheetRo
           canLoadMore:
             getPaginationData(column.id, undefined)?.nextPageResults ??
             (Array.isArray(groupedIssueIds[column.id]) &&
-              groupedIssueIds[column.id].length < (getGroupIssueCount(column.id, undefined, false) ?? 0)),
+              (groupedIssueIds[column.id] as string[]).length < (getGroupIssueCount(column.id, undefined, false) ?? 0)),
           isLoading: getIssueLoader(column.id) === "pagination",
           loadMore: () => {
             if (!getIssueLoader(column.id)) fetchNextIssues(column.id);
