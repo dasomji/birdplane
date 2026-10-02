@@ -19,7 +19,7 @@ vi.mock("@/hooks/store/use-issues", () => ({
     issues: {
       groupedIssueIds: mocks.ids,
       getIssueLoader: () => undefined,
-      getPaginationData: (group: string) => ({ nextPageResults: group === "bird" }),
+      getPaginationData: () => undefined,
       getGroupIssueCount: (group: string) => (group === "bird" ? 51 : group === "other" ? 1 : 0),
     },
   }),
