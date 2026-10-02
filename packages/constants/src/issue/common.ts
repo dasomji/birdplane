@@ -33,9 +33,11 @@ export enum EIssueGroupByToServerOptions {
   "cycle" = "cycle_id",
   "module" = "issue_module__module_id",
   "target_date" = "target_date",
+  // Project and team project share the same API query parameter.
+  // oxlint-disable-next-line typescript-eslint/no-duplicate-enum-values
   "project" = "project_id",
   "created_by" = "created_by",
-  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+  // oxlint-disable-next-line typescript-eslint/no-duplicate-enum-values
   "team_project" = "project_id",
 }
 
@@ -91,6 +93,7 @@ export const ISSUE_PRIORITIES: {
 ];
 
 export const DRAG_ALLOWED_GROUPS: TIssueGroupByOptions[] = [
+  "state_detail.group",
   "state",
   "priority",
   "assignees",

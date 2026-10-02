@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+import { useEffect, useMemo } from "react";
 import { observer } from "mobx-react";
 import { Controller, useForm } from "react-hook-form";
 // plane imports
@@ -45,11 +46,7 @@ export const WorkspaceViewForm = observer(function WorkspaceViewForm(props: Prop
   // i18n
   const { t } = useTranslation();
   // form info
-  const defaultValues = {
-    ...DEFAULT_VALUES,
-    ...preLoadedData,
-    ...data,
-  };
+  const defaultValues = useMemo(() => ({ ...DEFAULT_VALUES, ...preLoadedData, ...data }), [preLoadedData, data]);
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -59,6 +56,7 @@ export const WorkspaceViewForm = observer(function WorkspaceViewForm(props: Prop
   } = useForm<IWorkspaceView>({
     defaultValues,
   });
+  useEffect(() => reset(defaultValues), [defaultValues, reset]);
   // derived values
   const workItemFilters: IIssueFilters = {
     richFilters: getValues("rich_filters"),

@@ -22,7 +22,19 @@ import { getDisplayPropertiesCount } from "../utils";
 import { SpreadsheetIssueRow } from "./issue-row";
 import { SpreadsheetHeader } from "./spreadsheet-header";
 
+export type SpreadsheetGroup = {
+  id: string;
+  name: string;
+  icon?: React.ReactNode;
+  issueIds: string[];
+  count: number;
+  canLoadMore: boolean;
+  isLoading: boolean;
+  loadMore: () => void;
+};
+
 type Props = {
+  groups?: SpreadsheetGroup[];
   displayProperties: IIssueDisplayProperties;
   displayFilters: IIssueDisplayFilterOptions;
   handleDisplayFilterUpdate: (data: Partial<IIssueDisplayFilterOptions>) => void;
@@ -42,6 +54,7 @@ type Props = {
 
 export const SpreadsheetTable = observer(function SpreadsheetTable(props: Props) {
   const {
+    groups,
     displayProperties,
     displayFilters,
     handleDisplayFilterUpdate,
@@ -102,13 +115,37 @@ export const SpreadsheetTable = observer(function SpreadsheetTable(props: Props)
 
   const isPaginating = !!getIssueLoader();
 
-  useIntersectionObserver(containerRef, isPaginating ? null : intersectionElement, loadMoreIssues, `100% 0% 100% 0%`);
+  useIntersectionObserver(
+    containerRef,
+    groups || isPaginating ? null : intersectionElement,
+    loadMoreIssues,
+    `100% 0% 100% 0%`
+  );
 
   const handleKeyBoardNavigation = useTableKeyboardNavigation();
 
   const ignoreFieldsForCounting: (keyof IIssueDisplayProperties)[] = ["key"];
   if (!isEstimateEnabled) ignoreFieldsForCounting.push("estimate");
   const displayPropertiesCount = getDisplayPropertiesCount(displayProperties, ignoreFieldsForCounting);
+
+  const renderIssueRow = (id: string) => (
+    <SpreadsheetIssueRow
+      key={id}
+      issueId={id}
+      displayProperties={displayProperties}
+      quickActions={quickActions}
+      canEditProperties={canEditProperties}
+      nestingLevel={0}
+      isEstimateEnabled={isEstimateEnabled}
+      updateIssue={updateIssue}
+      portalElement={portalElement}
+      containerRef={containerRef}
+      isScrolled={isScrolled}
+      spreadsheetColumnsList={spreadsheetColumnsList}
+      selectionHelpers={selectionHelpers}
+      isEpic={isEpic}
+    />
+  );
 
   return (
     <table className="w-full overflow-y-auto bg-surface-1" onKeyDown={handleKeyBoardNavigation}>
@@ -122,33 +159,68 @@ export const SpreadsheetTable = observer(function SpreadsheetTable(props: Props)
         selectionHelpers={selectionHelpers}
         isEpic={isEpic}
       />
-      <tbody>
-        {issueIds.map((id) => (
-          <SpreadsheetIssueRow
-            key={id}
-            issueId={id}
-            displayProperties={displayProperties}
-            quickActions={quickActions}
-            canEditProperties={canEditProperties}
-            nestingLevel={0}
-            isEstimateEnabled={isEstimateEnabled}
-            updateIssue={updateIssue}
-            portalElement={portalElement}
-            containerRef={containerRef}
-            isScrolled={isScrolled}
-            spreadsheetColumnsList={spreadsheetColumnsList}
-            selectionHelpers={selectionHelpers}
-            isEpic={isEpic}
-          />
-        ))}
-      </tbody>
-      {canLoadMoreIssues && (
+      {groups ? (
+        groups.map((group) => (
+          <SpreadsheetGroupBody key={group.id} group={group} columnCount={displayPropertiesCount + 1}>
+            {group.issueIds.map(renderIssueRow)}
+          </SpreadsheetGroupBody>
+        ))
+      ) : (
+        <tbody>{issueIds.map(renderIssueRow)}</tbody>
+      )}
+      {!groups && canLoadMoreIssues && (
         <tfoot ref={setIntersectionElement}>
-          {Array.from({ length: 3 }).map((_, index) => (
-            <SpreadsheetIssueRowLoader key={index} columnCount={displayPropertiesCount} />
+          {["first", "second", "third"].map((key) => (
+            <SpreadsheetIssueRowLoader key={key} columnCount={displayPropertiesCount} />
           ))}
         </tfoot>
       )}
     </table>
   );
 });
+
+export function SpreadsheetGroupBody({
+  group,
+  columnCount,
+  children,
+}: {
+  group: SpreadsheetGroup;
+  columnCount: number;
+  children: React.ReactNode;
+}) {
+  const [collapsed, setCollapsed] = useState(false);
+  return (
+    <tbody aria-label={group.name}>
+      <tr className="border-y border-subtle bg-layer-1">
+        <th colSpan={columnCount} className="px-3 py-2 text-left text-13 font-medium">
+          <button
+            type="button"
+            aria-expanded={!collapsed}
+            onClick={() => setCollapsed(!collapsed)}
+            className="flex items-center gap-2"
+          >
+            <span aria-hidden>{collapsed ? "▸" : "▾"}</span>
+            {group.icon}
+            {group.name}
+            <span className="text-tertiary">{group.count}</span>
+          </button>
+        </th>
+      </tr>
+      {!collapsed && children}
+      {!collapsed && group.canLoadMore && (
+        <tr>
+          <td colSpan={columnCount} className="px-3 py-2">
+            <button
+              type="button"
+              disabled={group.isLoading}
+              onClick={group.loadMore}
+              className="text-13 text-accent-primary"
+            >
+              {group.isLoading ? "Loading…" : `Load more in ${group.name}`}
+            </button>
+          </td>
+        </tr>
+      )}
+    </tbody>
+  );
+}

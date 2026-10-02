@@ -105,13 +105,15 @@ export const CreateUpdateWorkspaceViewModal = observer(function CreateUpdateWork
   if (!workspaceSlug) return null;
   return (
     <ModalCore isOpen={isOpen} handleClose={handleClose} position={EModalPosition.TOP} width={EModalWidth.XXL}>
-      <WorkspaceViewForm
-        handleFormSubmit={handleFormSubmit}
-        handleClose={handleClose}
-        data={data}
-        preLoadedData={preLoadedData}
-        workspaceSlug={workspaceSlug}
-      />
+      {isOpen && (
+        <WorkspaceViewForm
+          handleFormSubmit={handleFormSubmit}
+          handleClose={handleClose}
+          data={data}
+          preLoadedData={preLoadedData}
+          workspaceSlug={workspaceSlug}
+        />
+      )}
     </ModalCore>
   );
 });

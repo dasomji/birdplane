@@ -20,9 +20,11 @@ import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
 // local imports
 import type { TRenderQuickActions } from "../list/list-view-types";
 import { QuickAddIssueRoot, SpreadsheetAddIssueButton } from "../quick-add";
+import type { SpreadsheetGroup } from "./spreadsheet-table";
 import { SpreadsheetTable } from "./spreadsheet-table";
 
 type Props = {
+  groups?: SpreadsheetGroup[];
   displayProperties: IIssueDisplayProperties;
   displayFilters: IIssueDisplayFilterOptions;
   handleDisplayFilterUpdate: (data: Partial<IIssueDisplayFilterOptions>) => void;
@@ -42,6 +44,7 @@ type Props = {
 
 export const SpreadsheetView = observer(function SpreadsheetView(props: Props) {
   const {
+    groups,
     displayProperties,
     displayFilters,
     handleDisplayFilterUpdate,
@@ -75,7 +78,7 @@ export const SpreadsheetView = observer(function SpreadsheetView(props: Props) {
         return true;
       });
 
-  if (!issueIds || issueIds.length === 0) return <></>;
+  if (!issueIds || (issueIds.length === 0 && !groups?.length)) return <></>;
   return (
     <div className="relative flex h-full w-full flex-col overflow-x-hidden bg-layer-1 whitespace-nowrap text-secondary">
       <div ref={portalRef} className="spreadsheet-menu-portal" />
@@ -90,6 +93,7 @@ export const SpreadsheetView = observer(function SpreadsheetView(props: Props) {
           <>
             <div ref={containerRef} className="vertical-scrollbar horizontal-scrollbar scrollbar-lg h-full w-full">
               <SpreadsheetTable
+                groups={groups}
                 displayProperties={displayProperties}
                 displayFilters={displayFilters}
                 handleDisplayFilterUpdate={handleDisplayFilterUpdate}

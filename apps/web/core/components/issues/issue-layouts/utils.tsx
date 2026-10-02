@@ -260,7 +260,7 @@ const getStateGroupColumns = (): IGroupByColumn[] => {
   // map state groups to group by columns
   return Object.values(stateGroups).map((stateGroup) => ({
     id: stateGroup.key,
-    name: stateGroup.label,
+    name: stateGroup.key === "cancelled" ? stateGroup.label : stateGroup.defaultStateName,
     icon: (
       <div className="size-4 rounded-full">
         <StateGroupIcon stateGroup={stateGroup.key} size={EIconSize.LG} />

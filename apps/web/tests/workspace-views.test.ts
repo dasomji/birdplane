@@ -2,9 +2,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { EIssueFilterType, ISSUE_DISPLAY_FILTERS_BY_PAGE } from "@plane/constants";
 import { EIssueLayoutTypes } from "@plane/types";
 import type { IIssueDisplayFilterOptions } from "@plane/types";
+import { WorkspaceIssues } from "@/store/issue/workspace/issue.store";
+import { ProjectIssues } from "@/store/issue/project/issue.store";
+import type { IProjectIssuesFilter } from "@/store/issue/project/filter.store";
 import { WorkspaceIssuesFilter } from "@/store/issue/workspace/filter.store";
 import type { IIssueRootStore } from "@/store/issue/root.store";
 import { getWorkspaceDisplayFilters } from "@/helpers/workspace-view";
+
+vi.mock("@/lib/store-context", () => ({ store: {} }));
 
 vi.mock("@/services/workspace.service", () => ({
   WorkspaceService: class {
@@ -59,10 +64,11 @@ describe("workspace view preferences and requests", () => {
     expect(store.filters["saved-view"].displayFilters?.layout).toBe("kanban");
   });
 
-  it("uses priority when switching an ungrouped view to a board", async () => {
+  it("uses all workflow state groups when switching an ungrouped view to a board", async () => {
     await store.fetchFilters("workspace", "all-issues");
     await update({ layout: EIssueLayoutTypes.KANBAN });
-    expect(store.issueFilters?.displayFilters?.group_by).toBe("priority");
+    expect(store.issueFilters?.displayFilters?.group_by).toBe("state_detail.group");
+    expect(store.issueFilters?.displayFilters?.show_empty_groups).toBe(true);
     expect(refresh).toHaveBeenCalledWith("workspace", "all-issues", "mutation");
   });
 
@@ -112,16 +118,19 @@ describe("workspace view preferences and requests", () => {
     expect(params.sub_group_by).toBeUndefined();
   });
 
-  it.each([EIssueLayoutTypes.SPREADSHEET, EIssueLayoutTypes.GANTT])(
-    "fetches flat results for %s after a grouped layout",
-    async (layout) => {
-      await store.fetchFilters("workspace", "all-issues");
-      await update({ layout, group_by: "project", sub_group_by: "priority" });
-      const params = store.getAppliedFilters("all-issues");
-      expect(params?.group_by).toBeUndefined();
-      expect(params?.sub_group_by).toBeUndefined();
-    }
-  );
+  it.each([EIssueLayoutTypes.GANTT])("fetches flat results for %s after a grouped layout", async (layout) => {
+    await store.fetchFilters("workspace", "all-issues");
+    await update({ layout, group_by: "project", sub_group_by: "priority" });
+    const params = store.getAppliedFilters("all-issues");
+    expect(params?.group_by).toBeUndefined();
+    expect(params?.sub_group_by).toBeUndefined();
+  });
+
+  it("preserves table grouping and requests grouped rows", async () => {
+    await store.fetchFilters("workspace", "all-issues");
+    await update({ layout: EIssueLayoutTypes.SPREADSHEET, group_by: "project" });
+    expect(store.getAppliedFilters("all-issues")?.group_by).toBe("project_id");
+  });
 
   it("provides display options for every available layout", () => {
     for (const layout of Object.values(EIssueLayoutTypes)) {
@@ -129,14 +138,37 @@ describe("workspace view preferences and requests", () => {
     }
     expect(ISSUE_DISPLAY_FILTERS_BY_PAGE.my_issues.layoutOptions.list.display_filters.group_by).toContain("project");
     expect(ISSUE_DISPLAY_FILTERS_BY_PAGE.my_issues.layoutOptions.kanban.display_filters.group_by).toContain("project");
+    expect(ISSUE_DISPLAY_FILTERS_BY_PAGE.my_issues.layoutOptions.spreadsheet.display_filters.group_by).toContain(
+      "project"
+    );
+  });
+
+  it("opens shared state columns when switching from a project-grouped table", () => {
+    expect(
+      getWorkspaceDisplayFilters({ layout: "spreadsheet", group_by: "project" }, { layout: "kanban" })
+    ).toMatchObject({ group_by: "state_detail.group", show_empty_groups: true });
+  });
+
+  it("uses grouped table rows in the workspace store while project tables stay flat", async () => {
+    await store.fetchFilters("workspace", "all-issues");
+    await update({ layout: EIssueLayoutTypes.SPREADSHEET, group_by: "project" });
+    const root = { rootStore: { router: {} } } as unknown as IIssueRootStore;
+    const workspaceIssues = new WorkspaceIssues(root, store);
+    workspaceIssues.groupedIssueIds = { "project-id": ["issue-id"] };
+    expect(workspaceIssues.groupBy).toBe("project");
+    expect(workspaceIssues.getIssueIds("project-id")).toEqual(["issue-id"]);
+    const projectIssues = new ProjectIssues(root, {
+      issueFilters: { displayFilters: { layout: EIssueLayoutTypes.SPREADSHEET, group_by: "state" } },
+    } as IProjectIssuesFilter);
+    expect(projectIssues.groupBy).toBeUndefined();
   });
 
   it("normalizes saved boards without a group and clears duplicate swimlane groups", () => {
-    expect(getWorkspaceDisplayFilters({ layout: "kanban", group_by: null }).group_by).toBe("priority");
+    expect(getWorkspaceDisplayFilters({ layout: "kanban", group_by: null }).group_by).toBe("state_detail.group");
     expect(
       getWorkspaceDisplayFilters({ layout: "list", group_by: "project", sub_group_by: "project" }, { layout: "kanban" })
         .sub_group_by
     ).toBeNull();
-    expect(getWorkspaceDisplayFilters({ layout: "kanban", group_by: "state" }).group_by).toBe("priority");
+    expect(getWorkspaceDisplayFilters({ layout: "kanban", group_by: "state" }).group_by).toBe("state_detail.group");
   });
 });

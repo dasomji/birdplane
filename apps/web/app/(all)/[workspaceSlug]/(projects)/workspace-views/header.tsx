@@ -5,6 +5,7 @@
  */
 
 import { useCallback, useMemo, useState } from "react";
+import { cloneDeep } from "lodash-es";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
@@ -17,7 +18,12 @@ import {
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { ViewsIcon } from "@plane/propel/icons";
-import type { IIssueDisplayFilterOptions, IIssueDisplayProperties, ICustomSearchSelectOption } from "@plane/types";
+import type {
+  IIssueDisplayFilterOptions,
+  IIssueDisplayProperties,
+  ICustomSearchSelectOption,
+  IWorkspaceView,
+} from "@plane/types";
 import { EIssuesStoreType, EIssueLayoutTypes } from "@plane/types";
 import { Breadcrumbs, Header, BreadcrumbNavigationSearchDropdown } from "@plane/ui";
 // components
@@ -36,6 +42,7 @@ import { useAppRouter } from "@/hooks/use-app-router";
 export const GlobalIssuesHeader = observer(function GlobalIssuesHeader() {
   // states
   const [createViewModal, setCreateViewModal] = useState(false);
+  const [viewSnapshot, setViewSnapshot] = useState<Partial<IWorkspaceView>>();
   // router
   const router = useAppRouter();
   const { workspaceSlug, globalViewId: routerGlobalViewId } = useParams();
@@ -106,7 +113,11 @@ export const GlobalIssuesHeader = observer(function GlobalIssuesHeader() {
 
   return (
     <>
-      <CreateUpdateWorkspaceViewModal isOpen={createViewModal} onClose={() => setCreateViewModal(false)} />
+      <CreateUpdateWorkspaceViewModal
+        isOpen={createViewModal}
+        onClose={() => setCreateViewModal(false)}
+        preLoadedData={viewSnapshot}
+      />
       <Header>
         <Header.LeftItem>
           <Breadcrumbs>
@@ -159,7 +170,14 @@ export const GlobalIssuesHeader = observer(function GlobalIssuesHeader() {
             variant="primary"
             size="lg"
             data-ph-element={GLOBAL_VIEW_TRACKER_ELEMENTS.RIGHT_HEADER_ADD_BUTTON}
-            onClick={() => setCreateViewModal(true)}
+            onClick={() => {
+              setViewSnapshot({
+                display_filters: cloneDeep(issueFilters?.displayFilters ?? {}),
+                display_properties: cloneDeep(issueFilters?.displayProperties ?? {}),
+                rich_filters: cloneDeep(issueFilters?.richFilters ?? {}),
+              });
+              setCreateViewModal(true);
+            }}
           >
             {t("workspace_views.add_view")}
           </Button>

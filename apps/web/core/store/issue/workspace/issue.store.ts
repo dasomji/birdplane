@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+import { EIssueLayoutTypes } from "@plane/types";
 import { isCancel } from "axios";
 import { action, makeObservable, runInAction } from "mobx";
 // base class
@@ -80,6 +81,11 @@ export class WorkspaceIssues extends BaseIssuesStore implements IWorkspaceIssues
     this.workspaceService = new WorkspaceService();
     // filter store
     this.issueFilterStore = issueFilterStore;
+  }
+
+  get groupBy() {
+    const displayFilters = this.issueFilterStore?.issueFilters?.displayFilters;
+    return displayFilters?.layout === EIssueLayoutTypes.SPREADSHEET ? displayFilters.group_by : super.groupBy;
   }
 
   fetchParentStats = () => {};
