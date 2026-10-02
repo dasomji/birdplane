@@ -44,9 +44,12 @@ image. Record the deployed commit from Coolify's deployment history.
 3. Create the Git-connected application with Auto Deploy and previews disabled.
    Copy the unchanged credentials and environment values. Inspect its parsed
    volumes before starting any container.
-4. Build and create the replacement containers without starting them, using
-   `docker compose create` temporarily as Coolify's Custom Start Command. Keep
-   the existing production stack running while images build.
+4. Build and create the replacement containers without starting them. Temporarily
+   set Coolify's Custom Start Command to
+   `docker compose --env-file .env --project-directory . -f deployments/birdplane/compose.yml create`.
+   Explicit relative paths avoid this Coolify version injecting a host-only env
+   path into the build helper. Keep the existing production stack running while
+   images build.
 5. Before cutover, take a final backup and record identities again. Stop the old
    stack without deleting its resource or volumes. Confirm its database process
    has stopped before starting the replacement database on the same volume.
