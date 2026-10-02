@@ -2,9 +2,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { EIssueFilterType, ISSUE_DISPLAY_FILTERS_BY_PAGE } from "@plane/constants";
 import { EIssueLayoutTypes } from "@plane/types";
 import type { IIssueDisplayFilterOptions } from "@plane/types";
+import { WorkspaceIssues } from "@/store/issue/workspace/issue.store";
+import { ProjectIssues } from "@/store/issue/project/issue.store";
+import type { IProjectIssuesFilter } from "@/store/issue/project/filter.store";
 import { WorkspaceIssuesFilter } from "@/store/issue/workspace/filter.store";
 import type { IIssueRootStore } from "@/store/issue/root.store";
 import { getWorkspaceDisplayFilters } from "@/helpers/workspace-view";
+
+vi.mock("@/lib/store-context", () => ({ store: {} }));
 
 vi.mock("@/services/workspace.service", () => ({
   WorkspaceService: class {
@@ -142,6 +147,20 @@ describe("workspace view preferences and requests", () => {
     expect(
       getWorkspaceDisplayFilters({ layout: "spreadsheet", group_by: "project" }, { layout: "kanban" })
     ).toMatchObject({ group_by: "state_detail.group", show_empty_groups: true });
+  });
+
+  it("uses grouped table rows in the workspace store while project tables stay flat", async () => {
+    await store.fetchFilters("workspace", "all-issues");
+    await update({ layout: EIssueLayoutTypes.SPREADSHEET, group_by: "project" });
+    const root = { rootStore: { router: {} } } as unknown as IIssueRootStore;
+    const workspaceIssues = new WorkspaceIssues(root, store);
+    workspaceIssues.groupedIssueIds = { "project-id": ["issue-id"] };
+    expect(workspaceIssues.groupBy).toBe("project");
+    expect(workspaceIssues.getIssueIds("project-id")).toEqual(["issue-id"]);
+    const projectIssues = new ProjectIssues(root, {
+      issueFilters: { displayFilters: { layout: EIssueLayoutTypes.SPREADSHEET, group_by: "state" } },
+    } as IProjectIssuesFilter);
+    expect(projectIssues.groupBy).toBeUndefined();
   });
 
   it("normalizes saved boards without a group and clears duplicate swimlane groups", () => {
