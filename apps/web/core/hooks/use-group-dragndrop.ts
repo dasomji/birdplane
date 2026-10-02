@@ -10,6 +10,8 @@ import type { EIssuesStoreType, TIssue, TIssueGroupByOptions, TIssueOrderByOptio
 import type { GroupDropLocation } from "@/components/issues/issue-layouts/utils";
 import { handleGroupDragDrop } from "@/components/issues/issue-layouts/utils";
 import { ISSUE_FILTER_DEFAULT_DATA } from "@/store/issue/helpers/base-issues.store";
+import { resolveStateGroupDrop } from "@/helpers/state-group-drop";
+import { useProjectState } from "./store/use-project-state";
 import { useIssueDetail } from "./store/use-issue-detail";
 import { useIssues } from "./store/use-issues";
 import { useIssuesActions } from "./use-issues-actions";
@@ -39,6 +41,7 @@ export const useGroupIssuesDragNDrop = (
   const {
     issue: { getIssueById },
   } = useIssueDetail();
+  const { fetchProjectStates } = useProjectState();
   const { updateIssue } = useIssuesActions(storeType);
   const {
     issues: { getIssueIds, addCycleToIssue, removeCycleFromIssue, changeModulesInIssue },
@@ -95,7 +98,12 @@ export const useGroupIssuesDragNDrop = (
       delete data[moduleKey];
     }
 
-    if (updateIssue) updateIssue(projectId, issueId, data).catch(() => setToast(errorToastProps));
+    if (updateIssue && workspaceSlug) {
+      const resolvedData = await resolveStateGroupDrop(projectId, data, (id) =>
+        fetchProjectStates(workspaceSlug.toString(), id)
+      );
+      await updateIssue(projectId, issueId, resolvedData);
+    }
   };
 
   const handleOnDrop = async (source: GroupDropLocation, destination: GroupDropLocation) => {
@@ -120,7 +128,7 @@ export const useGroupIssuesDragNDrop = (
       setToast({
         title: "Error!",
         type: TOAST_TYPE.ERROR,
-        message: err?.detail ?? "Failed to perform this action",
+        message: err?.detail ?? err?.message ?? "Failed to perform this action",
       });
     });
   };

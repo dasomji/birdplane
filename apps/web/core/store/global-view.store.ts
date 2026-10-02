@@ -8,6 +8,7 @@ import { set, cloneDeep, isEqual } from "lodash-es";
 import { action, computed, makeObservable, observable, runInAction } from "mobx";
 import { computedFn } from "mobx-utils";
 // plane imports
+import { EIssueFilterType } from "@plane/constants";
 import type { IWorkspaceView } from "@plane/types";
 // services
 import { WorkspaceService } from "@/services/workspace.service";
@@ -171,6 +172,27 @@ export class GlobalViewStore implements IGlobalViewStore {
 
       const currentView = await this.workspaceService.updateView(workspaceSlug, viewId, data);
 
+      runInAction(() => set(this.globalViewMap, viewId, currentView));
+      if (shouldSyncFilters) {
+        await Promise.all(
+          (
+            [
+              ["display_filters", EIssueFilterType.DISPLAY_FILTERS],
+              ["display_properties", EIssueFilterType.DISPLAY_PROPERTIES],
+            ] as const
+          ).map(async ([key, type]) => {
+            if (data[key] && !isEqual(currentViewData?.[key], currentView[key])) {
+              await this.rootStore.issue.workspaceIssuesFilter.updateFilters(
+                workspaceSlug,
+                undefined,
+                type,
+                currentView[key],
+                viewId
+              );
+            }
+          })
+        );
+      }
       // applying the filters in the global view
       if (shouldSyncFilters && !isEqual(currentViewData?.rich_filters || {}, currentView?.rich_filters || {})) {
         await this.rootStore.issue.workspaceIssuesFilter.updateFilterExpression(
@@ -181,11 +203,12 @@ export class GlobalViewStore implements IGlobalViewStore {
         this.rootStore.issue.workspaceIssues.fetchIssuesWithExistingPagination(workspaceSlug, viewId, "mutation");
       }
       return currentView;
-    } catch {
+    } catch (error) {
       Object.keys(data).forEach((key) => {
         const currentKey = key as keyof IWorkspaceView;
         if (currentViewData) set(this.globalViewMap, [viewId, currentKey], currentViewData[currentKey]);
       });
+      throw error;
     }
   }
 
@@ -194,10 +217,10 @@ export class GlobalViewStore implements IGlobalViewStore {
    * @param workspaceSlug
    * @param viewId
    */
-  deleteGlobalView = async (workspaceSlug: string, viewId: string): Promise<any> =>
-    await this.workspaceService.deleteView(workspaceSlug, viewId).then(() => {
-      runInAction(() => {
-        delete this.globalViewMap[viewId];
-      });
+  deleteGlobalView = async (workspaceSlug: string, viewId: string): Promise<void> => {
+    await this.workspaceService.deleteView(workspaceSlug, viewId);
+    runInAction(() => {
+      delete this.globalViewMap[viewId];
     });
+  };
 }

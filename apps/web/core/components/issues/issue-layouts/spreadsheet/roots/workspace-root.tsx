@@ -8,7 +8,7 @@ import React, { useCallback, useEffect } from "react";
 import { observer } from "mobx-react";
 // plane constants
 import { ALL_ISSUES, EIssueFilterType, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
-import type { IIssueDisplayFilterOptions } from "@plane/types";
+import type { GroupByColumnTypes, IIssueDisplayFilterOptions } from "@plane/types";
 import { EIssuesStoreType, EIssueLayoutTypes } from "@plane/types";
 // components
 import { AllIssueQuickActions } from "@/components/issues/issue-layouts/quick-action-dropdowns";
@@ -21,6 +21,7 @@ import { useWorkspaceIssueProperties } from "@/hooks/use-workspace-issue-propert
 // store
 import { IssueLayoutHOC } from "../../issue-layout-HOC";
 import type { TRenderQuickActions } from "../../list/list-view-types";
+import { getGroupByColumns } from "../../utils";
 import { SpreadsheetView } from "../spreadsheet-view";
 
 type Props = {
@@ -46,17 +47,20 @@ export const WorkspaceSpreadsheetRoot = observer(function WorkspaceSpreadsheetRo
   // Store hooks
   const {
     issuesFilter: { filters, updateFilters },
-    issues: { getIssueLoader, getPaginationData, groupedIssueIds },
+    issues: { getIssueLoader, getPaginationData, groupedIssueIds, getGroupIssueCount },
   } = useIssues(EIssuesStoreType.GLOBAL);
-  const { fetchIssues, updateIssue, removeIssue, archiveIssue } = useIssuesActions(EIssuesStoreType.GLOBAL);
+  const { fetchIssues, fetchNextIssues, updateIssue, removeIssue, archiveIssue } = useIssuesActions(
+    EIssuesStoreType.GLOBAL
+  );
   const { allowPermissions } = useUserPermissions();
 
   // Derived values
   const issueFilters = globalViewId ? filters?.[globalViewId.toString()] : undefined;
 
+  const groupBy = issueFilters?.displayFilters?.group_by;
   useEffect(() => {
-    fetchIssues("init-loader", { canGroup: false, perPageCount: 100 });
-  }, [fetchIssues]);
+    fetchIssues("init-loader", { canGroup: !!groupBy, perPageCount: groupBy ? 50 : 100 });
+  }, [fetchIssues, groupBy, globalViewId]);
 
   // Permission checker
   const canEditProperties = useCallback(
@@ -112,13 +116,38 @@ export const WorkspaceSpreadsheetRoot = observer(function WorkspaceSpreadsheetRo
   }
 
   // Computed values
-  const issueIds = groupedIssueIds[ALL_ISSUES];
+  const groups = groupBy
+    ? (
+        getGroupByColumns({
+          groupBy: groupBy as GroupByColumnTypes,
+          includeNone: true,
+          isWorkspaceLevel: true,
+        }) ?? []
+      )
+        .map((column) => ({
+          id: column.id,
+          name: column.name,
+          icon: column.icon,
+          issueIds: Array.isArray(groupedIssueIds[column.id]) ? (groupedIssueIds[column.id] as string[]) : [],
+          count: getGroupIssueCount(column.id, undefined, false) ?? 0,
+          canLoadMore: !!getPaginationData(column.id, undefined)?.nextPageResults,
+          isLoading: getIssueLoader(column.id) === "pagination",
+          loadMore: () => {
+            if (!getIssueLoader(column.id)) fetchNextIssues(column.id);
+          },
+        }))
+        .filter(
+          (group) => issueFilters?.displayFilters?.show_empty_groups || group.count > 0 || group.issueIds.length > 0
+        )
+    : undefined;
+  const issueIds = groups ? [...new Set(groups.flatMap((group) => group.issueIds))] : groupedIssueIds[ALL_ISSUES];
   const nextPageResults = getPaginationData(ALL_ISSUES, undefined)?.nextPageResults;
 
   // Render spreadsheet
   return (
     <IssueLayoutHOC layout={EIssueLayoutTypes.SPREADSHEET}>
       <SpreadsheetView
+        groups={groups}
         displayProperties={issueFilters?.displayProperties ?? {}}
         displayFilters={issueFilters?.displayFilters ?? {}}
         handleDisplayFilterUpdate={handleDisplayFiltersUpdate}
