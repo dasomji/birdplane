@@ -1,0 +1,63 @@
+# Git-connected production deployment
+
+The production Compose definition is [compose.yml](compose.yml). Coolify checks
+out the `birdplane` release branch and builds the web and backend from that
+checkout. Connect the application through the installed `dasomji-coolify` GitHub
+App and enable Auto Deploy after the initial migration is verified. Keep
+pull-request previews disabled: this definition references production storage.
+
+## Coolify configuration
+
+- Build pack: Docker Compose.
+- Base Directory: `/`.
+- Docker Compose Location: `/deployments/birdplane/compose.yml`.
+- Repository: `dasomji/birdplane`; branch: `birdplane`.
+- Configure the public domain on the `proxy` service: `https://plane.audiopoesis.com:80`.
+- Preserve the separate MCP application's higher-priority `/mcp/` route.
+- Copy the existing runtime environment values privately into the application's
+  environment settings. Never commit credentials or database/upload backups.
+- Use normal Compose processing, rather than Raw Compose Deployment. Coolify
+  supplies routing and management labels; the file supplies storage and builds.
+
+Every persistent volume has an explicit existing name and `external: true`.
+A missing volume fails deployment instead of creating an empty installation.
+Keep these names during application recreation. Preview deployments must never
+mount these volumes. The web and backend use shared local image tags that are
+rebuilt from the checked-out commit; workers and migrations use that same backend
+image. Record the deployed commit from Coolify's deployment history.
+
+## Migration
+
+1. Save the existing resource configuration, generated Compose, environment,
+   routes, and volume identities privately.
+2. Take a fresh PostgreSQL custom-format dump and export uploads with an object
+   manifest. Verify the exported dump checksum, restore with
+   `pg_restore --exit-on-error` into a separate database, and verify every upload
+   checksum. Record workspace, project, and issue identities.
+3. Create the Git-connected application with Auto Deploy and previews disabled.
+   Copy the unchanged credentials and environment values. Inspect its parsed
+   volumes before starting any container.
+4. Build and create the replacement containers without starting them, using
+   `docker compose create` temporarily as Coolify's Custom Start Command. Keep
+   the existing production stack running while images build.
+5. Before cutover, take a final backup and record identities again. Stop the old
+   stack without deleting its resource or volumes. Confirm its database process
+   has stopped before starting the replacement database on the same volume.
+6. Clear the temporary Custom Start Command, configure the proxy domain, and
+   deploy the replacement application. Verify migrations, existing records,
+   uploads, API/MCP health, and workspace layout/grouping controls.
+7. Enable Auto Deploy for `birdplane` and verify a real GitHub push causes a
+   deployment of that commit. Retain the stopped old resource for rollback.
+
+## Rollback
+
+Stop the replacement application before restarting the old stack. Preserve all
+external volumes and use the privately saved original configuration. Do not run
+both databases against the same volume. Do not delete the old resource or its
+volumes while it remains the rollback path. An application rollback must also
+account for any new schema migrations; restoring an old dump over live writes
+requires a separate recovery decision.
+
+For upstream upgrades, retain the existing
+[upstream update checklist](upstream-update-checklist.md) and test with a restored
+backup before merging to the auto-deployed release branch.

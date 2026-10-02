@@ -1,5 +1,10 @@
 # Birdplane on an existing Coolify Plane stack
 
+For Git-connected Compose and automatic deployment from the `birdplane` release
+branch, use [the Git deployment guide](git-compose.md) and [compose.yml](compose.yml).
+The instructions below describe the original manually pinned Compose Service
+and its rollback configuration.
+
 For upstream Plane version updates, complete the
 [upstream update checklist](upstream-update-checklist.md) before rollout,
 including review and retirement of temporary local fixes.
