@@ -1,4 +1,4 @@
-# Production Git-connected Coolify Compose application.
+# Production Git-connected Coolify application in Raw Compose mode.
 # Credentials are supplied by Coolify; existing volumes must already exist.
 # Build paths are relative to the repository root (Coolify Base Directory: /).
 services:
@@ -12,6 +12,14 @@ services:
     build:
       context: .
       dockerfile: apps/web/Dockerfile.web
+    labels: &id001
+      coolify.managed: "true"
+      coolify.applicationId: ${BIRDPLANE_APPLICATION_ID:?Set BIRDPLANE_APPLICATION_ID
+        in Coolify}
+      coolify.applicationUuid: ${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+        in Coolify}
+      coolify.type: application
+      coolify.pullRequestId: "0"
   space:
     image: makeplane/plane-space:v1.4.2
     depends_on:
@@ -19,12 +27,14 @@ services:
       - worker
       - web
     restart: unless-stopped
+    labels: *id001
   admin:
     image: makeplane/plane-admin:v1.4.2
     depends_on:
       - api
       - web
     restart: unless-stopped
+    labels: *id001
   live:
     image: makeplane/plane-live:v1.4.2
     environment:
@@ -38,12 +48,13 @@ services:
       - api
       - web
     restart: unless-stopped
+    labels: *id001
   api:
     image: birdplane-backend:git-compose
     command: ./bin/docker-entrypoint-api.sh
     volumes:
       - logs_api:/code/plane/logs
-    environment: &id001
+    environment: &id002
       APP_DOMAIN: ${APP_DOMAIN}
       FILE_SIZE_LIMIT: ${FILE_SIZE_LIMIT}
       CERT_EMAIL: ${CERT_EMAIL}
@@ -99,12 +110,13 @@ services:
     build:
       context: ./apps/api
       dockerfile: Dockerfile.api
+    labels: *id001
   worker:
     image: birdplane-backend:git-compose
     command: ./bin/docker-entrypoint-worker.sh
     volumes:
       - logs_worker:/code/plane/logs
-    environment: *id001
+    environment: *id002
     depends_on:
       api:
         condition: service_started
@@ -118,12 +130,13 @@ services:
         condition: service_completed_successfully
     restart: unless-stopped
     pull_policy: never
+    labels: *id001
   beat-worker:
     image: birdplane-backend:git-compose
     command: ./bin/docker-entrypoint-beat.sh
     volumes:
       - logs_beat-worker:/code/plane/logs
-    environment: *id001
+    environment: *id002
     depends_on:
       api:
         condition: service_started
@@ -137,12 +150,13 @@ services:
         condition: service_completed_successfully
     restart: unless-stopped
     pull_policy: never
+    labels: *id001
   migrator:
     image: birdplane-backend:git-compose
     command: ./bin/docker-entrypoint-migrator.sh
     volumes:
       - logs_migrator:/code/plane/logs
-    environment: *id001
+    environment: *id002
     depends_on:
       plane-db:
         condition: service_healthy
@@ -150,7 +164,7 @@ services:
         condition: service_healthy
     restart: "no"
     pull_policy: never
-    exclude_from_hc: true
+    labels: *id001
   plane-db:
     image: postgres:15.7-alpine
     command: postgres -c 'max_connections=1000'
@@ -172,6 +186,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 12
+    labels: *id001
   plane-redis:
     image: valkey/valkey:7.2.11-alpine
     volumes:
@@ -185,6 +200,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 12
+    labels: *id001
   plane-mq:
     image: rabbitmq:3.13.6-management-alpine
     environment:
@@ -207,6 +223,7 @@ services:
       interval: 15s
       timeout: 10s
       retries: 12
+    labels: *id001
   plane-minio:
     image: minio/minio:RELEASE.2025-09-07T16-13-09Z
     command: server /export --console-address ":9090"
@@ -216,6 +233,7 @@ services:
     volumes:
       - uploads:/export
     restart: unless-stopped
+    labels: *id001
   proxy:
     image: makeplane/plane-proxy:v1.4.2
     environment:
@@ -240,6 +258,32 @@ services:
     restart: unless-stopped
     expose:
       - "80"
+    labels:
+      coolify.managed: "true"
+      coolify.applicationId: ${BIRDPLANE_APPLICATION_ID:?Set BIRDPLANE_APPLICATION_ID
+        in Coolify}
+      coolify.applicationUuid: ${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+        in Coolify}
+      coolify.type: application
+      coolify.pullRequestId: "0"
+      traefik.enable: "true"
+      traefik.docker.network: coolify
+      traefik.http.routers.birdplane-git-http.entrypoints: http
+      traefik.http.routers.birdplane-git-http.rule: Host(`plane.audiopoesis.com`)
+        && PathPrefix(`/`)
+      traefik.http.routers.birdplane-git-http.middlewares: redirect-to-https
+      traefik.http.routers.birdplane-git-http.service: birdplane-git
+      traefik.http.routers.birdplane-git-https.entrypoints: https
+      traefik.http.routers.birdplane-git-https.rule: Host(`plane.audiopoesis.com`)
+        && PathPrefix(`/`)
+      traefik.http.routers.birdplane-git-https.tls: "true"
+      traefik.http.routers.birdplane-git-https.tls.certresolver: letsencrypt
+      traefik.http.routers.birdplane-git-https.middlewares: gzip
+      traefik.http.routers.birdplane-git-https.service: birdplane-git
+      traefik.http.services.birdplane-git.loadbalancer.server.port: "80"
+    networks:
+      - default
+      - coolify
 volumes:
   pgdata:
     external: true
@@ -271,3 +315,9 @@ volumes:
   proxy_data:
     external: true
     name: hnslaatmrmfginhfa1kemiam_proxy-data
+networks:
+  default:
+    name: birdplane-git-compose
+  coolify:
+    external: true
+    name: coolify

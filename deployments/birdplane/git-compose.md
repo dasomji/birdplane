@@ -12,12 +12,16 @@ pull-request previews disabled: this definition references production storage.
 - Base Directory: `/`.
 - Docker Compose Location: `/deployments/birdplane/compose.yml`.
 - Repository: `dasomji/birdplane`; branch: `birdplane`.
-- Configure the public domain on the `proxy` service: `https://plane.audiopoesis.com:80`.
+- The `proxy` service's Traefik labels route `https://plane.audiopoesis.com` to port 80.
 - Preserve the separate MCP application's higher-priority `/mcp/` route.
 - Copy the existing runtime environment values privately into the application's
   environment settings. Never commit credentials or database/upload backups.
-- Use normal Compose processing, rather than Raw Compose Deployment. Coolify
-  supplies routing and management labels; the file supplies storage and builds.
+- Enable Raw Compose Deployment. The installed Coolify version's normal parser
+  rewrites external volume mounts; raw mode preserves the exact Docker definition.
+  The file supplies routing, networks, and management labels explicitly.
+- Set `BIRDPLANE_APPLICATION_UUID` and `BIRDPLANE_APPLICATION_ID` to the new
+  application's verified UUID and numeric ID. These label its containers for
+  Coolify monitoring and lifecycle operations.
 
 Every persistent volume has an explicit existing name and `external: true`.
 A missing volume fails deployment instead of creating an empty installation.
@@ -43,7 +47,7 @@ image. Record the deployed commit from Coolify's deployment history.
 5. Before cutover, take a final backup and record identities again. Stop the old
    stack without deleting its resource or volumes. Confirm its database process
    has stopped before starting the replacement database on the same volume.
-6. Clear the temporary Custom Start Command, configure the proxy domain, and
+6. Clear the temporary Custom Start Command and
    deploy the replacement application. Verify migrations, existing records,
    uploads, API/MCP health, and workspace layout/grouping controls.
 7. Enable Auto Deploy for `birdplane` and verify a real GitHub push causes a
