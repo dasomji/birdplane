@@ -33,6 +33,11 @@ mount these volumes. The web and backend use shared local image tags that are
 rebuilt from the checked-out commit; workers and migrations use that same backend
 image. Record the deployed commit from Coolify's deployment history.
 
+MinIO is built from the exact `RELEASE.2025-09-07T16-13-09Z` source commit because
+the former official container image and binary downloads are unavailable. This
+preserves its release version while making deployments independent of that
+removed image. See [Dockerfile.minio](Dockerfile.minio).
+
 ## Migration
 
 1. Save the existing resource configuration, generated Compose, environment,

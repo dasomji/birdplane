@@ -39,6 +39,20 @@ upstream provides the behavior. Include its reason, upstream links, affected
 code, removal condition, and verification. Permanent Birdplane features do not
 belong here solely because they differ from upstream.
 
+### MinIO release image unavailable
+
+- **Status:** active deployment workaround, BIRD-27.
+- **Reason:** the official Docker Hub and Quay image for
+  `RELEASE.2025-09-07T16-13-09Z` cannot be pulled; its binary download returns 410.
+- **Source:** [tagged release](https://github.com/minio/minio/releases/tag/RELEASE.2025-09-07T16-13-09Z),
+  commit `07c3a429bfed433e49018cb0f78a52145d4bedeb`.
+- **Local implementation:** `Dockerfile.minio` builds this exact source release;
+  `compose.yml` uses the resulting local image and existing uploads volume.
+- **Remove when:** a maintained, reproducible replacement image is selected and
+  verified against a restored upload backup, with an explicit upgrade decision.
+- **Verification:** compare every existing object's key, size, and SHA256 after
+  deployment; verify S3 connectivity and the reported MinIO release version.
+
 ### Project display names containing hyphens
 
 - **Status:** active local fix; prepared on 2026-09-16, not deployed as of that date.
