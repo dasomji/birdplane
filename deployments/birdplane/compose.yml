@@ -348,16 +348,18 @@ services:
       - traefik.http.routers.birdplane-git-http.entrypoints=http
       - traefik.http.routers.birdplane-git-http.rule=Host(`plane.audiopoesis.com`) &&
         PathPrefix(`/`)
-      - traefik.http.routers.birdplane-git-http.middlewares=redirect-to-https
+      - traefik.http.routers.birdplane-git-http.middlewares=birdplane-git-redirect
       - traefik.http.routers.birdplane-git-http.service=birdplane-git
       - traefik.http.routers.birdplane-git-https.entrypoints=https
       - traefik.http.routers.birdplane-git-https.rule=Host(`plane.audiopoesis.com`)
         && PathPrefix(`/`)
       - traefik.http.routers.birdplane-git-https.tls=true
       - traefik.http.routers.birdplane-git-https.tls.certresolver=letsencrypt
-      - traefik.http.routers.birdplane-git-https.middlewares=gzip
+      - traefik.http.routers.birdplane-git-https.middlewares=birdplane-git-gzip
       - traefik.http.routers.birdplane-git-https.service=birdplane-git
       - traefik.http.services.birdplane-git.loadbalancer.server.port=80
+      - traefik.http.middlewares.birdplane-git-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.birdplane-git-gzip.compress=true
     networks:
       - default
       - coolify

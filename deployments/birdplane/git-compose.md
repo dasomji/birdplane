@@ -16,6 +16,9 @@ pull-request previews disabled: this definition references production storage.
 - Preserve the separate MCP application's higher-priority `/mcp/` route.
 - Copy the existing runtime environment values privately into the application's
   environment settings. Never commit credentials or database/upload backups.
+  Enable both build-time and runtime availability: Docker Compose interpolates
+  the entire definition during builds. Keep Inject Build Args to Dockerfile off;
+  these configuration values must not become image build arguments.
 - Enable Raw Compose Deployment. The installed Coolify version's normal parser
   rewrites external volume mounts; raw mode preserves the exact Docker definition.
   The file supplies routing, networks, and management labels explicitly.
