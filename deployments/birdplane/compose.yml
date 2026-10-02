@@ -20,6 +20,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: web-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   space:
     image: makeplane/plane-space:v1.4.2
     depends_on:
@@ -35,6 +37,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: space-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   admin:
     image: makeplane/plane-admin:v1.4.2
     depends_on:
@@ -49,6 +53,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: admin-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   live:
     image: makeplane/plane-live:v1.4.2
     environment:
@@ -70,6 +76,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: live-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   api:
     image: birdplane-backend:git-compose
     command: ./bin/docker-entrypoint-api.sh
@@ -139,6 +147,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: api-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   worker:
     image: birdplane-backend:git-compose
     command: ./bin/docker-entrypoint-worker.sh
@@ -166,6 +176,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: worker-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   beat-worker:
     image: birdplane-backend:git-compose
     command: ./bin/docker-entrypoint-beat.sh
@@ -193,6 +205,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: beat-worker-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   migrator:
     image: birdplane-backend:git-compose
     command: ./bin/docker-entrypoint-migrator.sh
@@ -214,6 +228,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: migrator-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   plane-db:
     image: postgres:15.7-alpine
     command: postgres -c 'max_connections=1000'
@@ -243,6 +259,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: plane-db-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   plane-redis:
     image: valkey/valkey:7.2.11-alpine
     volumes:
@@ -264,6 +282,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: plane-redis-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   plane-mq:
     image: rabbitmq:3.13.6-management-alpine
     environment:
@@ -294,6 +314,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: plane-mq-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   plane-minio:
     image: minio/minio:RELEASE.2025-09-07T16-13-09Z
     command: server /export --console-address ":9090"
@@ -311,6 +333,8 @@ services:
         in Coolify}
       - coolify.type=application
       - coolify.pullRequestId=0
+    container_name: plane-minio-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
   proxy:
     image: makeplane/plane-proxy:v1.4.2
     environment:
@@ -363,6 +387,8 @@ services:
     networks:
       - default
       - coolify
+    container_name: proxy-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
+      in Coolify}
 volumes:
   pgdata:
     external: true
