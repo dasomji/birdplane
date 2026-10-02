@@ -51,7 +51,8 @@ export const AllIssueLayoutRoot = observer(function AllIssueLayoutRoot(props: Pr
   // Derived values
   const viewDetails = globalViewId ? getViewDetailsById(globalViewId) : undefined;
   const workItemFilters = globalViewId ? filters?.[globalViewId] : undefined;
-  const activeLayout: EIssueLayoutTypes | undefined = workItemFilters?.displayFilters?.layout;
+  const { displayFilters, displayProperties, kanbanFilters } = workItemFilters ?? {};
+  const activeLayout: EIssueLayoutTypes | undefined = displayFilters?.layout;
   // Determine initial work item filters based on view type and availability
   const initialWorkItemFilters = useMemo(() => {
     if (!globalViewId) return undefined;
@@ -62,12 +63,12 @@ export const AllIssueLayoutRoot = observer(function AllIssueLayoutRoot(props: Pr
     if (!isStaticView && !hasViewDetails) return undefined;
 
     return {
-      displayFilters: workItemFilters?.displayFilters,
-      displayProperties: workItemFilters?.displayProperties,
-      kanbanFilters: workItemFilters?.kanbanFilters,
+      displayFilters,
+      displayProperties,
+      kanbanFilters,
       richFilters: viewDetails?.rich_filters ?? {},
     };
-  }, [globalViewId, viewDetails, workItemFilters]);
+  }, [globalViewId, viewDetails, displayFilters, displayProperties, kanbanFilters]);
 
   // Custom hooks
   useWorkspaceIssueProperties(workspaceSlug);
