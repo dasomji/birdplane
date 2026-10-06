@@ -1,0 +1,44 @@
+[
+  {
+    "width": 390,
+    "touch": true,
+    "passed": true,
+    "list": {
+      "width": 372,
+      "scroll": 372
+    },
+    "checks": [
+      "virtualized list",
+      "navigation overlay and close",
+      "search panel",
+      "profile settings navigation",
+      "password inputs",
+      "member actions",
+      "webhook controls",
+      "work item properties",
+      "profile details",
+      "cycle and module analytics open and close"
+    ]
+  },
+  {
+    "width": 768,
+    "touch": true,
+    "passed": true,
+    "list": {
+      "width": 750,
+      "scroll": 750
+    },
+    "checks": [
+      "virtualized list",
+      "navigation overlay and close",
+      "search panel",
+      "profile settings navigation",
+      "password inputs",
+      "member actions",
+      "webhook controls",
+      "work item properties",
+      "profile details",
+      "cycle and module analytics open and close"
+    ]
+  }
+]

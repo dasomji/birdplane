@@ -32,20 +32,22 @@ export const SidebarWrapper = observer(function SidebarWrapper(props: TSidebarWr
   const [isCustomizeNavDialogOpen, setIsCustomizeNavDialogOpen] = useState(false);
   // store hooks
   const { toggleSidebar, sidebarCollapsed } = useAppTheme();
-  const windowSize = useSize();
+  const [windowWidth] = useSize();
   // refs
   const ref = useRef<HTMLDivElement>(null);
 
   useOutsideClickDetector(ref, () => {
-    if (sidebarCollapsed === false && window.innerWidth < 768) {
-      toggleSidebar();
+    if (sidebarCollapsed === false && window.innerWidth < 1024) {
+      toggleSidebar(true);
     }
   });
 
   useEffect(() => {
-    if (windowSize[0] < 768 && !sidebarCollapsed) toggleSidebar();
+    // The main and peek sidebars both mount this wrapper. Set the state
+    // explicitly so two effects cannot undo each other's collapse.
+    if (windowWidth < 1024) toggleSidebar(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [windowSize]);
+  }, [windowWidth]);
 
   return (
     <>

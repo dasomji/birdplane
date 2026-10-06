@@ -1,0 +1,5504 @@
+[
+  {
+    "key": "mobile-profile-assigned",
+    "name": "profile-assigned",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/assigned",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-profile-assigned.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ible properties 6\n\nTodo\nOct 06 - 09, 2026\nA\nmodule\nGS-5\n\nGround Support: verify long work item title and visible properties 5\n\nBacklog\nOct 06 - 09, 2026\nA\nmodule\nFLIGHTCTL-8\n\nFlight Control responsive layout audit: verify long work item title and visible properties 8\n\nDone\nOct 06 - 09, 2026\nA\nmodule",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/assigned",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 13
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-profile-created",
+    "name": "profile-created",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/created",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-profile-created.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "sive layout audit\n\nCommunity\nProjects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nYour work\nLayout\nDisplay\nNo work items yet\n\nAll work items created by you come here, track them here directly.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/created",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-profile-subscribed",
+    "name": "profile-subscribed",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/subscribed",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-profile-subscribed.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": " layout audit\n\nCommunity\nProjects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nYour work\nLayout\nDisplay\nNo work items yet\n\nSubscribe to work items you are interested in, track all of them here.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/subscribed",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-archived-issue-detail",
+    "name": "archived-issue-detail",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/issues/418e9625-2ace-4d78-8106-2048488fbbf2",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-archived-issue-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": " detail layout and restore controls.\n\nLast edited by 18 minutes ago\n\nAdd sub-work item\nAdd relation\nAdd link\nAttach\nProperties\nState\nDone\nAssignees\nAdd assignees\nPriority\nNone\nStart date\nAdd start date\nDue date\nAdd due date\nModules\nNo module\nCycle\nNo cycle\nParent\nAdd parent work item\nLabels\nActivity",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/issues/418e9625-2ace-4d78-8106-2048488fbbf2",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-analytics-work-items",
+    "name": "analytics-work-items",
+    "url": "/audit/analytics/work-items",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-analytics-work-items.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "operty\nHigh\nPRIORITY\n0\n5\n10\n15\n20\n25\n30\n35\n45\nNO. OF WORK ITEM\n1 Priority\nExport as csv\nPriority\t\nCount\n\nHigh\t\n40\n2 Projects\nExport as csv\nProject\n\t\nBacklog\n\t\nStarted\n\t\nUnstarted\n\t\nCompleted\n\t\nCancelled\n\n\nGround Support\n\t\n5\n\t\n5\n\t\n5\n\t\n5\n\t\n0\n\n\nFlight Control responsive layout audit\n\t\n5\n\t\n5\n\t\n5\n\t\n5\n\t\n0",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/analytics/work-items",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "relative items-center justify-between gap-1.5 overflow-auto rounded-lg p-0.5 text-13 bg-layer-3 flex h-7 w-fit overflow-x-auto",
+          "width": 175,
+          "scrollWidth": 190,
+          "text": "Overview\nWork items"
+        }
+      ],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-profile-details",
+    "name": "profile-details",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/assigned",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-profile-details.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\nOct 06 - 09, 2026\nA\nmodule\nFLIGHTCTL-8\n\nFlight Control responsive layout audit: verify long work item title and visible properties 8\n\nDone\nOct 06 - 09, 2026\nA\nmodule\nA\nAudit Tester\n(Audit Tester)\nJoined on\nOct 06, 2026\nTimezone\n18:52 UTC\nGround Support\n25%\nFlight Control responsive layout audit\n25%",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/assigned",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 13
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-home",
+    "name": "home",
+    "url": "/audit",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-home.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "your picture, colors, and more.\n\nPersonalize now\nQuicklinks\nAdd quick Link\n\nKeep important references, resources, or docs handy for your work\n\nRecents\nAll\n\nYou don't have any recents yet.\n\nYour stickies\nAdd sticky\n\nJot down an idea, capture an aha, or record a brainwave. Add a sticky to get started.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-drafts",
+    "name": "drafts",
+    "url": "/audit/drafts",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-drafts.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nDrafts\nDraft a work item\nHalf-written work items\n\nTo try this out, start adding a work item and leave it mid-way or create your first draft below. 😉\n\nCreate draft work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/drafts",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-your-work",
+    "name": "your-work",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-your-work.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ted\n\n0\n\nWork items assigned\n\n40\n\nWork items subscribed\n\n0\n\nWorkload\nBacklog\n\n10\n\nNot started\n\n10\n\nWorking on\n\n10\n\nCompleted\n\n10\n\nCanceled\n\n0\n\nWork items by Priority\nHigh\nPRIORITY\n5\n15\n25\n35\n45\nWork items by state\nBacklog\n10\nUnstarted\n10\nStarted\n10\nCompleted\n10\nCanceled\n0\nRecent activity\n\nNo Data yet",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-profile-activity",
+    "name": "profile-activity",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/activity",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-profile-activity.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "jects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nProjects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nYour work\nRecent activity\nDownload today's activity",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/activity",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-stickies",
+    "name": "stickies",
+    "url": "/audit/stickies",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-stickies.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nStickies\nAdd sticky\nStickies are quick notes and to-dos you take down on the fly.\n\nCapture your thoughts and ideas effortlessly by creating stickies that you can access anytime and from anywhere.\n\nAdd sticky",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/stickies",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-notifications",
+    "name": "notifications",
+    "url": "/audit/notifications",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-notifications.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nInbox\nAll\nMentions\n\nUpdates for your subscribed work items will appear here",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/notifications",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-projects",
+    "name": "projects",
+    "url": "/audit/projects",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-projects.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nProjects\nProject\nCreated date\nFilters\nFlight Control responsive layout audit\n\nFLIGHTCTL\n\nCreated on Oct 06, 2026\n\nA\nGround Support\n\nGS\n\nCreated on Oct 06, 2026\n\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-archived-projects",
+    "name": "archived-projects",
+    "url": "/audit/projects/archives",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-archived-projects.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "onsive layout audit\n\nCommunity\nProjects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nArchived\nCreated date\nFilters\nNo projects archived\n\nLooks like all your projects are still active—great job!",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/archives",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-views",
+    "name": "workspace-views",
+    "url": "/audit/workspace-views",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-views.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "rt\n\nFlight Control responsive layout audit\n\nCommunity\nProjects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nDisplay\nAdd view\n\nAll work items\n\nAssigned\n\nCreated\n\nSubscribed\n\nSaved workspace list",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-list",
+    "name": "workspace-list",
+    "url": "/audit/workspace-views/all-issues",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-list.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\n\nDone\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nGS-11\n\nGround Support: verify long work item title and visible properties 11\n\nIn Progress\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/all-issues",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 10
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-board",
+    "name": "workspace-board",
+    "url": "/audit/workspace-views/all-issues",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-board.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "6\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nGS-6\nGround Support: verify long work item title and visible properties 6\nTodo\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nIn Progress\n10\nDone\n10\nCanceled\n0",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/all-issues",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "horizontal-scrollbar relative flex scrollbar-lg h-full w-full bg-surface-2 overflow-x-auto overflow-y-hidden",
+          "width": 372,
+          "scrollWidth": 1857,
+          "text": "Backlog\n10\nGS-17\nGround Support: verify long work item title and visible propert"
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 727,
+          "right": 747
+        },
+        {
+          "tag": "A",
+          "text": "GS-18\nGround Support: verify long work item title ",
+          "x": 397,
+          "right": 747
+        },
+        {
+          "tag": "BUTTON",
+          "text": "GS-18",
+          "x": 410,
+          "right": 442
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Todo",
+          "x": 410,
+          "right": 474
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 482,
+          "right": 502
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Oct 06 - 09, 2026",
+          "x": 510,
+          "right": 652
+        },
+        {
+          "tag": "BUTTON",
+          "text": "A",
+          "x": 660,
+          "right": 682
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Responsive flight dashboard",
+          "x": 410,
+          "right": 570
+        },
+        {
+          "tag": "BUTTON",
+          "text": "October flight readiness",
+          "x": 410,
+          "right": 570
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Mobile and tablet acceptance",
+          "x": 410,
+          "right": 601
+        },
+        {
+          "tag": "A",
+          "text": "GS-14\nGround Support: verify long work item title ",
+          "x": 397,
+          "right": 747
+        },
+        {
+          "tag": "BUTTON",
+          "text": "GS-14",
+          "x": 410,
+          "right": 442
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Todo",
+          "x": 410,
+          "right": 474
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 482,
+          "right": 502
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Oct 06 - 09, 2026",
+          "x": 510,
+          "right": 652
+        },
+        {
+          "tag": "BUTTON",
+          "text": "A",
+          "x": 660,
+          "right": 682
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Responsive flight dashboard",
+          "x": 410,
+          "right": 570
+        },
+        {
+          "tag": "BUTTON",
+          "text": "October flight readiness",
+          "x": 410,
+          "right": 570
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Mobile and tablet acceptance",
+          "x": 410,
+          "right": 601
+        },
+        {
+          "tag": "A",
+          "text": "GS-10\nGround Support: verify long work item title ",
+          "x": 397,
+          "right": 747
+        }
+      ],
+      "issues": 20
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-calendar",
+    "name": "workspace-calendar",
+    "url": "/audit/workspace-views/all-issues",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-calendar.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "fts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nAll work items\nDisplay\nAdd view\nOctober 2026\nToday\nMon\nTue\nWed\nThu\nFri\n28\n29\n30\n1\n2\n5\n6\n7\n8\n9\n12\n13\n14\n15\n16\n19\n20\n21\n22\n23\n26\n27\n28\n29\n30\n\n6 October, 2026\n\n6 October, 2026",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/all-issues",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 4
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-table",
+    "name": "workspace-table",
+    "url": "/audit/workspace-views/all-issues",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-table.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ible properties 15\n\t\nIn Progress\n\t\nHigh\n\t\nA\nAudit Tester\n\t\nMobile and tablet acceptance\n\t\nResponsive flight dashboard\n\t\nOctober flight readiness\n\t\nOct 06, 2026\n\t\nOct 09, 2026\n\t\nEstimate\n\t\nOct 06, 2026\n\t\nOct 06, 2026\n\t\n0 links\n\t\n0 attachments\n\t\n0 sub-work items\n\n\n\n\n\n▾\nDone\n10\n\n\n\n\n\n\n\n\n\n\n\n\n▾\nCanceled\n0",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/all-issues",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "vertical-scrollbar horizontal-scrollbar scrollbar-lg h-full w-full",
+          "width": 372,
+          "scrollWidth": 2872,
+          "text": "Work items\n\t\nState\n\t\nPriority\n\t\nAssignees\n\t\nLabels\n\t\nModules\n\t\nCycle\n\t\nStart dat"
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": "State",
+          "x": 522,
+          "right": 665
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Priority",
+          "x": 666,
+          "right": 809
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Assignees",
+          "x": 810,
+          "right": 970
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Labels",
+          "x": 971,
+          "right": 1203
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Modules",
+          "x": 1204,
+          "right": 1424
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Cycle",
+          "x": 1425,
+          "right": 1622
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Start date",
+          "x": 1623,
+          "right": 1782
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Due date",
+          "x": 1783,
+          "right": 1941
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Estimate",
+          "x": 1942,
+          "right": 2090
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Created on",
+          "x": 2091,
+          "right": 2234
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Updated on",
+          "x": 2235,
+          "right": 2381
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Link",
+          "x": 2382,
+          "right": 2525
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Attachment",
+          "x": 2526,
+          "right": 2693
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Sub-work item",
+          "x": 2694,
+          "right": 2880
+        },
+        {
+          "tag": "A",
+          "text": "GS-17\nGround Support: verify long work item title ",
+          "x": 10,
+          "right": 522
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Backlog",
+          "x": 522,
+          "right": 665
+        },
+        {
+          "tag": "BUTTON",
+          "text": "High",
+          "x": 666,
+          "right": 809
+        },
+        {
+          "tag": "BUTTON",
+          "text": "A\nAudit Tester",
+          "x": 810,
+          "right": 970
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Mobile and tablet acceptance",
+          "x": 971,
+          "right": 1203
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Responsive flight dashboard",
+          "x": 1204,
+          "right": 1424
+        }
+      ],
+      "issues": 27
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-timeline",
+    "name": "workspace-timeline",
+    "url": "/audit/workspace-views/all-issues",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-timeline.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": " visible properties 4\nFlight Control responsive layout audit: verify long work item title and visible properties 3\nFlight Control responsive layout audit: verify long work item title and visible properties 2\nFlight Control responsive layout audit: verify long work item title and visible properties 1",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/all-issues",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "gantt-container",
+          "class": "vertical-scrollbar horizontal-scrollbar flex scrollbar-lg h-full w-full overflow-auto border-t-[0.5px] border-subtle",
+          "width": 372,
+          "scrollWidth": 15480,
+          "text": "Work items\nDuration\nGS-20\nGround Support: verify long work item title and visibl"
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 373,
+          "right": 405
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        }
+      ],
+      "issues": 80
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-saved-workspace-view",
+    "name": "saved-workspace-view",
+    "url": "/audit/workspace-views/0f6a586b-7f57-47eb-8197-33762ac305d3",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-saved-workspace-view.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ht dashboard\nOctober flight readiness\nMobile and tablet acceptance\nGS-11\n\nGround Support: verify long work item title and visible properties 11\n\nIn Progress\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFlight Control responsive layout audit\n20",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/0f6a586b-7f57-47eb-8197-33762ac305d3",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 10
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-list",
+    "name": "project-list",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-list.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFLIGHTCTL-11\n\nFlight Control responsive layout audit: verify long work item title and visible properties 11\n\nIn Progress\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 10
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-issue-detail",
+    "name": "issue-detail",
+    "url": "/audit/browse/FLIGHTCTL-1",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-issue-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "dd relation\nAdd link\nAttach\nProperties\nState\nBacklog\nAssignees\nA\nAudit Tester\nPriority\nHigh\nStart date\nOct 06, 2026\nDue date\nOct 09, 2026\nModules\nResponsive flight dashboard\nCycle\nOctober flight readiness\nParent\nAdd parent work item\nLabels\nMobile and tablet acceptance\nAdd labels\nActivity\n\n\n\n\nComment",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/browse/FLIGHTCTL-1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-issue-properties",
+    "name": "issue-properties",
+    "url": "/audit/browse/FLIGHTCTL-1",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-issue-properties.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ablet acceptance\nAdd labels\nActivity\n\n\n\n\nComment\nProperties\nState\nBacklog\nAssignees\nA\nAudit Tester\nPriority\nHigh\nStart date\nOct 06, 2026\nDue date\nOct 09, 2026\nModules\nResponsive flight dashboard\nCycle\nOctober flight readiness\nParent\nAdd parent work item\nLabels\nMobile and tablet acceptance\nAdd labels",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/browse/FLIGHTCTL-1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-list-horizontal-end",
+    "name": "list-horizontal-end",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-list-horizontal-end.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFLIGHTCTL-11\n\nFlight Control responsive layout audit: verify long work item title and visible properties 11\n\nIn Progress\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 10
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-cycles",
+    "name": "cycles",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-cycles.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Started\n5 Work items\nUnstarted\n5 Work items\nBacklog\n5 Work items\nWork item burndown\nPending work items - 15\nOct 08\nOct 13\nOct 18\nDATE\n0\n3\n6\n9\n12\n15\n18\n21\n27\nCOMPLETION\nCurrent work items\nIdeal work items\nPriority work items\nAssignees\nLabels\nA\nAudit Tester\n25%\nof 20\nUpcoming cycle\n0\nCompleted cycle\n0",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-active-cycles",
+    "name": "active-cycles",
+    "url": "/audit/active-cycles",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-active-cycles.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ll of them per cycle in one click.\nZoom into cycles that need attention.\nInvestigate the state of any cycle that doesn't conform to expectations in one click.\nStay ahead of blockers.\nSpot challenges from one project to another and see inter-cycle dependencies that aren't obvious from any other view.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/active-cycles",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-modules",
+    "name": "modules",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-modules.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Community\nProjects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\n...\nModules\nAdd\nLayout\n25%\nResponsive flight dashboard\nOct 06 - 18, 2026\nIn Progress",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-views",
+    "name": "project-views",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/views",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-views.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "s\nViews\nPages\nIntake\nCommunity\nProjects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\nViews\nAdd view\nUpdated at\nFilters\nFlight readiness saved view\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/views",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-saved-project-view",
+    "name": "saved-project-view",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/views/3704cf3d-f7b9-4995-90bd-38e24f2ebfe0",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-saved-project-view.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e and tablet acceptance\nFLIGHTCTL-6\n\nFlight Control responsive layout audit: verify long work item title and visible properties 6\n\nTodo\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item\nIn Progress\n5\nNew work item\nDone\n5\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/views/3704cf3d-f7b9-4995-90bd-38e24f2ebfe0",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 9
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-pages",
+    "name": "pages",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-pages.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\nPages\nAdd page\nPublic\nPrivate\nArchived\nDate modified\nFilters\nFlight readiness mobile and tablet checklist\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-page-outline",
+    "name": "page-outline",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages/aa54d55a-af92-4998-81e0-103e19ea9b43?paneTab=outline",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-page-outline.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\nLoading version details\nView only\nRestore\nIcon\nFlight readiness mobile and tablet checklist\nResponsive audit\n\nCheck content, navigation and controls on narrow screens.\n\nResponsive audit\n\nCheck content, navigation and controls on narrow screens.\n\nOutline\nInfo\nAssets\nResponsive audit\nResponsive audit",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages/aa54d55a-af92-4998-81e0-103e19ea9b43",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-page-detail",
+    "name": "page-detail",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages/aa54d55a-af92-4998-81e0-103e19ea9b43",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-page-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\nCommunity\nFlight readiness mobile and tablet checklist\nLoading version details\nView only\nRestore\nIcon\nFlight readiness mobile and tablet checklist\nResponsive audit\n\nCheck content, navigation and controls on narrow screens.\n\nResponsive audit\n\nCheck content, navigation and controls on narrow screens.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages/aa54d55a-af92-4998-81e0-103e19ea9b43",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-intake",
+    "name": "intake",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/intake",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-intake.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ts\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\nIntake\nAdd work item\nOpen\n0\nClosed\nStatus\nPending\nNo matching results.\n\nNo results found. Try adjusting your search terms.\n\nSelect an Intake work item to view its details",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/intake",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-archived-issues",
+    "name": "archived-issues",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/issues",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-archived-issues.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\n...\nWork items\n1\nWork items\nCycles\nModules\nDisplay\nAll work items\n1\nFLIGHTCTL-21\n\nArchived work item with a long responsive detail title\n\nDone",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/issues",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 1
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-archived-cycles",
+    "name": "archived-cycles",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/cycles",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-archived-cycles.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "es\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\n...\nCycles\nWork items\nCycles\nModules\nFilters\nNo archived cycles yet\n\nTo tidy up your project, archive completed cycles. Find them here once archived.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/cycles",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "horizontal-scrollbar flex scrollbar-sm w-full items-center gap-2 overflow-x-auto px-4",
+          "width": 215,
+          "scrollWidth": 310,
+          "text": "Work items\nCycles\nModules"
+        }
+      ],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-archived-modules",
+    "name": "archived-modules",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/modules",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-archived-modules.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ts\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\n...\nModules\nWork items\nCycles\nModules\nName\nFilters\nNo archived Modules yet\n\nTo tidy up your project, archive completed or cancelled modules. Find them here once archived.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/modules",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "horizontal-scrollbar flex scrollbar-sm w-full items-center gap-2 overflow-x-auto px-4",
+          "width": 116,
+          "scrollWidth": 310,
+          "text": "Work items\nCycles\nModules"
+        }
+      ],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-analytics",
+    "name": "analytics",
+    "url": "/audit/analytics/overview",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-analytics.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "les\n2\nTotal Intake\n0\nProject Insights\nWork Items\nCycles\nModules\nIntake\nMembers\nPages\nViews\nSummary of Projects\nAll Projects\nTrend on charts\nWork items\nWork Items\n40\nCycles\n2\nModules\n2\nIntake\n0\nMembers\n1\nPages\n1\nViews\n2\nActive Projects\n\nGround Support\n\n25%\n\nFlight Control responsive layout audit\n\n25%",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/analytics/overview",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "relative items-center justify-between gap-1.5 overflow-auto rounded-lg p-0.5 text-13 bg-layer-3 flex h-7 w-fit overflow-x-auto",
+          "width": 175,
+          "scrollWidth": 190,
+          "text": "Overview\nWork items"
+        }
+      ],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-settings-general",
+    "name": "workspace-settings-general",
+    "url": "/audit/settings",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-settings-general.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "alhost:18031/audit\nUpload logo\nWorkspace name\nCompany size\nSelect organization size\nWorkspace URL\nWorkspace Timezone\nUTC\nUpdate workspace\nDelete this workspace\n\nWhen deleting a workspace, all of the data and resources within that workspace will be permanently removed and cannot be recovered.\n\nDelete",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-settings-members",
+    "name": "workspace-settings-members",
+    "url": "/audit/settings/members",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-settings-members.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nMembers\nMembers\nMembers\n1\nFilters\nAdd member\nFull name\n\t\nDisplay name\n\t\nEmail\n\t\nRole\n\tAuthentication\t\nJoining date\n\n\nA\nAudit Tester\n\t\nAudit Tester\n\t\naudit@example.invalid\n\t\nAdmin\n\t\nEmail\n\t\nOct 06, 2026\nPending invites\n1\nA\naudit@example.invalid\n\nPending\n\nMember",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/members",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "divide-y-[0.5px] divide-subtle overflow-scroll",
+          "width": 329,
+          "scrollWidth": 1051,
+          "text": "Full name\n\t\nDisplay name\n\t\nEmail\n\t\nRole\n\tAuthentication\t\nJoining date\n\n\nA\nAudit "
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": "Display name",
+          "x": 349,
+          "right": 477
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Email",
+          "x": 497,
+          "right": 689
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Role",
+          "x": 709,
+          "right": 837
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Joining date",
+          "x": 967,
+          "right": 1072
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 394,
+          "right": 416
+        }
+      ],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-settings-billing",
+    "name": "workspace-settings-billing",
+    "url": "/audit/settings/billing",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-settings-billing.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "request\nbilled monthly\nMonthly\nYearly\nTalk to Sales\nHighlights\nUnlimited users\nCustom work items + Properties\nWork item templates\nFull Time Tracking\nRBAC\nProject Templates\nBaselines And Deviations\nCustom Reports\nPrivate + managed deployments\nGAC\nLDAP support\nDatabases + Formulas\nCompare all features",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/billing",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "horizontal-scrollbar scrollbar-sm size-full overflow-x-auto",
+          "width": 329,
+          "scrollWidth": 840,
+          "text": "Pro\nPopular\n$10\n$8\na user per month\nbilled monthly\nMonthly\nYearly-25%\nUpgrade to"
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": "Yearly-25%",
+          "x": 347,
+          "right": 431
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Upgrade to Pro",
+          "x": 256,
+          "right": 433
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Monthly",
+          "x": 471,
+          "right": 556
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Yearly",
+          "x": 560,
+          "right": 644
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Talk to Sales",
+          "x": 469,
+          "right": 646
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Monthly",
+          "x": 684,
+          "right": 769
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Yearly",
+          "x": 773,
+          "right": 857
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Talk to Sales",
+          "x": 682,
+          "right": 859
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Compare all features",
+          "x": 368,
+          "right": 533
+        }
+      ],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-settings-exports",
+    "name": "workspace-settings-exports",
+    "url": "/audit/settings/exports",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-settings-exports.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\nExports\n\nExport your project data in various formats and access your export history with download links.\n\nExporting project\nAll projects\nFormat\nCSV\nExport\nPrevious exports\nRefresh status\nNo exports yet\n\nYou don't have any export records right now. Once you export data, all records will appear here.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/exports",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-settings-integrations",
+    "name": "workspace-settings-integrations",
+    "url": "/audit/settings/integrations",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-settings-integrations.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Oops! Something went wrong.\n\nSorry, the page you are looking for cannot be found. It may have been removed, had its name changed, or is temporarily unavailable.\n\nGo to Home",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/integrations",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-settings-webhooks",
+    "name": "workspace-settings-webhooks",
+    "url": "/audit/settings/webhooks",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-settings-webhooks.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nWebhooks\nWebhooks\nWebhooks\n\nAutomate notifications to external services when project events occur.\n\nAdd webhook\nhttps://audit.example.invalid/hooks/flight",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/webhooks",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-webhook-detail",
+    "name": "webhook-detail",
+    "url": "/audit/settings/webhooks/fd13fb89-7963-403c-ac07-ac4c5239dc5e",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-webhook-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "d, updated, or deleted\n\nWork items\n\nWork item created, updated, deleted, added to a cycle or module\n\nModules\n\nModule created, updated, or deleted\n\nWork item comments\n\nComment posted, updated, or deleted\n\nSecret key\nGenerate a token to sign-in to the webhook payload\nRe-generate key\nUpdate\nDanger zone",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/webhooks/fd13fb89-7963-403c-ac07-ac4c5239dc5e",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-settings-projects",
+    "name": "settings-projects",
+    "url": "/audit/settings/projects",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-settings-projects.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "r side navigation although you will still be able to access it from your projects page. You can restore the project or delete it whenever you want.\n\nArchive\nDelete\n\nWhen deleting a project, all of the data and resources within that project will be permanently removed and cannot be recovered.\n\nDelete",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/a6e09aa3-8ffb-48bb-8ece-25c43031a0d6/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-settings-general",
+    "name": "project-settings-general",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-settings-general.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "r side navigation although you will still be able to access it from your projects page. You can restore the project or delete it whenever you want.\n\nArchive\nDelete\n\nWhen deleting a project, all of the data and resources within that project will be permanently removed and cannot be recovered.\n\nDelete",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-settings-members",
+    "name": "project-settings-members",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/members",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-settings-members.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Select the default assignee for the project.\n\nNone\nGuest access\n\nThis will allow guests to have view access to all the project work items.\n\nMembers\nFilters\nAdd member\nFull name\n\t\nDisplay name\n\t\nEmail\n\t\nRole\n\t\nJoining date\n\n\nA\nAudit Tester\n\t\nAudit Tester\n\t\naudit@example.invalid\n\t\nAdmin\n\t\nOct 06, 2026",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/members",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "divide-y divide-subtle overflow-scroll",
+          "width": 329,
+          "scrollWidth": 941,
+          "text": "Full name\n\t\nDisplay name\n\t\nEmail\n\t\nRole\n\t\nJoining date\n\n\nA\nAudit Tester\n\t\nAudit "
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": "Display name",
+          "x": 349,
+          "right": 477
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Email",
+          "x": 497,
+          "right": 689
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Role",
+          "x": 709,
+          "right": 837
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Joining date",
+          "x": 857,
+          "right": 962
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Admin",
+          "x": 709,
+          "right": 837
+        }
+      ],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-settings-features-cycles",
+    "name": "project-settings-features-cycles",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/cycles",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-settings-features-cycles.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nCycles\nCycles\n\nSchedule work in flexible periods that adapt to this project's unique rhythm and pace.\n\nEnable cycles\n\nPlan work in focused timeframes.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/cycles",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-settings-features-modules",
+    "name": "project-settings-features-modules",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/modules",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-settings-features-modules.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nModules\nModules\n\nOrganize work into sub-projects with dedicated leads and assignees.\n\nEnable modules\n\nProject members will be able to create and edit modules.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/modules",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-settings-features-views",
+    "name": "project-settings-features-views",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/views",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-settings-features-views.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nViews\nViews\n\nSave custom sorts, filters, and display options or share them with your team.\n\nEnable views\n\nProject members will be able to create and edit views.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/views",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-settings-features-pages",
+    "name": "project-settings-features-pages",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/pages",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-settings-features-pages.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nPages\nPages\n\nCreate and edit free-form content; notes, docs, anything.\n\nEnable pages\n\nProject members will be able to create and edit pages.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/pages",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-settings-features-intake",
+    "name": "project-settings-features-intake",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/intake",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-settings-features-intake.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nIntake\nIntake\n\nLet non-members share bugs, feedback, and suggestions; without disrupting your workflow.\n\nEnable intake\n\nLet project members create in app intake requests.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/intake",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-settings-states",
+    "name": "project-settings-states",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/states",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-settings-states.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nStates\nStates\nStates\n\nDefine and customize workflow states to track the progress of your work items.\n\nBacklog\nBacklog\n\nUnstarted\nTodo\n\nStarted\nIn Progress\n\nCompleted\nDone\n\nCancelled\nNo states available for the cancelled group\nPlease create a new state",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/states",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-settings-labels",
+    "name": "project-settings-labels",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/labels",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-settings-labels.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nLabels\nLabels\nLabels\n\nCreate custom labels to categorize and organize your work items\n\nAdd label\nMobile and tablet acceptance",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/labels",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-settings-estimates",
+    "name": "project-settings-estimates",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/estimates",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-settings-estimates.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nEstimates\nEstimates\nEstimates\n\nSet up estimation systems to track and communicate the effort required for each work item.\n\nNo estimates yet\n\nDefine how your team measures effort and track it consistently across all work items.\n\nAdd estimate system",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/estimates",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-project-settings-automations",
+    "name": "project-settings-automations",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/automations",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-project-settings-automations.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "actions to streamline your project management workflow and reduce manual tasks.\n\nAuto-archive closed work items\n\nBirdplane will auto archive work items that have been completed or canceled.\n\nAuto-close work items\n\nBirdplane will automatically close work items that haven't been completed or canceled.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/automations",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-profile-settings-general",
+    "name": "profile-settings-general",
+    "url": "/settings/profile/general",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-profile-settings-general.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "rsonal Access Tokens\nChange cover\nAudit Tester\naudit@example.invalid\nFirst name *\nLast name\nDisplay name *\nEmail *\nSave changes\nDeactivate account\n\nWhen deactivating an account, all of the data and resources within that account will be permanently removed and cannot be recovered.\n\nDeactivate account",
+      "images": 0
+    },
+    "measure": {
+      "url": "/settings/profile/general",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-profile-settings-preferences",
+    "name": "profile-settings-preferences",
+    "url": "/settings/profile/preferences",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-profile-settings-preferences.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "the way you work\n\nTheme\n\nSelect or customize your interface color scheme.\n\nSelect your theme\nLanguage & Time\nTimezone\n\nCurrent timezone setting.\n\nUTC\nLanguage\n\nChoose the language used in the user interface.\n\nEnglish\nFirst day of the week\n\nThis will change how all calendars in your app look.\n\nSunday",
+      "images": 0
+    },
+    "measure": {
+      "url": "/settings/profile/preferences",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-profile-settings-notifications",
+    "name": "profile-settings-notifications",
+    "url": "/settings/profile/notifications",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-profile-settings-notifications.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "se changes.\n\nState change\n\nNotify me when the work items moves to a different state\n\nWork item completed\n\nNotify me only when a work item is completed\n\nComments\n\nNotify me when someone leaves a comment on the work item\n\nMentions\n\nNotify me only when someone mentions me in the comments or description",
+      "images": 0
+    },
+    "measure": {
+      "url": "/settings/profile/notifications",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-profile-settings-security",
+    "name": "profile-settings-security",
+    "url": "/settings/profile/security",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-profile-settings-security.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Profile\nSecurity\nPreferences\nNotifications\nPersonal Access Tokens\nChange password\nCurrent password\nNew password\nConfirm password\nChange password",
+      "images": 0
+    },
+    "measure": {
+      "url": "/settings/profile/security",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-profile-settings-api-tokens",
+    "name": "profile-settings-api-tokens",
+    "url": "/settings/profile/api-tokens",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-profile-settings-api-tokens.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "tifications\nPersonal Access Tokens\nPersonal Access Tokens\n\nGenerate secure API tokens to integrate your data with external systems and applications.\n\nAdd access token\nNo Personal token yet\n\nGenerate secure API tokens to connect your workspace with external systems and applications.\n\nAdd access token",
+      "images": 0
+    },
+    "measure": {
+      "url": "/settings/profile/api-tokens",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-create-workspace",
+    "name": "create-workspace",
+    "url": "/create-workspace",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-create-workspace.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "audit@example.invalid\nCreate your workspace\nName your workspace*\nSet your workspace's URL*\nlocalhost:18031/\nHow many people will use this workspace?*\nSelect a range\nCreate workspace\nGo back",
+      "images": 0
+    },
+    "measure": {
+      "url": "/create-workspace",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-invitations",
+    "name": "invitations",
+    "url": "/invitations",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-invitations.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "audit@example.invalid\nWe see that someone has invited you to join a workspace\nJoin a workspace\nR\nResponsive audit workspace\n\nMember\n\nAccept & Join\nGo Home",
+      "images": 0
+    },
+    "measure": {
+      "url": "/invitations",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-workspace-invitations",
+    "name": "workspace-invitations",
+    "url": "/workspace-invitations?slug=audit&invitation_id=7ca94714-279e-459e-af10-ecbf84a9c945&token=disposable-local-invitation",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-workspace-invitations.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "You have been invited to Responsive audit workspace\nYour workspace is where you'll create projects, collaborate on your work items, and organize different streams of work in your Birdplane account.\nAccept\nIgnore",
+      "images": 0
+    },
+    "measure": {
+      "url": "/workspace-invitations",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-not-found",
+    "name": "not-found",
+    "url": "/audit/unknown-page",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-not-found.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Oops! Something went wrong.\n\nSorry, the page you are looking for cannot be found. It may have been removed, had its name changed, or is temporarily unavailable.\n\nGo to Home",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/unknown-page",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-sign-in",
+    "name": "sign-in",
+    "url": "/",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-sign-in.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nWork in all dimensions.\nWelcome back to Birdplane.\nEmail\nContinue\n\nBy signing in, you understand and agree to\nour Terms of Service and Privacy Policy.\n\nPlan, track, and collaborate with Birdplane.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-sign-up",
+    "name": "sign-up",
+    "url": "/sign-up",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-sign-up.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nWork in all dimensions.\nCreate your Birdplane account.\nEmail\nContinue\n\nBy creating an account, you understand and agree to\nour Terms of Service and Privacy Policy.\n\nPlan, track, and collaborate with Birdplane.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/sign-up",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-forgot-password",
+    "name": "forgot-password",
+    "url": "/accounts/forgot-password",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-forgot-password.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nReset password\nRegain access to your account.\nEmail\nSend reset linkBack to sign in",
+      "images": 0
+    },
+    "measure": {
+      "url": "/accounts/forgot-password",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-reset-password",
+    "name": "reset-password",
+    "url": "/accounts/reset-password?email=audit%40example.invalid&uidb64=fixture&token=fixture",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-reset-password.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nReset password\nCreate a new password.\nEmail\nPassword\nMin 8 characters\nMin 1 upper-case letter\nMin 1 lower-case letter\nMin 1 number\nMin 1 special character\nConfirm password\nSet password",
+      "images": 0
+    },
+    "measure": {
+      "url": "/accounts/reset-password",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-onboarding-profile",
+    "name": "onboarding-profile",
+    "url": "/onboarding",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-onboarding-profile.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nA\nAudit Tester\nCreate your profile.\n\nThis is how you will appear in Birdplane.\n\nA\nUpload image\nName\nContinue",
+      "images": 0
+    },
+    "measure": {
+      "url": "/onboarding",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-create-project-modal",
+    "name": "create-project-modal",
+    "url": "/audit/projects",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-create-project-modal.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nProjects\nProject\nCreated date\nFilters\nFlight Control responsive layout audit\n\nFLIGHTCTL\n\nCreated on Oct 06, 2026\n\nA\nGround Support\n\nGS\n\nCreated on Oct 06, 2026\n\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-create-issue-modal",
+    "name": "create-issue-modal",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-create-issue-modal.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFLIGHTCTL-11\n\nFlight Control responsive layout audit: verify long work item title and visible properties 11\n\nIn Progress\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 11
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-profile-assigned",
+    "name": "profile-assigned",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/assigned",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-profile-assigned.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "26\nA\nmodule\nFLIGHTCTL-12\n\nFlight Control responsive layout audit: verify long work item title and visible properties 12\n\nDone\nOct 06 - 09, 2026\nA\nmodule\nFLIGHTCTL-11\n\nFlight Control responsive layout audit: verify long work item title and visible properties 11\n\nIn Progress\nOct 06 - 09, 2026\nA\nmodule",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/assigned",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 22
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-profile-created",
+    "name": "profile-created",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/created",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-profile-created.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "New work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nYour work\nDisplay\nSummary\nAssigned\nCreated\nSubscribed\nActivity\nNo work items yet\n\nAll work items created by you come here, track them here directly.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/created",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-profile-subscribed",
+    "name": "profile-subscribed",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/subscribed",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-profile-subscribed.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nYour work\nDisplay\nSummary\nAssigned\nCreated\nSubscribed\nActivity\nNo work items yet\n\nSubscribe to work items you are interested in, track all of them here.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/subscribed",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-archived-issue-detail",
+    "name": "archived-issue-detail",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/issues/418e9625-2ace-4d78-8106-2048488fbbf2",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-archived-issue-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "1\nThis work item has been archived. Visit the Archives section to restore it.\nGo to archives\nFLIGHTCTL-21\nSaved\nArchived work item with a long responsive detail title\n\nArchived detail layout and restore controls.\n\nLast edited by 23 minutes ago\n\nAdd sub-work item\nAdd relation\nAdd link\nAttach\nActivity",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/issues/418e9625-2ace-4d78-8106-2048488fbbf2",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-analytics-work-items",
+    "name": "analytics-work-items",
+    "url": "/audit/analytics/work-items",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-analytics-work-items.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "operty\nHigh\nPRIORITY\n0\n5\n10\n15\n20\n25\n30\n35\n45\nNO. OF WORK ITEM\n1 Priority\nExport as csv\nPriority\t\nCount\n\nHigh\t\n40\n2 Projects\nExport as csv\nProject\n\t\nBacklog\n\t\nStarted\n\t\nUnstarted\n\t\nCompleted\n\t\nCancelled\n\n\nGround Support\n\t\n5\n\t\n5\n\t\n5\n\t\n5\n\t\n0\n\n\nFlight Control responsive layout audit\n\t\n5\n\t\n5\n\t\n5\n\t\n5\n\t\n0",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/analytics/work-items",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-profile-details",
+    "name": "profile-details",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/assigned",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-profile-details.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": " 09, 2026\nA\nmodule\nFLIGHTCTL-11\n\nFlight Control responsive layout audit: verify long work item title and visible properties 11\n\nIn Progress\nOct 06 - 09, 2026\nA\nmodule\nA\nAudit Tester\n(Audit Tester)\nJoined on\nOct 06, 2026\nTimezone\n18:57 UTC\nGround Support\n25%\nFlight Control responsive layout audit\n25%",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/assigned",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 22
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-home",
+    "name": "home",
+    "url": "/audit",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-home.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "your picture, colors, and more.\n\nPersonalize now\nQuicklinks\nAdd quick Link\n\nKeep important references, resources, or docs handy for your work\n\nRecents\nAll\n\nYou don't have any recents yet.\n\nYour stickies\nAdd sticky\n\nJot down an idea, capture an aha, or record a brainwave. Add a sticky to get started.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-drafts",
+    "name": "drafts",
+    "url": "/audit/drafts",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-drafts.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nDrafts\nDraft a work item\nHalf-written work items\n\nTo try this out, start adding a work item and leave it mid-way or create your first draft below. 😉\n\nCreate draft work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/drafts",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-your-work",
+    "name": "your-work",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-your-work.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ted\n\n0\n\nWork items assigned\n\n40\n\nWork items subscribed\n\n0\n\nWorkload\nBacklog\n\n10\n\nNot started\n\n10\n\nWorking on\n\n10\n\nCompleted\n\n10\n\nCanceled\n\n0\n\nWork items by Priority\nHigh\nPRIORITY\n5\n15\n25\n35\n45\nWork items by state\nBacklog\n10\nUnstarted\n10\nStarted\n10\nCompleted\n10\nCanceled\n0\nRecent activity\n\nNo Data yet",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-profile-activity",
+    "name": "profile-activity",
+    "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/activity",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-profile-activity.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Control responsive layout audit\n\nCommunity\nProjects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nYour work\nSummary\nAssigned\nCreated\nSubscribed\nActivity\nRecent activity\nDownload today's activity",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/profile/284aa7c6-f6d8-4d04-94e7-484544f289d7/activity",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-stickies",
+    "name": "stickies",
+    "url": "/audit/stickies",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-stickies.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nStickies\nAdd sticky\nStickies are quick notes and to-dos you take down on the fly.\n\nCapture your thoughts and ideas effortlessly by creating stickies that you can access anytime and from anywhere.\n\nAdd sticky",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/stickies",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-notifications",
+    "name": "notifications",
+    "url": "/audit/notifications",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-notifications.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "R\nResponsive audit workspace\nA\nInbox\nAll\nMentions\n\nUpdates for your subscribed work items will appear here",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/notifications",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-projects",
+    "name": "projects",
+    "url": "/audit/projects",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-projects.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nProjects\nCreated date\nFilters\nAdd Project\nFlight Control responsive layout audit\n\nFLIGHTCTL\n\nCreated on Oct 06, 2026\n\nA\nGround Support\n\nGS\n\nCreated on Oct 06, 2026\n\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-archived-projects",
+    "name": "archived-projects",
+    "url": "/audit/projects/archives",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-archived-projects.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "yout audit\n\nCommunity\nProjects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nProjects\nArchived\nCreated date\nFilters\nNo projects archived\n\nLooks like all your projects are still active—great job!",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/archives",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-views",
+    "name": "workspace-views",
+    "url": "/audit/workspace-views",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-views.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ight Control responsive layout audit\n\nCommunity\nProjects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nViews\nDisplay\nAdd view\n\nAll work items\n\nAssigned\n\nCreated\n\nSubscribed\n\nSaved workspace list",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-list",
+    "name": "workspace-list",
+    "url": "/audit/workspace-views/all-issues",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-list.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ober flight readiness\nMobile and tablet acceptance\nFLIGHTCTL-14\n\nFlight Control responsive layout audit: verify long work item title and visible properties 14\n\nTodo\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nIn Progress\n10\nDone\n10\nCanceled\n0",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/all-issues",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 17
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-board",
+    "name": "workspace-board",
+    "url": "/audit/workspace-views/all-issues",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-board.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "8\nDone\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nGS-4\nGround Support: verify long work item title and visible properties 4\nDone\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nCanceled\n0",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/all-issues",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "horizontal-scrollbar relative flex scrollbar-lg h-full w-full bg-surface-2 overflow-x-auto overflow-y-hidden",
+          "width": 750,
+          "scrollWidth": 1857,
+          "text": "Backlog\n10\nGS-17\nGround Support: verify long work item title and visible propert"
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 1093,
+          "right": 1113
+        },
+        {
+          "tag": "A",
+          "text": "GS-19\nGround Support: verify long work item title ",
+          "x": 763,
+          "right": 1113
+        },
+        {
+          "tag": "BUTTON",
+          "text": "GS-19",
+          "x": 776,
+          "right": 808
+        },
+        {
+          "tag": "BUTTON",
+          "text": "In Progress",
+          "x": 776,
+          "right": 876
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 884,
+          "right": 904
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Oct 06 - 09, 2026",
+          "x": 912,
+          "right": 1054
+        },
+        {
+          "tag": "BUTTON",
+          "text": "A",
+          "x": 1062,
+          "right": 1084
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Responsive flight dashboard",
+          "x": 776,
+          "right": 936
+        },
+        {
+          "tag": "BUTTON",
+          "text": "October flight readiness",
+          "x": 776,
+          "right": 936
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Mobile and tablet acceptance",
+          "x": 776,
+          "right": 967
+        },
+        {
+          "tag": "A",
+          "text": "GS-15\nGround Support: verify long work item title ",
+          "x": 763,
+          "right": 1113
+        },
+        {
+          "tag": "BUTTON",
+          "text": "GS-15",
+          "x": 776,
+          "right": 808
+        },
+        {
+          "tag": "BUTTON",
+          "text": "In Progress",
+          "x": 776,
+          "right": 876
+        },
+        {
+          "tag": "BUTTON",
+          "text": null,
+          "x": 884,
+          "right": 904
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Oct 06 - 09, 2026",
+          "x": 912,
+          "right": 1054
+        },
+        {
+          "tag": "BUTTON",
+          "text": "A",
+          "x": 1062,
+          "right": 1084
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Responsive flight dashboard",
+          "x": 776,
+          "right": 936
+        },
+        {
+          "tag": "BUTTON",
+          "text": "October flight readiness",
+          "x": 776,
+          "right": 936
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Mobile and tablet acceptance",
+          "x": 776,
+          "right": 967
+        },
+        {
+          "tag": "A",
+          "text": "GS-11\nGround Support: verify long work item title ",
+          "x": 763,
+          "right": 1113
+        }
+      ],
+      "issues": 40
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-calendar",
+    "name": "workspace-calendar",
+    "url": "/audit/workspace-views/all-issues",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-calendar.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ble properties 20\nGS-19\nGround Support: verify long work item title and visible properties 19\nGS-18\nGround Support: verify long work item title and visible properties 18\nGS-17\nGround Support: verify long work item title and visible properties 17\nLoad more\n12\n13\n14\n15\n16\n19\n20\n21\n22\n23\n26\n27\n28\n29\n30",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/all-issues",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 4
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-table",
+    "name": "workspace-table",
+    "url": "/audit/workspace-views/all-issues",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-table.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "y long work item title and visible properties 12\n\t\nDone\n\t\nHigh\n\t\nA\nAudit Tester\n\t\nMobile and tablet acceptance\n\t\nResponsive flight dashboard\n\t\nOctober flight readiness\n\t\nOct 06, 2026\n\t\nOct 09, 2026\n\t\nEstimate\n\t\nOct 06, 2026\n\t\nOct 06, 2026\n\t\n0 links\n\t\n0 attachments\n\t\n0 sub-work items\n\n\n\n\n▾\nCanceled\n0",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/all-issues",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "vertical-scrollbar horizontal-scrollbar scrollbar-lg h-full w-full",
+          "width": 750,
+          "scrollWidth": 2872,
+          "text": "Work items\n\t\nState\n\t\nPriority\n\t\nAssignees\n\t\nLabels\n\t\nModules\n\t\nCycle\n\t\nStart dat"
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": "Priority",
+          "x": 666,
+          "right": 809
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Assignees",
+          "x": 810,
+          "right": 970
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Labels",
+          "x": 971,
+          "right": 1203
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Modules",
+          "x": 1204,
+          "right": 1424
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Cycle",
+          "x": 1425,
+          "right": 1622
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Start date",
+          "x": 1623,
+          "right": 1782
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Due date",
+          "x": 1783,
+          "right": 1941
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Estimate",
+          "x": 1942,
+          "right": 2090
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Created on",
+          "x": 2091,
+          "right": 2234
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Updated on",
+          "x": 2235,
+          "right": 2381
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Link",
+          "x": 2382,
+          "right": 2525
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Attachment",
+          "x": 2526,
+          "right": 2693
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Sub-work item",
+          "x": 2694,
+          "right": 2880
+        },
+        {
+          "tag": "BUTTON",
+          "text": "High",
+          "x": 666,
+          "right": 809
+        },
+        {
+          "tag": "BUTTON",
+          "text": "A\nAudit Tester",
+          "x": 810,
+          "right": 970
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Mobile and tablet acceptance",
+          "x": 971,
+          "right": 1203
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Responsive flight dashboard",
+          "x": 1204,
+          "right": 1424
+        },
+        {
+          "tag": "BUTTON",
+          "text": "October flight readiness",
+          "x": 1425,
+          "right": 1622
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Oct 06, 2026",
+          "x": 1623,
+          "right": 1782
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Oct 09, 2026",
+          "x": 1783,
+          "right": 1941
+        }
+      ],
+      "issues": 38
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-timeline",
+    "name": "workspace-timeline",
+    "url": "/audit/workspace-views/all-issues",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-timeline.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": " visible properties 4\nFlight Control responsive layout audit: verify long work item title and visible properties 3\nFlight Control responsive layout audit: verify long work item title and visible properties 2\nFlight Control responsive layout audit: verify long work item title and visible properties 1",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/all-issues",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "gantt-container",
+          "class": "vertical-scrollbar horizontal-scrollbar flex scrollbar-lg h-full w-full overflow-auto border-t-[0.5px] border-subtle",
+          "width": 750,
+          "scrollWidth": 15480,
+          "text": "Work items\nDuration\nGS-20\nGround Support: verify long work item title and visibl"
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Ground Support: verify long work item title and vi",
+          "x": 635,
+          "right": 875
+        }
+      ],
+      "issues": 80
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-saved-workspace-view",
+    "name": "saved-workspace-view",
+    "url": "/audit/workspace-views/0f6a586b-7f57-47eb-8197-33762ac305d3",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-saved-workspace-view.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nGS-5\n\nGround Support: verify long work item title and visible properties 5\n\nBacklog\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFlight Control responsive layout audit\n20",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/workspace-views/0f6a586b-7f57-47eb-8197-33762ac305d3",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 16
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-list",
+    "name": "project-list",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-list.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFLIGHTCTL-4\n\nFlight Control responsive layout audit: verify long work item title and visible properties 4\n\nDone\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 17
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-issue-detail",
+    "name": "issue-detail",
+    "url": "/audit/browse/FLIGHTCTL-1",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-issue-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "s\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\n...\nWork Items\nFLIGHTCTL-1\nSubscribe\nFLIGHTCTL-1\nSaved\n92/255\n\nCheck navigation, dates, labels and long content at narrow widths.\n\nLast edited by about 1 hour ago\n\nAdd sub-work item\nAdd relation\nAdd link\nAttach\nActivity\n\n\n\n\nComment",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/browse/FLIGHTCTL-1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-issue-properties",
+    "name": "issue-properties",
+    "url": "/audit/browse/FLIGHTCTL-1",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-issue-properties.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "dd relation\nAdd link\nAttach\nActivity\n\n\n\n\nComment\nProperties\nState\nBacklog\nAssignees\nA\nAudit Tester\nPriority\nHigh\nStart date\nOct 06, 2026\nDue date\nOct 09, 2026\nModules\nResponsive flight dashboard\nCycle\nOctober flight readiness\nParent\nAdd parent work item\nLabels\nMobile and tablet acceptance\nAdd labels",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/browse/FLIGHTCTL-1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-list-horizontal-end",
+    "name": "list-horizontal-end",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-list-horizontal-end.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFLIGHTCTL-4\n\nFlight Control responsive layout audit: verify long work item title and visible properties 4\n\nDone\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 17
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-cycles",
+    "name": "cycles",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-cycles.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "rk items\nBacklog\n5 Work items\nWork item burndown\nPending work items - 15\nOct 04\nOct 06\nOct 08\nOct 10\nOct 12\nOct 14\nOct 16\nOct 18\nDATE\n0\n3\n6\n9\n12\n15\n18\n21\n27\nCOMPLETION\nCurrent work items\nIdeal work items\nPriority work items\nAssignees\nLabels\nA\nAudit Tester\n25%\nof 20\nUpcoming cycle\n0\nCompleted cycle\n0",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-active-cycles",
+    "name": "active-cycles",
+    "url": "/audit/active-cycles",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-active-cycles.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ll of them per cycle in one click.\nZoom into cycles that need attention.\nInvestigate the state of any cycle that doesn't conform to expectations in one click.\nStay ahead of blockers.\nSpot challenges from one project to another and see inter-cycle dependencies that aren't obvious from any other view.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/active-cycles",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-modules",
+    "name": "modules",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-modules.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "jects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\n...\nModules\nName\nFilters\nAdd Module\n25%\nResponsive flight dashboard\nOct 06 - 18, 2026\nIn Progress",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-views",
+    "name": "project-views",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/views",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-views.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ews\nPages\nIntake\nCommunity\nProjects\nNew work item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\n...\nViews\nUpdated at\nFilters\nAdd view\nFlight readiness saved view\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/views",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-saved-project-view",
+    "name": "saved-project-view",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/views/3704cf3d-f7b9-4995-90bd-38e24f2ebfe0",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-saved-project-view.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "light readiness\nMobile and tablet acceptance\nFLIGHTCTL-3\n\nFlight Control responsive layout audit: verify long work item title and visible properties 3\n\nIn Progress\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item\nDone\n5\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/views/3704cf3d-f7b9-4995-90bd-38e24f2ebfe0",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 15
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-pages",
+    "name": "pages",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-pages.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": " item\n\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\n...\nPages\nAdd page\nPublic\nPrivate\nArchived\nDate modified\nFilters\nFlight readiness mobile and tablet checklist\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-page-outline",
+    "name": "page-outline",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages/aa54d55a-af92-4998-81e0-103e19ea9b43?paneTab=outline",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-page-outline.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": " details\nView only\nRestore\nHeading 2\nColor\nIcon\nFlight readiness mobile and tablet checklist\nResponsive audit\n\nCheck content, navigation and controls on narrow screens.\n\nResponsive audit\n\nCheck content, navigation and controls on narrow screens.\n\nOutline\nInfo\nAssets\nResponsive audit\nResponsive audit",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages/aa54d55a-af92-4998-81e0-103e19ea9b43",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-page-detail",
+    "name": "page-detail",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages/aa54d55a-af92-4998-81e0-103e19ea9b43",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-page-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "t readiness mobile and tablet checklist\nLoading version details\nView only\nRestore\nHeading 2\nColor\nIcon\nFlight readiness mobile and tablet checklist\nResponsive audit\n\nCheck content, navigation and controls on narrow screens.\n\nResponsive audit\n\nCheck content, navigation and controls on narrow screens.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/pages/aa54d55a-af92-4998-81e0-103e19ea9b43",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-intake",
+    "name": "intake",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/intake",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-intake.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "More\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\n...\nIntake\nAdd work item\nOpen\n0\nClosed\nStatus\nPending\nNo matching results.\n\nNo results found. Try adjusting your search terms.\n\nSelect an Intake work item to view its details",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/intake",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-archived-issues",
+    "name": "archived-issues",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/issues",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-archived-issues.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\n...\nArchives\nWork items\n1\nWork items\nCycles\nModules\nDisplay\nAll work items\n1\nFLIGHTCTL-21\n\nArchived work item with a long responsive detail title\n\nDone",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/issues",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 1
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-archived-cycles",
+    "name": "archived-cycles",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/cycles",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-archived-cycles.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "pace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\n...\nArchives\nCycles\nWork items\nCycles\nModules\nFilters\nNo archived cycles yet\n\nTo tidy up your project, archive completed cycles. Find them here once archived.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/cycles",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-archived-modules",
+    "name": "archived-modules",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/modules",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-archived-modules.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Projects\n\nGround Support\n\nFlight Control responsive layout audit\n\nWork items\nCycles\nModules\nViews\nPages\nIntake\nCommunity\n...\nArchives\nModules\nWork items\nCycles\nModules\nName\nFilters\nNo archived Modules yet\n\nTo tidy up your project, archive completed or cancelled modules. Find them here once archived.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/archives/modules",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-analytics",
+    "name": "analytics",
+    "url": "/audit/analytics/overview",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-analytics.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "les\n2\nTotal Intake\n0\nProject Insights\nWork Items\nCycles\nModules\nIntake\nMembers\nPages\nViews\nSummary of Projects\nAll Projects\nTrend on charts\nWork items\nWork Items\n40\nCycles\n2\nModules\n2\nIntake\n0\nMembers\n1\nPages\n1\nViews\n2\nActive Projects\n\nGround Support\n\n25%\n\nFlight Control responsive layout audit\n\n25%",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/analytics/overview",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-settings-general",
+    "name": "workspace-settings-general",
+    "url": "/audit/settings",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-settings-general.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "alhost:18031/audit\nUpload logo\nWorkspace name\nCompany size\nSelect organization size\nWorkspace URL\nWorkspace Timezone\nUTC\nUpdate workspace\nDelete this workspace\n\nWhen deleting a workspace, all of the data and resources within that workspace will be permanently removed and cannot be recovered.\n\nDelete",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-settings-members",
+    "name": "workspace-settings-members",
+    "url": "/audit/settings/members",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-settings-members.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "bers\nBilling & Plans\nExports\nDeveloper\nWebhooks\nMembers\nMembers\n1\nFilters\nAdd member\nFull name\n\t\nDisplay name\n\t\nEmail\n\t\nRole\n\tAuthentication\t\nJoining date\n\n\nA\nAudit Tester\n\t\nAudit Tester\n\t\naudit@example.invalid\n\t\nAdmin\n\t\nEmail\n\t\nOct 06, 2026\nPending invites\n1\nA\naudit@example.invalid\n\nPending\n\nMember",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/members",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "divide-y-[0.5px] divide-subtle overflow-scroll",
+          "width": 457,
+          "scrollWidth": 1051,
+          "text": "Full name\n\t\nDisplay name\n\t\nEmail\n\t\nRole\n\tAuthentication\t\nJoining date\n\n\nA\nAudit "
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": "Email",
+          "x": 747,
+          "right": 939
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Role",
+          "x": 959,
+          "right": 1087
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Joining date",
+          "x": 1217,
+          "right": 1322
+        }
+      ],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-settings-billing",
+    "name": "workspace-settings-billing",
+    "url": "/audit/settings/billing",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-settings-billing.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "request\nbilled monthly\nMonthly\nYearly\nTalk to Sales\nHighlights\nUnlimited users\nCustom work items + Properties\nWork item templates\nFull Time Tracking\nRBAC\nProject Templates\nBaselines And Deviations\nCustom Reports\nPrivate + managed deployments\nGAC\nLDAP support\nDatabases + Formulas\nCompare all features",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/billing",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "horizontal-scrollbar scrollbar-sm size-full overflow-x-auto",
+          "width": 457,
+          "scrollWidth": 840,
+          "text": "Pro\nPopular\n$10\n$8\na user per month\nbilled monthly\nMonthly\nYearly-25%\nUpgrade to"
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": "Monthly",
+          "x": 721,
+          "right": 806
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Yearly",
+          "x": 810,
+          "right": 894
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Talk to Sales",
+          "x": 719,
+          "right": 896
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Monthly",
+          "x": 934,
+          "right": 1019
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Yearly",
+          "x": 1023,
+          "right": 1107
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Talk to Sales",
+          "x": 932,
+          "right": 1109
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Compare all features",
+          "x": 618,
+          "right": 783
+        }
+      ],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-settings-exports",
+    "name": "workspace-settings-exports",
+    "url": "/audit/settings/exports",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-settings-exports.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\nExports\n\nExport your project data in various formats and access your export history with download links.\n\nExporting project\nAll projects\nFormat\nCSV\nExport\nPrevious exports\nRefresh status\nNo exports yet\n\nYou don't have any export records right now. Once you export data, all records will appear here.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/exports",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-settings-integrations",
+    "name": "workspace-settings-integrations",
+    "url": "/audit/settings/integrations",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-settings-integrations.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Oops! Something went wrong.\n\nSorry, the page you are looking for cannot be found. It may have been removed, had its name changed, or is temporarily unavailable.\n\nGo to Home",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/integrations",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-settings-webhooks",
+    "name": "workspace-settings-webhooks",
+    "url": "/audit/settings/webhooks",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-settings-webhooks.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "ive audit workspace\nA\n\nWorkspace settings\n\nR\n\nResponsive audit workspace\n\nAdmin\n\nAdministration\nGeneral\nMembers\nBilling & Plans\nExports\nDeveloper\nWebhooks\nWebhooks\nWebhooks\n\nAutomate notifications to external services when project events occur.\n\nAdd webhook\nhttps://audit.example.invalid/hooks/flight",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/webhooks",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-webhook-detail",
+    "name": "webhook-detail",
+    "url": "/audit/settings/webhooks/fd13fb89-7963-403c-ac07-ac4c5239dc5e",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-webhook-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "d, updated, or deleted\n\nWork items\n\nWork item created, updated, deleted, added to a cycle or module\n\nModules\n\nModule created, updated, or deleted\n\nWork item comments\n\nComment posted, updated, or deleted\n\nSecret key\nGenerate a token to sign-in to the webhook payload\nRe-generate key\nUpdate\nDanger zone",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/webhooks/fd13fb89-7963-403c-ac07-ac4c5239dc5e",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-settings-projects",
+    "name": "settings-projects",
+    "url": "/audit/settings/projects",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-settings-projects.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "r side navigation although you will still be able to access it from your projects page. You can restore the project or delete it whenever you want.\n\nArchive\nDelete\n\nWhen deleting a project, all of the data and resources within that project will be permanently removed and cannot be recovered.\n\nDelete",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/a6e09aa3-8ffb-48bb-8ece-25c43031a0d6/",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-settings-general",
+    "name": "project-settings-general",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-settings-general.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "r side navigation although you will still be able to access it from your projects page. You can restore the project or delete it whenever you want.\n\nArchive\nDelete\n\nWhen deleting a project, all of the data and resources within that project will be permanently removed and cannot be recovered.\n\nDelete",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-settings-members",
+    "name": "project-settings-members",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/members",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-settings-members.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Select the default assignee for the project.\n\nNone\nGuest access\n\nThis will allow guests to have view access to all the project work items.\n\nMembers\nFilters\nAdd member\nFull name\n\t\nDisplay name\n\t\nEmail\n\t\nRole\n\t\nJoining date\n\n\nA\nAudit Tester\n\t\nAudit Tester\n\t\naudit@example.invalid\n\t\nAdmin\n\t\nOct 06, 2026",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/members",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "class": "divide-y divide-subtle overflow-scroll",
+          "width": 457,
+          "scrollWidth": 941,
+          "text": "Full name\n\t\nDisplay name\n\t\nEmail\n\t\nRole\n\t\nJoining date\n\n\nA\nAudit Tester\n\t\nAudit "
+        }
+      ],
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": "Email",
+          "x": 747,
+          "right": 939
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Role",
+          "x": 959,
+          "right": 1087
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Joining date",
+          "x": 1107,
+          "right": 1212
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Admin",
+          "x": 959,
+          "right": 1087
+        }
+      ],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-settings-features-cycles",
+    "name": "project-settings-features-cycles",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/cycles",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-settings-features-cycles.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": " layout audit\n\nAdmin\n\nGeneral\nGeneral\nMembers\nFeatures\nCycles\nModules\nViews\nPages\nIntake\nWork Structure\nStates\nLabels\nEstimates\nExecution\nAutomations\nCycles\nCycles\n\nSchedule work in flexible periods that adapt to this project's unique rhythm and pace.\n\nEnable cycles\n\nPlan work in focused timeframes.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/cycles",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-settings-features-modules",
+    "name": "project-settings-features-modules",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/modules",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-settings-features-modules.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "audit\n\nAdmin\n\nGeneral\nGeneral\nMembers\nFeatures\nCycles\nModules\nViews\nPages\nIntake\nWork Structure\nStates\nLabels\nEstimates\nExecution\nAutomations\nModules\nModules\n\nOrganize work into sub-projects with dedicated leads and assignees.\n\nEnable modules\n\nProject members will be able to create and edit modules.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/modules",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-settings-features-views",
+    "name": "project-settings-features-views",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/views",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-settings-features-views.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "dit\n\nAdmin\n\nGeneral\nGeneral\nMembers\nFeatures\nCycles\nModules\nViews\nPages\nIntake\nWork Structure\nStates\nLabels\nEstimates\nExecution\nAutomations\nViews\nViews\n\nSave custom sorts, filters, and display options or share them with your team.\n\nEnable views\n\nProject members will be able to create and edit views.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/views",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-settings-features-pages",
+    "name": "project-settings-features-pages",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/pages",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-settings-features-pages.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "responsive layout audit\n\nAdmin\n\nGeneral\nGeneral\nMembers\nFeatures\nCycles\nModules\nViews\nPages\nIntake\nWork Structure\nStates\nLabels\nEstimates\nExecution\nAutomations\nPages\nPages\n\nCreate and edit free-form content; notes, docs, anything.\n\nEnable pages\n\nProject members will be able to create and edit pages.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/pages",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-settings-features-intake",
+    "name": "project-settings-features-intake",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/intake",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-settings-features-intake.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\n\nGeneral\nGeneral\nMembers\nFeatures\nCycles\nModules\nViews\nPages\nIntake\nWork Structure\nStates\nLabels\nEstimates\nExecution\nAutomations\nIntake\nIntake\n\nLet non-members share bugs, feedback, and suggestions; without disrupting your workflow.\n\nEnable intake\n\nLet project members create in app intake requests.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/features/intake",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-settings-states",
+    "name": "project-settings-states",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/states",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-settings-states.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Structure\nStates\nLabels\nEstimates\nExecution\nAutomations\nStates\nStates\n\nDefine and customize workflow states to track the progress of your work items.\n\nBacklog\nBacklog\n\nUnstarted\nTodo\n\nStarted\nIn Progress\n\nCompleted\nDone\n\nCancelled\nNo states available for the cancelled group\nPlease create a new state",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/states",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-settings-labels",
+    "name": "project-settings-labels",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/labels",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-settings-labels.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "tings\n\nFlight Control responsive layout audit\n\nAdmin\n\nGeneral\nGeneral\nMembers\nFeatures\nCycles\nModules\nViews\nPages\nIntake\nWork Structure\nStates\nLabels\nEstimates\nExecution\nAutomations\nLabels\nLabels\n\nCreate custom labels to categorize and organize your work items\n\nAdd label\nMobile and tablet acceptance",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/labels",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-settings-estimates",
+    "name": "project-settings-estimates",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/estimates",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-settings-estimates.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e\nWork Structure\nStates\nLabels\nEstimates\nExecution\nAutomations\nEstimates\nEstimates\n\nSet up estimation systems to track and communicate the effort required for each work item.\n\nNo estimates yet\n\nDefine how your team measures effort and track it consistently across all work items.\n\nAdd estimate system",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/estimates",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-project-settings-automations",
+    "name": "project-settings-automations",
+    "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/automations",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-project-settings-automations.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "actions to streamline your project management workflow and reduce manual tasks.\n\nAuto-archive closed work items\n\nBirdplane will auto archive work items that have been completed or canceled.\n\nAuto-close work items\n\nBirdplane will automatically close work items that haven't been completed or canceled.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/settings/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/automations",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-profile-settings-general",
+    "name": "profile-settings-general",
+    "url": "/settings/profile/general",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-profile-settings-general.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "rsonal Access Tokens\nChange cover\nAudit Tester\naudit@example.invalid\nFirst name *\nLast name\nDisplay name *\nEmail *\nSave changes\nDeactivate account\n\nWhen deactivating an account, all of the data and resources within that account will be permanently removed and cannot be recovered.\n\nDeactivate account",
+      "images": 0
+    },
+    "measure": {
+      "url": "/settings/profile/general",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-profile-settings-preferences",
+    "name": "profile-settings-preferences",
+    "url": "/settings/profile/preferences",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-profile-settings-preferences.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "the way you work\n\nTheme\n\nSelect or customize your interface color scheme.\n\nSelect your theme\nLanguage & Time\nTimezone\n\nCurrent timezone setting.\n\nUTC\nLanguage\n\nChoose the language used in the user interface.\n\nEnglish\nFirst day of the week\n\nThis will change how all calendars in your app look.\n\nSunday",
+      "images": 0
+    },
+    "measure": {
+      "url": "/settings/profile/preferences",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-profile-settings-notifications",
+    "name": "profile-settings-notifications",
+    "url": "/settings/profile/notifications",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-profile-settings-notifications.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "se changes.\n\nState change\n\nNotify me when the work items moves to a different state\n\nWork item completed\n\nNotify me only when a work item is completed\n\nComments\n\nNotify me when someone leaves a comment on the work item\n\nMentions\n\nNotify me only when someone mentions me in the comments or description",
+      "images": 0
+    },
+    "measure": {
+      "url": "/settings/profile/notifications",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-profile-settings-security",
+    "name": "profile-settings-security",
+    "url": "/settings/profile/security",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-profile-settings-security.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Profile\nSecurity\nPreferences\nNotifications\nPersonal Access Tokens\nChange password\nCurrent password\nNew password\nConfirm password\nChange password",
+      "images": 0
+    },
+    "measure": {
+      "url": "/settings/profile/security",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-profile-settings-api-tokens",
+    "name": "profile-settings-api-tokens",
+    "url": "/settings/profile/api-tokens",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-profile-settings-api-tokens.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "tifications\nPersonal Access Tokens\nPersonal Access Tokens\n\nGenerate secure API tokens to integrate your data with external systems and applications.\n\nAdd access token\nNo Personal token yet\n\nGenerate secure API tokens to connect your workspace with external systems and applications.\n\nAdd access token",
+      "images": 0
+    },
+    "measure": {
+      "url": "/settings/profile/api-tokens",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-create-workspace",
+    "name": "create-workspace",
+    "url": "/create-workspace",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-create-workspace.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "audit@example.invalid\nCreate your workspace\nName your workspace*\nSet your workspace's URL*\nlocalhost:18031/\nHow many people will use this workspace?*\nSelect a range\nCreate workspace\nGo back",
+      "images": 0
+    },
+    "measure": {
+      "url": "/create-workspace",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-invitations",
+    "name": "invitations",
+    "url": "/invitations",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-invitations.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "audit@example.invalid\nWe see that someone has invited you to join a workspace\nJoin a workspace\nR\nResponsive audit workspace\n\nMember\n\nAccept & Join\nGo Home",
+      "images": 0
+    },
+    "measure": {
+      "url": "/invitations",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-workspace-invitations",
+    "name": "workspace-invitations",
+    "url": "/workspace-invitations?slug=audit&invitation_id=7ca94714-279e-459e-af10-ecbf84a9c945&token=disposable-local-invitation",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-workspace-invitations.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "You have been invited to Responsive audit workspace\nYour workspace is where you'll create projects, collaborate on your work items, and organize different streams of work in your Birdplane account.\nAccept\nIgnore",
+      "images": 0
+    },
+    "measure": {
+      "url": "/workspace-invitations",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-not-found",
+    "name": "not-found",
+    "url": "/audit/unknown-page",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-not-found.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Oops! Something went wrong.\n\nSorry, the page you are looking for cannot be found. It may have been removed, had its name changed, or is temporarily unavailable.\n\nGo to Home",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/unknown-page",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-sign-in",
+    "name": "sign-in",
+    "url": "/",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-sign-in.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nWork in all dimensions.\nWelcome back to Birdplane.\nEmail\nContinue\n\nBy signing in, you understand and agree to\nour Terms of Service and Privacy Policy.\n\nPlan, track, and collaborate with Birdplane.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-sign-up",
+    "name": "sign-up",
+    "url": "/sign-up",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-sign-up.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nWork in all dimensions.\nCreate your Birdplane account.\nEmail\nContinue\n\nBy creating an account, you understand and agree to\nour Terms of Service and Privacy Policy.\n\nPlan, track, and collaborate with Birdplane.",
+      "images": 0
+    },
+    "measure": {
+      "url": "/sign-up",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-forgot-password",
+    "name": "forgot-password",
+    "url": "/accounts/forgot-password",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-forgot-password.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nReset password\nRegain access to your account.\nEmail\nSend reset linkBack to sign in",
+      "images": 0
+    },
+    "measure": {
+      "url": "/accounts/forgot-password",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-reset-password",
+    "name": "reset-password",
+    "url": "/accounts/reset-password?email=audit%40example.invalid&uidb64=fixture&token=fixture",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-reset-password.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nReset password\nCreate a new password.\nEmail\nPassword\nMin 8 characters\nMin 1 upper-case letter\nMin 1 lower-case letter\nMin 1 number\nMin 1 special character\nConfirm password\nSet password",
+      "images": 0
+    },
+    "measure": {
+      "url": "/accounts/reset-password",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-onboarding-profile",
+    "name": "onboarding-profile",
+    "url": "/onboarding",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-onboarding-profile.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nA\nAudit Tester\nCreate your profile.\n\nThis is how you will appear in Birdplane.\n\nA\nUpload image\nName\nContinue",
+      "images": 0
+    },
+    "measure": {
+      "url": "/onboarding",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-create-project-modal",
+    "name": "create-project-modal",
+    "url": "/audit/projects",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-create-project-modal.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nProjects\nCreated date\nFilters\nAdd Project\nFlight Control responsive layout audit\n\nFLIGHTCTL\n\nCreated on Oct 06, 2026\n\nA\nGround Support\n\nGS\n\nCreated on Oct 06, 2026\n\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-create-issue-modal",
+    "name": "create-issue-modal",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-create-issue-modal.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFLIGHTCTL-4\n\nFlight Control responsive layout audit: verify long work item title and visible properties 4\n\nDone\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/issues",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 18
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-set-password",
+    "name": "set-password",
+    "url": "/accounts/set-password?email=audit%40example.invalid",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-set-password.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nReset password\nCreate a new password.\nEmail\nPassword\nMin 8 characters\nMin 1 upper-case letter\nMin 1 lower-case letter\nMin 1 number\nMin 1 special character\nConfirm password\nSet password",
+      "images": 0
+    },
+    "measure": {
+      "url": "/accounts/set-password",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-onboarding-workspace",
+    "name": "onboarding-workspace",
+    "url": "/onboarding",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-onboarding-workspace.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nA\nAudit Tester\nJoin invites or create a workspace\n\nAll your work — unified.\n\nR\nResponsive audit workspace\n\nMember\n\nContinue\nCreate new workspace",
+      "images": 0
+    },
+    "measure": {
+      "url": "/onboarding",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-onboarding-invite",
+    "name": "onboarding-invite",
+    "url": "/onboarding",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-onboarding-invite.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nA\nAudit Tester\nInvite your teammates\n\nWork in Birdplane happens best with your team. Invite them now to use Birdplane to its potential.\n\nEmail\nRole\nMember\nMember\nMember\nAdd another\nContinue\nI’ll do it later",
+      "images": 0
+    },
+    "measure": {
+      "url": "/onboarding",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-navigation-search",
+    "name": "navigation-search",
+    "url": "/audit/projects",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-navigation-search.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nProjects\nProject\nCreated date\nFilters\nFlight Control responsive layout audit\n\nFLIGHTCTL\n\nCreated on Oct 06, 2026\n\nA\nGround Support\n\nGS\n\nCreated on Oct 06, 2026\n\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-set-password",
+    "name": "set-password",
+    "url": "/accounts/set-password?email=audit%40example.invalid",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-set-password.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nReset password\nCreate a new password.\nEmail\nPassword\nMin 8 characters\nMin 1 upper-case letter\nMin 1 lower-case letter\nMin 1 number\nMin 1 special character\nConfirm password\nSet password",
+      "images": 0
+    },
+    "measure": {
+      "url": "/accounts/set-password",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-onboarding-workspace",
+    "name": "onboarding-workspace",
+    "url": "/onboarding",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-onboarding-workspace.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nA\nAudit Tester\nJoin invites or create a workspace\n\nAll your work — unified.\n\nR\nResponsive audit workspace\n\nMember\n\nContinue\nCreate new workspace",
+      "images": 0
+    },
+    "measure": {
+      "url": "/onboarding",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-onboarding-invite",
+    "name": "onboarding-invite",
+    "url": "/onboarding",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-onboarding-invite.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Birdplane\nA\nAudit Tester\nInvite your teammates\n\nWork in Birdplane happens best with your team. Invite them now to use Birdplane to its potential.\n\nEmail\nRole\nMember\nMember\nMember\nAdd another\nContinue\nI’ll do it later",
+      "images": 0
+    },
+    "measure": {
+      "url": "/onboarding",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-navigation-search",
+    "name": "navigation-search",
+    "url": "/audit/projects",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-navigation-search.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nProjects\nCreated date\nFilters\nAdd Project\nFlight Control responsive layout audit\n\nFLIGHTCTL\n\nCreated on Oct 06, 2026\n\nA\nGround Support\n\nGS\n\nCreated on Oct 06, 2026\n\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-cycle-analytics",
+    "name": "cycle-analytics",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles/9cbe24cf-bc9c-43df-9e79-a55cde37cc72",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-cycle-analytics.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "le and tablet acceptance\nNew work item\nOctober flight readiness\nIn progress\nOct 04 - 18, 2026\nLead\nA\nAudit Tester\nMembers\nA\nWork items\n5/20\nProgress\nOct 06\nOct 10\nOct 14\nOct 18\nDATE\n0\n3\n6\n9\n12\n15\n18\n21\n27\nCOMPLETION\nCurrent Work items\nIdeal Work items\nStates\nAssignees\nLabels\nA\nAudit Tester\n25%\nof 20",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles/9cbe24cf-bc9c-43df-9e79-a55cde37cc72",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 11
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-module-analytics",
+    "name": "module-analytics",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules/ff6c147d-7ef7-4e89-a115-30b86a26446a",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-module-analytics.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Progress\nResponsive flight dashboard\nDate range\nOct 06, 2026\nOct 18, 2026\nLead\nLead\nMembers\nMembers\nWork items\n5/20\nProgress\n25%\nOct 06\nOct 10\nOct 14\nOct 18\nDATE\n0\n3\n6\n9\n12\n15\n18\n21\n27\nCOMPLETION\nCurrent work items\nIdeal work items\nStates\nAssignees\nLabels\nMobile and tablet acceptance\n25%\nof 20\nLinks",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules/ff6c147d-7ef7-4e89-a115-30b86a26446a",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 10
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-cycle-detail",
+    "name": "cycle-detail",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles/9cbe24cf-bc9c-43df-9e79-a55cde37cc72",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-cycle-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFLIGHTCTL-10\n\nFlight Control responsive layout audit: verify long work item title and visible properties 10\n\nTodo\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles/9cbe24cf-bc9c-43df-9e79-a55cde37cc72",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 11
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-module-detail",
+    "name": "module-detail",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules/ff6c147d-7ef7-4e89-a115-30b86a26446a",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-module-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFLIGHTCTL-11\n\nFlight Control responsive layout audit: verify long work item title and visible properties 11\n\nIn Progress\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules/ff6c147d-7ef7-4e89-a115-30b86a26446a",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 10
+    },
+    "errors": []
+  },
+  {
+    "key": "mobile-navigation-sidebar",
+    "name": "navigation-sidebar",
+    "url": "/audit/projects",
+    "device": "mobile",
+    "phase": "after",
+    "screenshot": "screenshots/after-mobile-navigation-sidebar.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "\nHome\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nProjects\nProject\nCreated date\nFilters\nFlight Control responsive layout audit\n\nFLIGHTCTL\n\nCreated on Oct 06, 2026\n\nA\nGround Support\n\nGS\n\nCreated on Oct 06, 2026\n\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-cycle-analytics",
+    "name": "cycle-analytics",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles/9cbe24cf-bc9c-43df-9e79-a55cde37cc72",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-cycle-analytics.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "le and tablet acceptance\nNew work item\nOctober flight readiness\nIn progress\nOct 04 - 18, 2026\nLead\nA\nAudit Tester\nMembers\nA\nWork items\n5/20\nProgress\nOct 06\nOct 10\nOct 14\nOct 18\nDATE\n0\n3\n6\n9\n12\n15\n18\n21\n27\nCOMPLETION\nCurrent Work items\nIdeal Work items\nStates\nAssignees\nLabels\nA\nAudit Tester\n25%\nof 20",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles/9cbe24cf-bc9c-43df-9e79-a55cde37cc72",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 17
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-module-analytics",
+    "name": "module-analytics",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules/ff6c147d-7ef7-4e89-a115-30b86a26446a",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-module-analytics.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "Progress\nResponsive flight dashboard\nDate range\nOct 06, 2026\nOct 18, 2026\nLead\nLead\nMembers\nMembers\nWork items\n5/20\nProgress\n25%\nOct 06\nOct 10\nOct 14\nOct 18\nDATE\n0\n3\n6\n9\n12\n15\n18\n21\n27\nCOMPLETION\nCurrent work items\nIdeal work items\nStates\nAssignees\nLabels\nMobile and tablet acceptance\n25%\nof 20\nLinks",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules/ff6c147d-7ef7-4e89-a115-30b86a26446a",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 17
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-cycle-detail",
+    "name": "cycle-detail",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles/9cbe24cf-bc9c-43df-9e79-a55cde37cc72",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-cycle-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFLIGHTCTL-4\n\nFlight Control responsive layout audit: verify long work item title and visible properties 4\n\nDone\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/cycles/9cbe24cf-bc9c-43df-9e79-a55cde37cc72",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 17
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-module-detail",
+    "name": "module-detail",
+    "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules/ff6c147d-7ef7-4e89-a115-30b86a26446a",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-module-detail.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nFLIGHTCTL-4\n\nFlight Control responsive layout audit: verify long work item title and visible properties 4\n\nDone\nOct 06 - 09, 2026\nA\nResponsive flight dashboard\nOctober flight readiness\nMobile and tablet acceptance\nNew work item",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects/dc5f7e5a-0bea-4aeb-b7c7-e72931a58801/modules/ff6c147d-7ef7-4e89-a115-30b86a26446a",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 17
+    },
+    "errors": []
+  },
+  {
+    "key": "tablet-navigation-sidebar",
+    "name": "navigation-sidebar",
+    "url": "/audit/projects",
+    "device": "tablet",
+    "phase": "after",
+    "screenshot": "screenshots/after-tablet-navigation-sidebar.png",
+    "proof": {
+      "ready": "complete",
+      "fonts": "loaded",
+      "finiteAnimations": 0,
+      "text": "e\n\nDrafts\n\nYour work\n\nStickies\n\nWorkspace\n\nProjects\n\nMore\nProjects\n\nGround Support\n\nFlight Control responsive layout audit\n\nCommunity\nProjects\nCreated date\nFilters\nAdd Project\nFlight Control responsive layout audit\n\nFLIGHTCTL\n\nCreated on Oct 06, 2026\n\nA\nGround Support\n\nGS\n\nCreated on Oct 06, 2026\n\nA",
+      "images": 0
+    },
+    "measure": {
+      "url": "/audit/projects",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "documentWidth": 768,
+      "scrolls": [],
+      "offscreen": [],
+      "issues": 0
+    },
+    "errors": []
+  }
+]

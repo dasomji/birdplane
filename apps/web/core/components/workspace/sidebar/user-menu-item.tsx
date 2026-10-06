@@ -49,8 +49,8 @@ export const SidebarUserMenuItem = observer(function SidebarUserMenuItem(props: 
   if (!allowPermissions(item.access as any, EUserPermissionsLevel.WORKSPACE, workspaceSlug.toString())) return null;
 
   const handleLinkClick = () => {
-    if (window.innerWidth < 768) {
-      toggleSidebar();
+    if (window.innerWidth < 1024) {
+      toggleSidebar(true);
     }
   };
 

@@ -19,6 +19,8 @@ export const AppSidebarToggleButton = observer(function AppSidebarToggleButton()
       size="base"
       variant="ghost"
       icon={PanelLeft}
+      aria-label="Toggle navigation sidebar"
+      data-prevent-outside-click
       onClick={() => {
         if (sidebarPeek) toggleSidebarPeek(false);
         toggleSidebar();

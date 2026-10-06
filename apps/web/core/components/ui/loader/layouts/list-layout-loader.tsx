@@ -23,12 +23,12 @@ export const ListLoaderItemRow = forwardRef(function ListLoaderItemRow(
   return (
     <Row
       ref={ref}
-      className={cn("flex h-11 items-center justify-between py-3", {
+      className={cn("flex h-11 max-w-full min-w-0 items-center justify-between gap-3 overflow-hidden py-3", {
         "bg-surface-1": renderForPlaceHolder,
         "border-t border-subtle": !renderForPlaceHolder,
       })}
     >
-      <div className="flex items-center gap-3">
+      <div className="flex min-w-0 flex-1 items-center gap-3 overflow-hidden">
         <span
           className={cn("h-5 w-10 rounded-sm bg-[var(--illustration-fill-tertiary)]", {
             "animate-pulse": shouldAnimate,
@@ -45,7 +45,7 @@ export const ListLoaderItemRow = forwardRef(function ListLoaderItemRow(
           )}
         />
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex max-w-[45%] min-w-0 items-center gap-2 overflow-hidden">
         {range(defaultPropertyCount).map((index) => (
           <Fragment key={index}>
             {getRandomInt(1, 2) % 2 === 0 ? (

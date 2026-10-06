@@ -5,6 +5,7 @@
  */
 
 import { useRef } from "react";
+import { PanelRight } from "lucide-react";
 import { observer } from "mobx-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
@@ -16,6 +17,7 @@ import { EIssuesStoreType } from "@plane/types";
 import { generateWorkItemLink, copyTextToClipboard } from "@plane/utils";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useIssues } from "@/hooks/store/use-issues";
 import { useProject } from "@/hooks/store/use-project";
 import { useUser } from "@/hooks/store/user";
@@ -44,6 +46,7 @@ export const IssueDetailQuickActions = observer(function IssueDetailQuickActions
   // hooks
   const { data: currentUser } = useUser();
   const { isMobile } = usePlatformOS();
+  const { issueDetailSidebarCollapsed, toggleIssueDetailSidebar } = useAppTheme();
   const { getProjectIdentifierById } = useProject();
   const {
     issue: { getIssueById },
@@ -143,6 +146,15 @@ export const IssueDetailQuickActions = observer(function IssueDetailQuickActions
     <>
       <div className="flex flex-shrink-0 items-center justify-end">
         <div className="flex flex-wrap items-center gap-2">
+          <IconButton
+            variant="secondary"
+            size="lg"
+            icon={PanelRight}
+            aria-label="Toggle work item properties"
+            aria-expanded={!issueDetailSidebarCollapsed}
+            aria-controls="work-item-properties"
+            onClick={() => toggleIssueDetailSidebar()}
+          />
           {currentUser && !issue?.archived_at && (
             <IssueSubscription workspaceSlug={workspaceSlug} projectId={projectId} issueId={issueId} />
           )}

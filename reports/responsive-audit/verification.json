@@ -1,0 +1,191 @@
+[
+  {
+    "width": 320,
+    "touch": false,
+    "passed": true,
+    "list": {
+      "width": 302,
+      "scroll": 302
+    },
+    "checks": [
+      "virtualized list",
+      "navigation overlay and close",
+      "search panel",
+      "profile settings navigation",
+      "password inputs",
+      "member actions",
+      "webhook controls",
+      "work item properties",
+      "profile details",
+      "cycle and module analytics open and close"
+    ]
+  },
+  {
+    "width": 360,
+    "touch": false,
+    "passed": true,
+    "list": {
+      "width": 342,
+      "scroll": 342
+    },
+    "checks": [
+      "virtualized list",
+      "navigation overlay and close",
+      "search panel",
+      "profile settings navigation",
+      "password inputs",
+      "member actions",
+      "webhook controls",
+      "work item properties",
+      "profile details",
+      "cycle and module analytics open and close"
+    ]
+  },
+  {
+    "width": 390,
+    "touch": false,
+    "passed": true,
+    "list": {
+      "width": 372,
+      "scroll": 372
+    },
+    "checks": [
+      "virtualized list",
+      "navigation overlay and close",
+      "search panel",
+      "profile settings navigation",
+      "password inputs",
+      "member actions",
+      "webhook controls",
+      "work item properties",
+      "profile details",
+      "cycle and module analytics open and close"
+    ]
+  },
+  {
+    "width": 414,
+    "touch": false,
+    "passed": true,
+    "list": {
+      "width": 396,
+      "scroll": 396
+    },
+    "checks": [
+      "virtualized list",
+      "navigation overlay and close",
+      "search panel",
+      "profile settings navigation",
+      "password inputs",
+      "member actions",
+      "webhook controls",
+      "work item properties",
+      "profile details",
+      "cycle and module analytics open and close"
+    ]
+  },
+  {
+    "width": 768,
+    "touch": false,
+    "passed": true,
+    "list": {
+      "width": 750,
+      "scroll": 750
+    },
+    "checks": [
+      "virtualized list",
+      "navigation overlay and close",
+      "search panel",
+      "profile settings navigation",
+      "password inputs",
+      "member actions",
+      "webhook controls",
+      "work item properties",
+      "profile details",
+      "cycle and module analytics open and close"
+    ]
+  },
+  {
+    "width": 820,
+    "touch": false,
+    "passed": true,
+    "list": {
+      "width": 802,
+      "scroll": 802
+    },
+    "checks": [
+      "virtualized list",
+      "navigation overlay and close",
+      "search panel",
+      "profile settings navigation",
+      "password inputs",
+      "member actions",
+      "webhook controls",
+      "work item properties",
+      "profile details",
+      "cycle and module analytics open and close"
+    ]
+  },
+  {
+    "width": 1024,
+    "touch": false,
+    "passed": true,
+    "list": {
+      "width": 756,
+      "scroll": 756
+    },
+    "checks": [
+      "virtualized list",
+      "navigation overlay and close",
+      "search panel",
+      "profile settings navigation",
+      "password inputs",
+      "member actions",
+      "webhook controls",
+      "work item properties",
+      "profile details",
+      "cycle and module analytics open and close"
+    ]
+  },
+  {
+    "width": 1280,
+    "touch": false,
+    "passed": true,
+    "list": {
+      "width": 1012,
+      "scroll": 1012
+    },
+    "checks": [
+      "virtualized list",
+      "navigation overlay and close",
+      "search panel",
+      "profile settings navigation",
+      "password inputs",
+      "member actions",
+      "webhook controls",
+      "work item properties",
+      "profile details",
+      "cycle and module analytics open and close"
+    ]
+  },
+  {
+    "width": 1440,
+    "touch": false,
+    "passed": true,
+    "list": {
+      "width": 1172,
+      "scroll": 1172
+    },
+    "checks": [
+      "virtualized list",
+      "navigation overlay and close",
+      "search panel",
+      "profile settings navigation",
+      "password inputs",
+      "member actions",
+      "webhook controls",
+      "work item properties",
+      "profile details",
+      "cycle and module analytics open and close"
+    ]
+  }
+]

@@ -25,6 +25,7 @@ import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useCommandPalette } from "@/hooks/store/use-command-palette";
 import { useProject } from "@/hooks/store/use-project";
 import { useUser } from "@/hooks/store/user";
+import useSize from "@/hooks/use-window-size";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // components
 import { ProfileSidebarTime } from "./time";
@@ -47,13 +48,14 @@ export const ProfileSidebar = observer(function ProfileSidebar(props: TProfileSi
   const { toggleProfileSettingsModal } = useCommandPalette();
   const { isMobile } = usePlatformOS();
   const { t } = useTranslation();
+  const [windowWidth] = useSize();
   // derived values
   const userData = userProjectsData?.user_data;
 
   useOutsideClickDetector(ref, () => {
     if (profileSidebarCollapsed === false) {
-      if (window.innerWidth < 768) {
-        toggleProfileSidebar();
+      if (window.innerWidth < 1024) {
+        toggleProfileSidebar(true);
       }
     }
   });
@@ -70,27 +72,18 @@ export const ProfileSidebar = observer(function ProfileSidebar(props: TProfileSi
   ];
 
   useEffect(() => {
-    const handleToggleProfileSidebar = () => {
-      if (window && window.innerWidth < 768) {
-        toggleProfileSidebar(true);
-      }
-      if (window && profileSidebarCollapsed && window.innerWidth >= 768) {
-        toggleProfileSidebar(false);
-      }
-    };
-
-    window.addEventListener("resize", handleToggleProfileSidebar);
-    handleToggleProfileSidebar();
-    return () => window.removeEventListener("resize", handleToggleProfileSidebar);
-  }, []);
+    if (windowWidth < 1024) toggleProfileSidebar(true);
+  }, [windowWidth, toggleProfileSidebar]);
 
   return (
     <div
       className={cn(
-        `vertical-scrollbar fixed z-5 scrollbar-md h-full w-full shrink-0 overflow-hidden overflow-y-auto border-l border-subtle bg-surface-1 shadow-raised-200 transition-all md:relative md:w-[300px]`,
+        "vertical-scrollbar absolute right-0 z-5 scrollbar-md h-full w-full max-w-full shrink-0 overflow-hidden overflow-y-auto border-l border-subtle bg-surface-1 shadow-raised-200 sm:w-[300px] lg:relative",
+        { hidden: profileSidebarCollapsed },
         className
       )}
-      style={profileSidebarCollapsed ? { marginLeft: `${window?.innerWidth || 0}px` } : {}}
+      id="profile-details"
+      ref={ref}
     >
       {userProjectsData ? (
         <>

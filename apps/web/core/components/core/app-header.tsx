@@ -23,8 +23,8 @@ export const AppHeader = observer(function AppHeader(props: AppHeaderProps) {
   const { header, mobileHeader, className, rowClassName } = props;
 
   return (
-    <div className={cn("z-[18]", className)}>
-      <Row className={cn("flex h-11 w-full items-center gap-2 border-b border-subtle bg-surface-1", rowClassName)}>
+    <div className={cn("z-[18] min-w-0 shrink-0", className)}>
+      <Row className={cn("flex min-h-11 w-full items-center gap-2 border-b border-subtle bg-surface-1", rowClassName)}>
         <ExtendedAppHeader header={header} />
       </Row>
       {/* eslint-disable-next-line oxc/const-comparisons */}

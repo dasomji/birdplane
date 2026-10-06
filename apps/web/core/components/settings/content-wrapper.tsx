@@ -20,13 +20,18 @@ export function SettingsContentWrapper(props: Props) {
   const { children, header, hugging = false } = props;
 
   return (
-    <div className="@container flex size-full grow flex-col overflow-hidden">
+    <div className="@container flex size-full min-w-0 grow flex-col overflow-hidden">
       {header && (
         <div className="w-full shrink-0">
           <AppHeader header={header} />
         </div>
       )}
-      <ScrollArea scrollType="hover" orientation="vertical" size="sm" className="size-full grow overflow-y-scroll">
+      <ScrollArea
+        scrollType="hover"
+        orientation="vertical"
+        size="sm"
+        className="size-full min-w-0 grow overflow-y-scroll"
+      >
         <div
           className={cn("py-9", {
             "w-full px-page-x lg:px-12": hugging,

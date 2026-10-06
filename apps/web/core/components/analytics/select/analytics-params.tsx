@@ -40,8 +40,8 @@ export const AnalyticsSelectParams = observer(function AnalyticsSelectParams(pro
   );
 
   return (
-    <div className={cn("flex w-full justify-between", classNames)}>
-      <div className={`flex items-center gap-2`}>
+    <div className={cn("flex w-full min-w-0 justify-between", classNames)}>
+      <div className="flex min-w-0 flex-wrap items-center gap-2">
         <Controller
           name="y_axis"
           control={control}

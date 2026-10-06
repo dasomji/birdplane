@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "pairs": 164,
+  "images": 328,
+  "findings": 13,
+  "checks": [
+    "all embedded PNGs decoded",
+    "device/finding/search filters",
+    "zoom dialog",
+    "mobile document bounds",
+    "no page errors"
+  ]
+}

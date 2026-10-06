@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+import { useEffect } from "react";
 import { observer } from "mobx-react";
 import useSWR from "swr";
 // plane imports
@@ -19,6 +20,7 @@ import { ModuleAnalyticsSidebar } from "@/components/modules";
 import { useModule } from "@/hooks/store/use-module";
 import { useProject } from "@/hooks/store/use-project";
 import { useAppRouter } from "@/hooks/use-app-router";
+import useSize from "@/hooks/use-window-size";
 import useLocalStorage from "@/hooks/use-local-storage";
 import type { Route } from "./+types/page";
 
@@ -46,6 +48,11 @@ function ModuleIssuesPage({ params }: Route.ComponentProps) {
     setValue(`${!isSidebarCollapsed}`);
   };
 
+  const [windowWidth] = useSize();
+  useEffect(() => {
+    if (windowWidth < 1024) setValue("true");
+  }, [windowWidth, setValue]);
+
   // const activeLayout = issuesFilter?.issueFilters?.displayFilters?.layout;
   return (
     <>
@@ -61,14 +68,14 @@ function ModuleIssuesPage({ params }: Route.ComponentProps) {
           }}
         />
       ) : (
-        <div className="flex h-full w-full">
-          <div className="h-full w-full overflow-hidden">
+        <div className="relative flex h-full w-full min-w-0">
+          <div className="h-full min-w-0 flex-1 overflow-hidden">
             <ModuleLayoutRoot />
           </div>
           {!isSidebarCollapsed && (
             <div
               className={cn(
-                "vertical-scrollbar absolute right-0 z-13 flex scrollbar-sm h-full w-[24rem] flex-shrink-0 flex-col gap-3.5 overflow-y-auto border-l border-subtle bg-surface-1 px-6 shadow-raised-200 duration-300"
+                "vertical-scrollbar absolute right-0 z-13 flex scrollbar-sm h-full w-[24rem] max-w-full flex-shrink-0 flex-col gap-3.5 overflow-y-auto border-l border-subtle bg-surface-1 px-6 shadow-raised-200 duration-300"
               )}
             >
               <ModuleAnalyticsSidebar moduleId={moduleId} handleClose={toggleSidebar} />
