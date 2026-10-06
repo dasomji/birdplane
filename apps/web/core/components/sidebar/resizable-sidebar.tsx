@@ -90,14 +90,17 @@ export function ResizableSidebar({
     setIsResizing(false);
   }, []);
 
-  const toggleCollapsed = useCallback(() => {
-    toggleCollapsedProp();
-    setShowPeek(false);
-    setIsHoveringTrigger(false);
-    if (peekTimeoutRef.current) {
-      clearTimeout(peekTimeoutRef.current);
-    }
-  }, [toggleCollapsedProp, setShowPeek]);
+  const toggleCollapsed = useCallback(
+    (collapsed?: boolean) => {
+      toggleCollapsedProp(collapsed);
+      setShowPeek(false);
+      setIsHoveringTrigger(false);
+      if (peekTimeoutRef.current) {
+        clearTimeout(peekTimeoutRef.current);
+      }
+    },
+    [toggleCollapsedProp, setShowPeek]
+  );
 
   const handlePeekEnter = useCallback(() => {
     if (isCollapsed && showPeek) {
@@ -176,11 +179,19 @@ export function ResizableSidebar({
 
   return (
     <>
+      {!isCollapsed && (
+        <button
+          type="button"
+          aria-label="Close navigation sidebar"
+          className="absolute inset-0 z-[19] bg-backdrop lg:hidden"
+          onClick={() => toggleCollapsed(true)}
+        />
+      )}
       {/* Main Sidebar */}
       <div
         id="main-sidebar"
         className={cn(
-          "z-20 h-full border-r border-subtle bg-surface-1",
+          "z-20 h-full border-r border-subtle bg-surface-1 max-lg:absolute",
           !isResizing && "transition-all duration-300 ease-in-out",
           isCollapsed ? "w-0 translate-x-[-100%] opacity-0" : "translate-x-0 opacity-100",
           isMobile && "absolute",
@@ -193,6 +204,10 @@ export function ResizableSidebar({
         }}
         role="complementary"
         aria-label="Main sidebar"
+        aria-hidden={isCollapsed}
+        ref={(element) => {
+          if (element) element.inert = isCollapsed;
+        }}
         data-prevent-outside-click={isMobile}
       >
         <aside
@@ -236,6 +251,10 @@ export function ResizableSidebar({
         onMouseLeave={handlePeekLeave}
         role="complementary"
         aria-label="Sidebar peek view"
+        aria-hidden={!(isCollapsed && showPeek)}
+        ref={(element) => {
+          if (element) element.inert = !(isCollapsed && showPeek);
+        }}
       >
         <aside
           className={cn(

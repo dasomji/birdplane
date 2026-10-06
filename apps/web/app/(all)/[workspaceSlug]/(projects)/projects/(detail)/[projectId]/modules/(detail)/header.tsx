@@ -133,7 +133,7 @@ export const ModuleIssuesHeader = observer(function ModuleIssuesHeader() {
       />
       <Header>
         <Header.LeftItem>
-          <div className="flex items-center gap-2">
+          <div className="flex w-full min-w-0 items-center gap-2">
             <Breadcrumbs onBack={router.back} isLoading={loader === "init-loader"}>
               <CommonProjectBreadcrumbs workspaceSlug={workspaceSlug?.toString()} projectId={projectId?.toString()} />
               <Breadcrumbs.Item
@@ -253,6 +253,8 @@ export const ModuleIssuesHeader = observer(function ModuleIssuesHeader() {
             variant="tertiary"
             size="lg"
             icon={PanelRight}
+            aria-label="Toggle module analytics"
+            aria-expanded={!isSidebarCollapsed}
             onClick={toggleSidebar}
             className={cn({
               "bg-accent-subtle text-accent-primary": !isSidebarCollapsed,

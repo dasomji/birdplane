@@ -20,7 +20,6 @@ import emptyIssueLight from "@/app/assets/empty-state/search/issues-light.webp?u
 import { EmptyState } from "@/components/common/empty-state";
 import { PageHead } from "@/components/core/page-title";
 // hooks
-import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -45,7 +44,6 @@ export const IssueDetailsPage = observer(function IssueDetailsPage({ params }: R
     issue: { getIssueById },
   } = useIssueDetail();
   const { getProjectById, getProjectByIdentifier } = useProject();
-  const { toggleIssueDetailSidebar, issueDetailSidebarCollapsed } = useAppTheme();
 
   const [projectIdentifier, sequence_id] = workItem.split("-");
 
@@ -70,20 +68,6 @@ export const IssueDetailsPage = observer(function IssueDetailsPage({ params }: R
     issueId,
     issue?.is_epic ? EIssueServiceType.EPICS : EIssueServiceType.ISSUES
   );
-
-  useEffect(() => {
-    const handleToggleIssueDetailSidebar = () => {
-      if (window && window.innerWidth < 768) {
-        toggleIssueDetailSidebar(true);
-      }
-      if (window && issueDetailSidebarCollapsed && window.innerWidth >= 768) {
-        toggleIssueDetailSidebar(false);
-      }
-    };
-    window.addEventListener("resize", handleToggleIssueDetailSidebar);
-    handleToggleIssueDetailSidebar();
-    return () => window.removeEventListener("resize", handleToggleIssueDetailSidebar);
-  }, [issueDetailSidebarCollapsed, toggleIssueDetailSidebar]);
 
   useEffect(() => {
     if (data?.is_intake) {

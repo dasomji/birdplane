@@ -24,7 +24,6 @@ import { MultipleSelectEntityAction } from "@/components/core/multiple-select";
 import { IssueProperties } from "@/components/issues/issue-layouts/properties";
 import { IssueIdentifier } from "@/components/issues/issue-detail/issue-identifier";
 // hooks
-import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
 import type { TSelectionHelper } from "@/hooks/use-multiple-select";
@@ -77,7 +76,6 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
   const workspaceSlug = routerWorkspaceSlug?.toString();
   const projectId = routerProjectId?.toString();
   // hooks
-  const { sidebarCollapsed: isSidebarCollapsed } = useAppTheme();
   const { getProjectIdentifierById, currentProjectNextSequenceId } = useProject();
   const {
     getIsIssuePeeked,
@@ -179,15 +177,13 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
       <Row
         ref={issueRef}
         className={cn(
-          "group/list-block relative flex min-h-11 flex-col gap-3 bg-layer-transparent py-3 text-13 transition-colors hover:bg-layer-transparent-hover",
+          "group/list-block relative flex min-h-11 flex-col gap-3 bg-layer-transparent py-3 text-13 transition-colors hover:bg-layer-transparent-hover @min-[60rem]:flex-row @min-[60rem]:items-center",
           {
             "border-accent-strong": getIsIssuePeeked(issue.id) && peekIssue?.nestingLevel === nestingLevel,
             "border-strong-1": isIssueActive,
             "last:border-b-transparent": !getIsIssuePeeked(issue.id) && !isIssueActive,
             "bg-accent-primary/5 hover:bg-accent-primary/10": isIssueSelected,
             "bg-layer-1": isCurrentBlockDragging,
-            "md:flex-row md:items-center": isSidebarCollapsed,
-            "lg:flex-row lg:items-center": !isSidebarCollapsed,
           }
         )}
         onDragStart={() => {
@@ -281,12 +277,7 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
             </Tooltip>
           </div>
           {!issue?.tempId && (
-            <div
-              className={cn("block rounded-sm border border-strong", {
-                "md:hidden": isSidebarCollapsed,
-                "lg:hidden": !isSidebarCollapsed,
-              })}
-            >
+            <div className="block shrink-0 rounded-sm border border-strong @min-[60rem]:hidden">
               {quickActions({
                 issue,
                 parentRef: issueRef,
@@ -294,11 +285,11 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
             </div>
           )}
         </div>
-        <div className="flex flex-shrink-0 items-center gap-2">
+        <div className="flex max-w-full min-w-0 items-center gap-2 @min-[60rem]:max-w-[60%]">
           {!issue?.tempId ? (
             <>
               <IssueProperties
-                className={`relative flex flex-wrap ${isSidebarCollapsed ? "md:flex-shrink-0 md:flex-grow" : "lg:flex-shrink-0 lg:flex-grow"} items-center gap-2 whitespace-nowrap`}
+                className="relative flex min-w-0 flex-1 flex-wrap items-center gap-2 whitespace-nowrap"
                 issue={issue}
                 isReadOnly={!canEditIssueProperties}
                 updateIssue={updateIssue}
@@ -308,10 +299,7 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
               />
               {/* oxlint-disable-next-line jsx_a11y/click-events-have-key-events oxlint-disable-next-line jsx_a11y/no-static-element-interactions */}
               <div
-                className={cn("hidden", {
-                  "md:flex": isSidebarCollapsed,
-                  "lg:flex": !isSidebarCollapsed,
-                })}
+                className="hidden shrink-0 @min-[60rem]:flex"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();

@@ -136,7 +136,7 @@ export const CycleIssuesHeader = observer(function CycleIssuesHeader() {
       />
       <Header>
         <Header.LeftItem>
-          <div className="flex items-center gap-2">
+          <div className="flex w-full min-w-0 items-center gap-2">
             <Breadcrumbs onBack={router.back} isLoading={loader === "init-loader"}>
               <CommonProjectBreadcrumbs workspaceSlug={workspaceSlug?.toString()} projectId={projectId?.toString()} />
               <Breadcrumbs.Item
@@ -257,6 +257,8 @@ export const CycleIssuesHeader = observer(function CycleIssuesHeader() {
               variant="tertiary"
               size="lg"
               icon={PanelRight}
+              aria-label="Toggle cycle analytics"
+              aria-expanded={!isSidebarCollapsed}
               onClick={toggleSidebar}
               className={cn({
                 "bg-accent-subtle text-accent-primary": !isSidebarCollapsed,
@@ -270,6 +272,17 @@ export const CycleIssuesHeader = observer(function CycleIssuesHeader() {
               customClassName="flex-shrink-0 flex items-center justify-center size-[26px] bg-layer-1/70 rounded-sm"
             />
           </div>
+          <IconButton
+            variant="tertiary"
+            size="lg"
+            icon={PanelRight}
+            aria-label="Toggle cycle analytics"
+            aria-expanded={!isSidebarCollapsed}
+            onClick={toggleSidebar}
+            className={cn("md:hidden", {
+              "bg-accent-subtle text-accent-primary": !isSidebarCollapsed,
+            })}
+          />
         </Header.RightItem>
       </Header>
     </>

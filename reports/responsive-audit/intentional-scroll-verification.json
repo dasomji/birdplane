@@ -1,0 +1,74 @@
+[
+  {
+    "width": 390,
+    "name": "board",
+    "passed": true,
+    "measured": [
+      {
+        "width": 372,
+        "scrollWidth": 1857,
+        "left": 100
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "name": "table",
+    "passed": true,
+    "measured": [
+      {
+        "width": 372,
+        "scrollWidth": 2872,
+        "left": 100
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "name": "timeline",
+    "passed": true,
+    "measured": [
+      {
+        "width": 372,
+        "scrollWidth": 15480,
+        "left": 100
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "name": "board",
+    "passed": true,
+    "measured": [
+      {
+        "width": 750,
+        "scrollWidth": 1857,
+        "left": 100
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "name": "table",
+    "passed": true,
+    "measured": [
+      {
+        "width": 750,
+        "scrollWidth": 2872,
+        "left": 100
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "name": "timeline",
+    "passed": true,
+    "measured": [
+      {
+        "width": 750,
+        "scrollWidth": 15480,
+        "left": 100
+      }
+    ]
+  }
+]

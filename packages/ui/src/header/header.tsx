@@ -35,7 +35,12 @@ function Header(props: HeaderProps) {
     <HeaderContext.Provider value={variant}>
       <Row
         variant={variant === EHeaderVariant.PRIMARY ? ERowVariant.HUGGING : ERowVariant.REGULAR}
-        className={cn(style, className)}
+        className={cn(
+          style,
+          "max-w-full min-w-0",
+          { "max-lg:flex-wrap max-lg:gap-y-2 max-lg:py-2": variant === EHeaderVariant.PRIMARY },
+          className
+        )}
         {...rest}
       >
         {children}
@@ -48,7 +53,7 @@ function LeftItem(props: HeaderProps) {
   return (
     <div
       className={cn(
-        "flex max-w-[80%] flex-grow flex-wrap items-center gap-2 overflow-ellipsis whitespace-nowrap",
+        "flex max-w-[80%] min-w-0 flex-grow flex-wrap items-center gap-2 overflow-ellipsis whitespace-nowrap",
         props.className
       )}
     >
@@ -63,7 +68,7 @@ function RightItem(props: HeaderProps) {
   return (
     <div
       className={cn(
-        "flex w-auto items-center justify-end gap-2",
+        "flex w-auto min-w-0 shrink-0 items-center justify-end gap-2 max-lg:max-w-full max-lg:flex-wrap",
         {
           "items-baseline": variant === EHeaderVariant.TERNARY,
         },

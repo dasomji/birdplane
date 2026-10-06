@@ -43,7 +43,7 @@ export const SidebarItemBase = observer(function SidebarItemBase({
   const { toggleSidebar, isExtendedSidebarOpened, toggleExtendedSidebar } = useAppTheme();
 
   const handleLinkClick = () => {
-    if (window.innerWidth < 768) toggleSidebar();
+    if (window.innerWidth < 1024) toggleSidebar(true);
     if (isExtendedSidebarOpened) toggleExtendedSidebar(false);
   };
 

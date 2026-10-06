@@ -9,6 +9,7 @@ import { observer } from "mobx-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRightCircle } from "lucide-react";
 // plane imports
+import { cn } from "@plane/utils";
 import { useTranslation } from "@plane/i18n";
 import { Tabs } from "@plane/propel/tabs";
 import { Tooltip } from "@plane/propel/tooltip";
@@ -87,10 +88,12 @@ export const PageNavigationPaneRoot = observer(function PageNavigationPaneRoot(p
 
   return (
     <aside
-      className="flex h-full shrink-0 flex-col border-l border-subtle bg-surface-1 pt-3.5 transition-all duration-300 ease-out"
+      className={cn(
+        "absolute right-0 z-10 flex h-full max-w-full shrink-0 flex-col border-l border-subtle bg-surface-1 pt-3.5 lg:relative",
+        { hidden: !isNavigationPaneOpen }
+      )}
       style={{
         width: `${paneWidth}px`,
-        marginRight: isNavigationPaneOpen ? "0px" : `-${paneWidth}px`,
       }}
     >
       <div className="mb-3.5 px-3.5">

@@ -6,7 +6,7 @@
 
 import { observer } from "mobx-react";
 // plane imports
-import { PROFILE_SETTINGS_TABS } from "@plane/constants";
+import { PROFILE_SETTINGS, PROFILE_SETTINGS_TABS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import type { TProfileSettingsTabs } from "@plane/types";
 // components
@@ -41,16 +41,30 @@ function ProfileSettingsPage(props: Route.ComponentProps) {
   return (
     <>
       <PageHead title={`${t("profile.label")} - ${t("general_settings")}`} />
-      <div className="relative size-full">
-        <div className="flex size-full">
+      <div className="relative flex size-full min-h-0 flex-col">
+        <nav aria-label="Profile settings" className="shrink-0 border-b border-subtle p-3 lg:hidden">
+          <select
+            aria-label="Profile settings page"
+            value={profileTabId}
+            onChange={(event) => router.push(`/settings/profile/${event.target.value}`)}
+            className="w-full rounded-md border border-subtle bg-surface-1 px-3 py-2 text-13 text-primary"
+          >
+            {PROFILE_SETTINGS_TABS.map((tab) => (
+              <option key={tab} value={tab}>
+                {t(PROFILE_SETTINGS[tab].i18n_label)}
+              </option>
+            ))}
+          </select>
+        </nav>
+        <div className="flex min-h-0 min-w-0 flex-1">
           <ProfileSettingsSidebarRoot
             activeTab={profileTabId as TProfileSettingsTabs}
-            className="w-[250px]"
+            className="hidden w-[250px] lg:block"
             updateActiveTab={(tab) => router.push(`/settings/profile/${tab}`)}
           />
           <ProfileSettingsContent
             activeTab={profileTabId as TProfileSettingsTabs}
-            className="mx-auto w-fit max-w-225 grow px-page-x py-20"
+            className="mx-auto w-full max-w-225 min-w-0 grow px-3 py-4 lg:px-page-x lg:py-20"
           />
         </div>
       </div>

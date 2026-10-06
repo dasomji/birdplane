@@ -95,18 +95,20 @@ export const UserProfileHeader = observer(function UserProfileHeader(props: TUse
               </CustomMenu.MenuItem>
             ))}
           </CustomMenu>
-          <div className="shrink-0 md:hidden">
-            <Button
-              variant="ghost"
-              size="lg"
-              onClick={() => {
-                toggleProfileSidebar();
-              }}
-              appendIcon={
-                <PanelRight className={!profileSidebarCollapsed ? "text-accent-primary" : "text-secondary"} />
-              }
-            ></Button>
-          </div>
+        </div>
+        <div className="shrink-0">
+          <Button
+            data-prevent-outside-click
+            aria-label="Toggle profile details"
+            aria-expanded={!profileSidebarCollapsed}
+            aria-controls="profile-details"
+            variant="ghost"
+            size="lg"
+            onClick={() => {
+              toggleProfileSidebar();
+            }}
+            appendIcon={<PanelRight className={!profileSidebarCollapsed ? "text-accent-primary" : "text-secondary"} />}
+          ></Button>
         </div>
       </Header.RightItem>
     </Header>
