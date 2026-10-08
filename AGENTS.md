@@ -23,6 +23,24 @@ When adding a temporary upstream workaround, add its removal condition and
 regression checks to that document's register. Retire redundant local patches
 only after verifying equivalent behavior in the selected upstream release.
 
+## Coolify operations and backup verification
+
+Follow [`deployments/birdplane/backups.md`](deployments/birdplane/backups.md)
+for deployment backups and temporary checks. Keep genuine scheduled-task,
+backup, and service failure notifications enabled. Use direct container access
+for exploratory diagnostics when available; disabled Coolify tasks still send
+failure notifications when manually executed. If direct access is unavailable,
+use prevalidated, clearly named manual tasks with explicit connection settings,
+bounded timeouts, and no interactive password prompts. Preserve failed execution
+evidence before cleanup, and wait for terminal status before removing tasks.
+
+Use the local PostgreSQL socket consistently and pass `-w` to every client.
+Transfer backups as files or bounded chunks, never as a single execution-log
+payload. Match the downloaded file's size and SHA-256 to the server and restore
+that downloaded file into an isolated database with `--exit-on-error` before
+calling it verified. Never suppress a failure with `|| true`, globally mute
+alerts to test a command, or report a verified server dump as a verified download.
+
 ## Commands
 
 - `pnpm dev` - Start all dev servers (web:3000, admin:3001)

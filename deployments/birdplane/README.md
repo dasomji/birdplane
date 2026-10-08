@@ -16,6 +16,8 @@ Changing a service UUID can silently create empty volumes. Never run `down -v`.
 Before rollout, save the current Coolify service configuration privately, take a
 PostgreSQL custom-format dump, verify a restore into a separate temporary database,
 and back up object storage. Record volume names and existing project/ticket IDs.
+Follow [backup transfer and verification](backups.md) for complete file transfers
+and notification-aware manual checks.
 
 For the backend, set all four services (`api`, `worker`, `beat-worker`, `migrator`)
 to the same local image tag, e.g. `birdplane-backend:COMMIT`, with
