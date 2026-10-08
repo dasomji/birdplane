@@ -45,7 +45,9 @@ removed image. See [Dockerfile.minio](Dockerfile.minio).
 2. Take a fresh PostgreSQL custom-format dump and export uploads with an object
    manifest. Verify the exported dump checksum, restore with
    `pg_restore --exit-on-error` into a separate database, and verify every upload
-   checksum. Record workspace, project, and issue identities.
+   checksum. Restore the downloaded file, not just the server-side dump; follow
+   [backup transfer and verification](backups.md). Record workspace, project,
+   and issue identities.
 3. Create the Git-connected application with Auto Deploy and previews disabled.
    Copy the unchanged credentials and environment values. Inspect its parsed
    volumes before starting any container.

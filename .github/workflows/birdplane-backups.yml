@@ -1,0 +1,25 @@
+name: Birdplane backups
+
+on:
+  push:
+    branches: [birdplane]
+    paths: ["deployments/birdplane/**", "AGENTS.md", ".github/workflows/birdplane-backups.yml"]
+  pull_request:
+    paths: ["deployments/birdplane/**", "AGENTS.md", ".github/workflows/birdplane-backups.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.8.22"
+          python-version: "3.12"
+      - run: python3 -m unittest discover -s deployments/birdplane -p 'test_backup_postgres.py'
+      - run: uvx --from ruff==0.16.10 ruff check deployments/birdplane/backup-postgres.py deployments/birdplane/test_backup_postgres.py
+      - run: uvx --from ruff==0.16.10 ruff format --check deployments/birdplane/backup-postgres.py deployments/birdplane/test_backup_postgres.py
