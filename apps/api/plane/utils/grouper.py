@@ -5,7 +5,7 @@
 # Django imports
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.contrib.postgres.fields import ArrayField
-from django.db.models import Q, UUIDField, Value, QuerySet, OuterRef, Subquery
+from django.db.models import F, Q, UUIDField, Value, QuerySet, OuterRef, Subquery
 from django.db.models.functions import Coalesce
 
 # Module imports
@@ -80,7 +80,7 @@ def issue_queryset_grouper(
         "module_ids": Coalesce(issue_module_subquery, Value([], output_field=ArrayField(UUIDField()))),
     }
 
-    default_annotations: Dict[str, Any] = {}
+    default_annotations: Dict[str, Any] = {"agent_name": F("agent__name")}
 
     for key, expression in annotations_map.items():
         if FIELD_MAPPER.get(key) in {group_by, sub_group_by}:
@@ -107,6 +107,8 @@ def issue_on_results(
         "id",
         "name",
         "state_id",
+        "agent_id",
+        "agent_name",
         "sort_order",
         "completed_at",
         "estimate_point",

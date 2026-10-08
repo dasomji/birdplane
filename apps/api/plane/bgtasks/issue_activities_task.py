@@ -353,6 +353,37 @@ def track_labels(
         )
 
 
+def track_agent(
+    requested_data, current_instance, issue_id, project_id, workspace_id, actor_id, issue_activities, epoch
+):
+    from plane.db.models import AgentProfile
+
+    old_id = current_instance.get("agent_id")
+    new_id = requested_data.get("agent_id")
+    if str(old_id or "") == str(new_id or ""):
+        return
+    names = {
+        str(agent.id): agent.name
+        for agent in AgentProfile.objects.filter(id__in=[value for value in [old_id, new_id] if value])
+    }
+    issue_activities.append(
+        IssueActivity(
+            issue_id=issue_id,
+            actor_id=actor_id,
+            verb="updated",
+            field="agent",
+            old_value=names.get(str(old_id), ""),
+            new_value=names.get(str(new_id), ""),
+            old_identifier=old_id,
+            new_identifier=new_id,
+            project_id=project_id,
+            workspace_id=workspace_id,
+            comment="updated the AI agent assignment",
+            epoch=epoch,
+        )
+    )
+
+
 # Track changes in issue assignees
 def track_assignees(
     requested_data,
@@ -611,6 +642,7 @@ def update_issue_activity(
         "start_date": track_start_date,
         "label_ids": track_labels,
         "assignee_ids": track_assignees,
+        "agent_id": track_agent,
         "estimate_point": track_estimate_points,
         "archived_at": track_archive_at,
         "closed_to": track_closed_to,

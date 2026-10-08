@@ -209,9 +209,11 @@ class Plane:
         return self.resolve(await self.catalog("projects-lite"), value, "project")
 
     async def metadata(self, pid, kind):
-        endpoint = {"members": "project-members-lite", "types": "work-item-types"}.get(
-            kind, kind
-        )
+        endpoint = {
+            "members": "project-members-lite",
+            "types": "work-item-types",
+            "agents": "agents",
+        }.get(kind, kind)
         return await self.catalog(f"projects/{pid}/{endpoint}")
 
     async def reference(self, pid, kind, value):
@@ -276,6 +278,7 @@ class Plane:
                 "title": "name",
                 "due_date": "target_date",
                 "description": "description_html",
+                "agent": "agent_id",
             }.get(key, key)
             value = row.get(source)
             if key == "description":
@@ -445,6 +448,10 @@ class Plane:
                         "is_default",
                         "start_date",
                         "end_date",
+                        "description",
+                        "can_assign",
+                        "can_unassign",
+                        "is_active",
                     ],
                 )
                 for r in await self.metadata(pid, args["kind"])
@@ -467,6 +474,7 @@ class Plane:
                     "priority",
                     "project",
                     "assignees",
+                    "agent",
                     "labels",
                     "parent",
                     "start_date",
@@ -608,6 +616,14 @@ class Plane:
         pid = (
             (await self.project(args["project"]))["id"] if args.get("project") else None
         )
+        agent_id = None
+        if "agent" in args:
+            if not pid and not uuid(args["agent"]):
+                raise PlaneError(
+                    "project_required",
+                    "An agent name filter requires project; a UUID works workspace-wide.",
+                )
+            agent_id = await self.reference(pid, "agents", args["agent"])
         structured_filters = await self.issue_filters(args.get("filters", []), pid)
         resolved = {}
         for field, kind in [
@@ -645,6 +661,7 @@ class Plane:
             "name",
             "state",
             "assignees",
+            "agent_id",
             "labels",
             "parent",
             "priority",
@@ -654,6 +671,7 @@ class Plane:
                 "title": "name",
                 "due_date": "target_date",
                 "description": "description_html",
+                "agent": "agent_id",
             }.get(k, k)
             for k in fields
         )
@@ -734,6 +752,8 @@ class Plane:
                 params["filters"] = json.dumps(
                     structured_filters, separators=(",", ":")
                 )
+            if agent_id:
+                params["agent_id"] = agent_id
             if "pql" in args:
                 params["pql"] = args["pql"]
             data = await self.request(
@@ -926,6 +946,19 @@ class Plane:
         for field, kind in [("assignees", "members"), ("labels", "labels")]:
             if field in args:
                 body[field] = [await self.reference(pid, kind, v) for v in args[field]]
+        if "agent" in args:
+            body["agent_id"] = (
+                await self.reference(pid, "agents", args["agent"])
+                if args["agent"]
+                else None
+            )
+            if body["agent_id"]:
+                if args.get("assignees"):
+                    raise PlaneError(
+                        "conflicting_fields",
+                        "Choose human assignees or an AI agent, not both.",
+                    )
+                body["assignees"] = []
         if "labels" in args and ("add_labels" in args or "remove_labels" in args):
             raise PlaneError(
                 "conflicting_fields",

@@ -6,12 +6,13 @@
 from django.utils import timezone
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 
 # Third Party imports
 from rest_framework import serializers
 
 # Module imports
+from plane.app.serializers.agent import AgentAssignmentMixin
 from .base import BaseSerializer, DynamicBaseSerializer
 from .user import UserLiteSerializer
 from .state import StateLiteSerializer
@@ -79,7 +80,7 @@ class IssueProjectLiteSerializer(BaseSerializer):
 
 ##TODO: Find a better way to write this serializer
 ## Find a better approach to save manytomany?
-class IssueCreateSerializer(BaseSerializer):
+class IssueCreateSerializer(AgentAssignmentMixin, BaseSerializer):
     # ids
     state_id = serializers.PrimaryKeyRelatedField(
         source="state", queryset=State.all_state_objects.all(), required=False, allow_null=True
@@ -104,6 +105,7 @@ class IssueCreateSerializer(BaseSerializer):
         model = Issue
         fields = "__all__"
         read_only_fields = [
+            "agent",
             "workspace",
             "project",
             "created_by",
@@ -122,6 +124,7 @@ class IssueCreateSerializer(BaseSerializer):
         return data
 
     def validate(self, attrs):
+        self.validate_agent_assignment(attrs)
         allow_triage = self.context.get("allow_triage_state", False)
         state_manager = State.triage_objects if allow_triage else State.objects
 
@@ -196,6 +199,7 @@ class IssueCreateSerializer(BaseSerializer):
 
         return attrs
 
+    @transaction.atomic
     def create(self, validated_data):
         assignees = validated_data.pop("assignee_ids", None)
         labels = validated_data.pop("label_ids", None)
@@ -233,6 +237,7 @@ class IssueCreateSerializer(BaseSerializer):
             # Then assign it to default assignee, if it is a valid assignee
             if (
                 default_assignee_id is not None
+                and not issue.agent_id
                 and ProjectMember.objects.filter(
                     member_id=default_assignee_id,
                     project_id=project_id,
@@ -273,7 +278,11 @@ class IssueCreateSerializer(BaseSerializer):
 
         return issue
 
+    @transaction.atomic
     def update(self, instance, validated_data):
+        instance = Issue.issue_objects.select_for_update(of=("self",)).get(pk=instance.pk)
+        self.instance = instance
+        self.validate_agent_assignment(validated_data)
         assignees = validated_data.pop("assignee_ids", None)
         labels = validated_data.pop("label_ids", None)
 
@@ -768,6 +777,7 @@ class IssueIntakeSerializer(DynamicBaseSerializer):
 
 
 class IssueSerializer(DynamicBaseSerializer):
+    agent_name = serializers.CharField(source="agent.name", read_only=True, allow_null=True)
     # ids
     cycle_id = serializers.PrimaryKeyRelatedField(read_only=True)
     module_ids = serializers.ListField(child=serializers.UUIDField(), required=False)
@@ -800,6 +810,8 @@ class IssueSerializer(DynamicBaseSerializer):
             "module_ids",
             "label_ids",
             "assignee_ids",
+            "agent_id",
+            "agent_name",
             "sub_issues_count",
             "created_at",
             "updated_at",
@@ -844,6 +856,8 @@ class IssueListDetailSerializer(serializers.Serializer):
             "id": instance.id,
             "name": instance.name,
             "state_id": instance.state_id,
+            "agent_id": instance.agent_id,
+            "agent_name": instance.agent.name if instance.agent_id else None,
             "sort_order": instance.sort_order,
             "completed_at": instance.completed_at,
             "estimate_point": instance.estimate_point_id,

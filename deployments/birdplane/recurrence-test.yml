@@ -28,5 +28,5 @@ services:
     entrypoint: [/bin/sh, -c]
     command:
       [
-        "pip install -q -r requirements/test.txt && pytest plane/recurrence/tests.py plane/tests/unit/api/test_rate_limit.py plane/tests/unit/utils/test_birdplane_filters.py plane/tests/unit/utils/test_issue_datetime_filters.py plane/tests/unit/utils/test_pql.py plane/tests/contract/api/test_projects.py plane/tests/contract/api/test_workspaces.py plane/tests/contract/api/test_work_item_relations.py plane/tests/contract/app/test_project_app.py --migrations --create-db -q",
+        "pip install -q -r requirements/test.txt && pytest plane/tests/unit/serializers/test_agent.py plane/recurrence/tests.py plane/tests/unit/api/test_rate_limit.py plane/tests/unit/utils/test_birdplane_filters.py plane/tests/unit/utils/test_issue_datetime_filters.py plane/tests/unit/utils/test_pql.py plane/tests/contract/api/test_projects.py plane/tests/contract/api/test_workspaces.py plane/tests/contract/api/test_work_item_relations.py plane/tests/contract/app/test_project_app.py --migrations --create-db -q",
       ]

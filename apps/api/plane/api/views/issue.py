@@ -270,8 +270,21 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
     use_read_replica = True
 
     def get_queryset(self):
+        agent_filters = {}
+        agent_id = self.request.query_params.get("agent_id")
+        if agent_id is not None:
+            from rest_framework.serializers import UUIDField
+            from plane.db.models import AgentProfile
+
+            agent_id = UUIDField().run_validation(agent_id)
+            agent = AgentProfile.objects.filter(id=agent_id).first()
+            if not agent or not agent.enabled_in(self.kwargs.get("project_id")):
+                return Issue.objects.none()
+            agent_filters["agent_id"] = agent_id
+
         return (
-            Issue.issue_objects.annotate(
+            Issue.issue_objects.filter(**agent_filters)
+            .annotate(
                 sub_issues_count=Issue.issue_objects.filter(parent=OuterRef("id"))
                 .order_by()
                 .annotate(count=Func(F("id"), function="Count"))
@@ -323,11 +336,15 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
         external_source = request.GET.get("external_source")
 
         if external_id and external_source:
-            issue = ComplexFilterBackend().filter_queryset(request, self.get_queryset(), self).get(
-                external_id=external_id,
-                external_source=external_source,
-                workspace__slug=slug,
-                project_id=project_id,
+            issue = (
+                ComplexFilterBackend()
+                .filter_queryset(request, self.get_queryset(), self)
+                .get(
+                    external_id=external_id,
+                    external_source=external_source,
+                    workspace__slug=slug,
+                    project_id=project_id,
+                )
             )
             return Response(
                 IssueSerializer(issue, fields=self.fields, expand=self.expand).data,
@@ -449,6 +466,7 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
         serializer = IssueSerializer(
             data=request.data,
             context={
+                "request": request,
                 "project_id": project_id,
                 "workspace_id": project.workspace_id,
                 "default_assignee_id": project.default_assignee_id,
@@ -640,6 +658,7 @@ class IssueDetailAPIEndpoint(BaseAPIView):
                     issue,
                     data=request.data,
                     context={
+                        "request": request,
                         "project_id": project_id,
                         "workspace_id": project.workspace_id,
                     },
@@ -685,6 +704,7 @@ class IssueDetailAPIEndpoint(BaseAPIView):
                 serializer = IssueSerializer(
                     data=request.data,
                     context={
+                        "request": request,
                         "project_id": project_id,
                         "workspace_id": project.workspace_id,
                         "default_assignee_id": project.default_assignee_id,
@@ -773,7 +793,7 @@ class IssueDetailAPIEndpoint(BaseAPIView):
         serializer = IssueSerializer(
             issue,
             data=request.data,
-            context={"project_id": project_id, "workspace_id": project.workspace_id},
+            context={"request": request, "project_id": project_id, "workspace_id": project.workspace_id},
             partial=True,
         )
         if serializer.is_valid():

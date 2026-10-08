@@ -20,7 +20,12 @@ from plane.license.api.views import (
     InstanceWorkSpaceEndpoint,
 )
 
+from plane.app.views.agent import AgentAdminEndpoint, AgentAdminOptionsEndpoint
+
 urlpatterns = [
+    path("agents/", AgentAdminEndpoint.as_view()),
+    path("agents/options/", AgentAdminOptionsEndpoint.as_view()),
+    path("agents/<uuid:pk>/", AgentAdminEndpoint.as_view()),
     path("", InstanceEndpoint.as_view(), name="instance"),
     path("admins/", InstanceAdminEndpoint.as_view(), name="instance-admins"),
     path("admins/me/", InstanceAdminUserMeEndpoint.as_view(), name="instance-admins"),

@@ -45,6 +45,39 @@ Reconnect MCP clients after upgrading to refresh the tool schemas.
 
 ## Tools
 
+### AI agent assignment
+
+Instance admins create profiles under **AI agents** in admin settings. Each
+profile has a creator, optional colleagues allowed to assign it, and selected
+workspaces/projects. Only the creator can assign a new profile by default.
+An assignment grant does not grant access to a workspace or project. The API
+enforces assignment permissions using the account behind the API key; MCP has
+the same permissions as that account.
+
+```python
+list_metadata(workspace="personal", project="BIRD", kind="agents")
+save_issue(workspace="personal", id="BIRD-30", agent="My coding agent")
+list_issues(workspace="personal", project="BIRD", agent="<agent UUID>",
+            fields=["title", "state", "agent", "labels"])
+save_issue(workspace="personal", id="BIRD-30", agent=None)
+```
+
+Assigning an agent clears human assignees. To switch back to humans, pass
+`agent=None` and `assignees=[...]` together, or remove the agent first. Replacing
+or removing an agent requires permission for the currently assigned profile.
+Use the agent UUID for scripts; duplicate names require UUIDs. Agent filtering
+runs on the API before pagination. Disabled profiles and assignments outside
+the profile's current scopes are excluded from an agent-filtered queue.
+
+Direct API clients use `agent_id` on work-item create/update requests and
+`?agent_id=<UUID>` on project work-item lists. Discover profiles through
+`GET /api/v1/workspaces/<slug>/projects/<UUID>/agents/`.
+
+Assignment is independent of readiness. External runners can combine it with
+states or labels; Birdplane does not execute agents or start automations. Deploy
+the API migration and UI changes alongside the MCP update, then reconnect MCP
+clients to refresh their schemas.
+
 ### Bundled agent guidance
 
 The server ships its [project-management skill](sikku/skills/plane-project-management/SKILL.md)

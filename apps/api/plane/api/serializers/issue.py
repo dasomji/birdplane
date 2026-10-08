@@ -5,12 +5,13 @@
 # Django imports
 from django.utils import timezone
 from lxml import html
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 
 #  Third party imports
 from rest_framework import serializers
 
 # Module imports
+from plane.app.serializers.agent import AgentAssignmentMixin
 from plane.db.models import (
     Issue,
     IssueType,
@@ -43,7 +44,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 
 
-class IssueSerializer(BaseSerializer):
+class IssueSerializer(AgentAssignmentMixin, BaseSerializer):
     """
     Comprehensive work item serializer with full relationship management.
 
@@ -69,10 +70,11 @@ class IssueSerializer(BaseSerializer):
 
     class Meta:
         model = Issue
-        read_only_fields = ["id", "workspace", "project", "updated_by", "updated_at", "completed_at"]
+        read_only_fields = ["agent", "id", "workspace", "project", "updated_by", "updated_at", "completed_at"]
         exclude = ["description_json", "description_stripped"]
 
     def validate(self, data):
+        self.validate_agent_assignment(data)
         if (
             data.get("start_date", None) is not None
             and data.get("target_date", None) is not None
@@ -148,6 +150,7 @@ class IssueSerializer(BaseSerializer):
 
         return data
 
+    @transaction.atomic
     def create(self, validated_data):
         assignees = validated_data.pop("assignees", None)
         labels = validated_data.pop("labels", None)
@@ -192,6 +195,7 @@ class IssueSerializer(BaseSerializer):
                 # Then assign it to default assignee, if it is a valid assignee
                 if (
                     default_assignee_id is not None
+                    and not issue.agent_id
                     and ProjectMember.objects.filter(
                         member_id=default_assignee_id,
                         project_id=project_id,
@@ -231,7 +235,11 @@ class IssueSerializer(BaseSerializer):
 
         return issue
 
+    @transaction.atomic
     def update(self, instance, validated_data):
+        instance = Issue.issue_objects.select_for_update(of=("self",)).get(pk=instance.pk)
+        self.instance = instance
+        self.validate_agent_assignment(validated_data)
         assignees = validated_data.pop("assignees", None)
         labels = validated_data.pop("labels", None)
 
@@ -355,6 +363,7 @@ class LabelCreateUpdateSerializer(BaseSerializer):
         ]
         read_only_fields = [
             "id",
+            "agent",
             "workspace",
             "project",
             "created_by",

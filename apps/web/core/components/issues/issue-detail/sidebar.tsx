@@ -4,6 +4,8 @@
  * See the LICENSE file for details.
  */
 
+import { Bot } from "lucide-react";
+import { IssueAgentSelect } from "./agent-select";
 import { observer } from "mobx-react";
 // i18n
 import { useTranslation } from "@plane/i18n";
@@ -102,7 +104,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
               <MemberDropdown
                 value={issue?.assignee_ids ?? undefined}
                 onChange={(val) => issueOperations.update(workspaceSlug, projectId, issueId, { assignee_ids: val })}
-                disabled={!isEditable}
+                disabled={!isEditable || !!issue.agent_id}
                 projectId={projectId?.toString() ?? ""}
                 placeholder={t("issue.add.assignee")}
                 multiple
@@ -114,6 +116,10 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 dropdownArrow
                 dropdownArrowClassName="h-3.5 w-3.5 hidden group-hover:inline"
               />
+            </SidebarPropertyListItem>
+
+            <SidebarPropertyListItem icon={Bot} label="AI agent">
+              <IssueAgentSelect {...props} value={issue.agent_id} />
             </SidebarPropertyListItem>
 
             <SidebarPropertyListItem icon={PriorityPropertyIcon} label={t("common.priority")}>

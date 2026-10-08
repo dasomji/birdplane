@@ -12,7 +12,10 @@ from plane.api.views import (
     ProjectSummaryAPIEndpoint,
 )
 
+from plane.app.views.agent import ProjectAgentsAPIEndpoint
+
 urlpatterns = [
+    path("workspaces/<str:slug>/projects/<uuid:project_id>/agents/", ProjectAgentsAPIEndpoint.as_view()),
     path(
         "workspaces/<str:slug>/projects/",
         ProjectListCreateAPIEndpoint.as_view(http_method_names=["get", "post"]),

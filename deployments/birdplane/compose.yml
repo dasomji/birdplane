@@ -40,7 +40,11 @@ services:
     container_name: space-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
       in Coolify}
   admin:
-    image: makeplane/plane-admin:v1.4.2
+    image: birdplane-admin:git-compose
+    pull_policy: never
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile.admin
     depends_on:
       - api
       - web
