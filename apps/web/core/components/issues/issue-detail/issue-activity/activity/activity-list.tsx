@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+import { IssueAgentActivity } from "./actions/agent";
 import { observer } from "mobx-react";
 // helpers
 import { getValidKeysFromObject } from "@plane/utils";
@@ -60,6 +61,8 @@ export const IssueActivityItem = observer(function IssueActivityItem(props: TIss
       return <IssueNameActivity {...componentDefaultProps} />;
     case "description":
       return <IssueDescriptionActivity {...componentDefaultProps} showIssue={false} />;
+    case "agent":
+      return <IssueAgentActivity {...componentDefaultProps} />;
     case "assignees":
       return <IssueAssigneeActivity {...componentDefaultProps} showIssue={false} />;
     case "priority":

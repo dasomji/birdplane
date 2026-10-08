@@ -10,7 +10,7 @@ import { xor } from "lodash-es";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // icons
-import { Paperclip } from "lucide-react";
+import { Bot, Paperclip } from "lucide-react";
 // i18n
 import { useTranslation } from "@plane/i18n";
 import { LinkIcon, StartDatePropertyIcon, ViewsIcon, DueDatePropertyIcon } from "@plane/propel/icons";
@@ -317,26 +317,35 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
         </div>
       </WithDisplayPropertiesHOC>
 
-      {/* assignee */}
-      <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="assignee">
-        {/* oxlint-disable-next-line jsx_a11y/click-events-have-key-events oxlint-disable-next-line jsx_a11y/no-static-element-interactions */}
-        <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
-          <MemberDropdown
-            projectId={issue?.project_id}
-            value={issue?.assignee_ids}
-            onChange={handleAssignee}
-            disabled={isReadOnly}
-            multiple
-            buttonVariant={issue.assignee_ids?.length > 0 ? "transparent-without-text" : "border-without-text"}
-            buttonClassName={issue.assignee_ids?.length > 0 ? "hover:bg-transparent px-0" : ""}
-            showTooltip={issue?.assignee_ids?.length === 0}
-            placeholder={t("common.assignees")}
-            optionsClassName="z-10"
-            tooltipContent=""
-            renderByDefault={isMobile}
-          />
-        </div>
-      </WithDisplayPropertiesHOC>
+      {issue.agent_id ? (
+        <span
+          title="Assigned to an AI agent"
+          className="inline-flex h-5 max-w-40 items-center gap-1 rounded border border-subtle px-1 text-body-xs-regular"
+        >
+          <Bot className="size-3 shrink-0" />
+          <span className="truncate">{issue.agent_name || "AI agent"}</span>
+        </span>
+      ) : (
+        <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="assignee">
+          {/* oxlint-disable-next-line jsx_a11y/click-events-have-key-events oxlint-disable-next-line jsx_a11y/no-static-element-interactions */}
+          <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
+            <MemberDropdown
+              projectId={issue?.project_id}
+              value={issue?.assignee_ids}
+              onChange={handleAssignee}
+              disabled={isReadOnly || !!issue.agent_id}
+              multiple
+              buttonVariant={issue.assignee_ids?.length > 0 ? "transparent-without-text" : "border-without-text"}
+              buttonClassName={issue.assignee_ids?.length > 0 ? "hover:bg-transparent px-0" : ""}
+              showTooltip={issue?.assignee_ids?.length === 0}
+              placeholder={t("common.assignees")}
+              optionsClassName="z-10"
+              tooltipContent=""
+              renderByDefault={isMobile}
+            />
+          </div>
+        </WithDisplayPropertiesHOC>
+      )}
 
       <>
         {!isEpic && (

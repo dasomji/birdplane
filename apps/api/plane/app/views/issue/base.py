@@ -221,7 +221,7 @@ class IssueViewSet(BaseViewSet):
             workspace__slug=self.kwargs.get("slug"),
         ).distinct()
 
-        return issues
+        return issues.select_related("agent")
 
     def apply_annotations(self, issues):
         issues = (
@@ -408,6 +408,7 @@ class IssueViewSet(BaseViewSet):
         serializer = IssueCreateSerializer(
             data=request.data,
             context={
+                "request": request,
                 "project_id": project_id,
                 "workspace_id": project.workspace_id,
                 "default_assignee_id": project.default_assignee_id,
@@ -454,6 +455,8 @@ class IssueViewSet(BaseViewSet):
                     "module_ids",
                     "label_ids",
                     "assignee_ids",
+                    "agent_id",
+                    "agent_name",
                     "sub_issues_count",
                     "created_at",
                     "updated_at",
@@ -677,7 +680,9 @@ class IssueViewSet(BaseViewSet):
         current_instance = json.dumps(IssueDetailSerializer(issue).data, cls=DjangoJSONEncoder)
 
         requested_data = json.dumps(self.request.data, cls=DjangoJSONEncoder)
-        serializer = IssueCreateSerializer(issue, data=request.data, partial=True, context={"project_id": project_id})
+        serializer = IssueCreateSerializer(
+            issue, data=request.data, partial=True, context={"request": request, "project_id": project_id}
+        )
         if serializer.is_valid():
             serializer.save()
             # Check if the update is a migration description update
@@ -822,6 +827,7 @@ class IssuePaginatedViewSet(BaseViewSet):
 
         return (
             issue_queryset.select_related("state")
+            .annotate(agent_name=F("agent__name"))
             .annotate(cycle_id=Subquery(CycleIssue.objects.filter(issue=OuterRef("id")).values("cycle_id")[:1]))
             .annotate(
                 link_count=Subquery(
@@ -892,6 +898,8 @@ class IssuePaginatedViewSet(BaseViewSet):
             "module_ids",
             "label_ids",
             "assignee_ids",
+            "agent_id",
+            "agent_name",
             "link_count",
             "attachment_count",
             "sub_issues_count",
@@ -978,7 +986,7 @@ class IssueDetailEndpoint(BaseAPIView):
 
     def apply_annotations(self, issues):
         return (
-            issues.annotate(
+            issues.select_related("agent").annotate(
                 cycle_id=Subquery(
                     CycleIssue.objects.filter(issue=OuterRef("id"), deleted_at__isnull=True).values("cycle_id")[:1]
                 )
@@ -1097,9 +1105,9 @@ class IssueDetailEndpoint(BaseAPIView):
             order_by=order_by_param,
             queryset=issue,
             total_count_queryset=total_issue_queryset,
-            on_results=lambda issue: IssueListDetailSerializer(
-                issue, many=True, fields=self.fields, expand=self.expand
-            ).data,
+            on_results=lambda issue: (
+                IssueListDetailSerializer(issue, many=True, fields=self.fields, expand=self.expand).data
+            ),
         )
 
 

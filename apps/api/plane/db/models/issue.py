@@ -153,6 +153,9 @@ class Issue(ChangeTrackerMixin, ProjectBaseModel):
         through="IssueAssignee",
         through_fields=("issue", "assignee"),
     )
+    agent = models.ForeignKey(
+        "db.AgentProfile", on_delete=models.SET_NULL, null=True, blank=True, related_name="issues"
+    )
     sequence_id = models.IntegerField(default=1, verbose_name="Issue Sequence ID")
     labels = models.ManyToManyField("db.Label", blank=True, related_name="labels", through="IssueLabel")
     sort_order = models.FloatField(default=65535)

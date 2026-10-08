@@ -39,7 +39,10 @@ from plane.app.views import (
 )
 
 
+from plane.app.views.agent import ProjectAgentsEndpoint
+
 urlpatterns = [
+    path("workspaces/<str:slug>/projects/<uuid:project_id>/agents/", ProjectAgentsEndpoint.as_view()),
     path(
         "workspace-slug-check/",
         WorkSpaceAvailabilityCheckEndpoint.as_view(),

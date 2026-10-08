@@ -28,6 +28,7 @@ FIELDS = {
             "priority",
             "project",
             "assignees",
+            "agent",
             "labels",
             "parent",
             "start_date",
@@ -37,7 +38,7 @@ FIELDS = {
             "description",
         ]
     ),
-    "maxItems": 13,
+    "maxItems": 14,
     "uniqueItems": True,
 }
 
@@ -211,6 +212,7 @@ TOOLS = [
             "state": string("State name or UUID."),
             "priority": PRIORITY,
             "assignee": string("Name, email, UUID or me."),
+            "agent": string("Agent name or UUID; names require project."),
             "label": string("Label name or UUID."),
             "parent": ISSUE,
             "fields": FIELDS,
@@ -245,6 +247,10 @@ TOOLS = [
             "state": string(),
             "priority": PRIORITY,
             "assignees": NAMES,
+            "agent": {
+                "type": ["string", "null"],
+                "description": "Agent name or UUID; null removes assignment. Assigning an agent clears human assignees. Creator or explicit assignment grant required.",
+            },
             "labels": NAMES,
             "add_labels": NAMES,
             "remove_labels": NAMES,
@@ -264,11 +270,19 @@ TOOLS = [
     ),
     tool(
         "list_metadata",
-        "List a project's states, labels, members, cycles, modules or types. Use when choosing valid values; ticket tools already resolve names.",
+        "List a project's states, labels, members, cycles, modules, types or agents. Use when choosing valid values; ticket tools already resolve names.",
         {
             "project": PROJECT,
             "kind": string(
-                enum=["states", "labels", "members", "cycles", "modules", "types"]
+                enum=[
+                    "states",
+                    "labels",
+                    "members",
+                    "cycles",
+                    "modules",
+                    "types",
+                    "agents",
+                ]
             ),
             "query": string(),
             **PAGE,
