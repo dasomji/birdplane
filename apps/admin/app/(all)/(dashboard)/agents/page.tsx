@@ -33,6 +33,8 @@ export default observer(function AgentsPage() {
           }
         : current
     );
+  const scopesByWorkspace = new Map(draft?.scopes.map((scope) => [scope.workspace, scope]));
+  const selectedAssigners = new Set(draft?.assigners);
   const inputClass = "w-full rounded border border-subtle bg-transparent p-2";
 
   return (
@@ -137,7 +139,8 @@ export default observer(function AgentsPage() {
                   Enable a workspace, then choose all projects or specific projects.
                 </p>
                 {options.workspaces.map((workspace) => {
-                  const scope = draft.scopes.find((item) => item.workspace === workspace.id);
+                  const scope = scopesByWorkspace.get(workspace.id);
+                  const selectedProjects = new Set(scope?.projects);
                   return (
                     <div key={workspace.id} className="space-y-2 rounded border border-subtle p-3">
                       <label className="flex gap-2">
@@ -174,7 +177,7 @@ export default observer(function AgentsPage() {
                                 <label key={project.id} className="flex gap-2">
                                   <input
                                     type="checkbox"
-                                    checked={scope.projects.includes(project.id)}
+                                    checked={selectedProjects.has(project.id)}
                                     onChange={(event) =>
                                       setScope(workspace.id, {
                                         ...scope,
@@ -210,7 +213,7 @@ export default observer(function AgentsPage() {
                       <label key={member.id} className="flex gap-2">
                         <input
                           type="checkbox"
-                          checked={draft.assigners.includes(member.id)}
+                          checked={selectedAssigners.has(member.id)}
                           onChange={(event) =>
                             setDraft({
                               ...draft,
