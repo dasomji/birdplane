@@ -39,6 +39,22 @@ upstream provides the behavior. Include its reason, upstream links, affected
 code, removal condition, and verification. Permanent Birdplane features do not
 belong here solely because they differ from upstream.
 
+### Project publish authorization (SECUR-247)
+
+- **Status:** local security backport prepared on 2026-10-26; deployment requires review.
+- **Upstream:** [fix #10034](https://github.com/makeplane/plane/pull/10034), included
+  in v1.4.3-rc2, commit `dc93e1699c7d6e770900c17fc24d04c4e89254e0`.
+- **Local implementation:** both `ProjectMemberPermission` implementations require
+  active membership in the URL project for POST; `DeployBoardViewSet.create`
+  also checks that the project belongs to the URL workspace.
+- **Remove when:** a reviewed upstream release includes these checks. Compare
+  the permission classes and publish handler before removing this backport.
+- **Verification:** run
+  `plane/tests/contract/app/test_deploy_board_project_scope_app.py`, including
+  rejection of non-project members and cross-workspace project IDs, no board
+  creation on denial, and successful publication by a project member. Also
+  verify external API label creation by project members.
+
 ### MinIO release image unavailable
 
 - **Status:** active deployment workaround, BIRD-27.
