@@ -58,22 +58,34 @@ belong here solely because they differ from upstream.
 
 ### MinIO release image unavailable
 
-- **Status:** active deployment workaround, BIRD-27.
-- **Reason:** the official Docker Hub and Quay image for
-  `RELEASE.2025-09-07T16-13-09Z` cannot be pulled; its binary download returns 410.
-- **Source:** [tagged release](https://github.com/minio/minio/releases/tag/RELEASE.2025-09-07T16-13-09Z),
-  commit `07c3a429bfed433e49018cb0f78a52145d4bedeb`.
-- **Local implementation:** `Dockerfile.minio` builds this exact source release;
-  `compose.yml` uses the resulting local image and existing uploads volume.
-- **Remove when:** a maintained, reproducible replacement image is selected and
-  verified against a restored upload backup, with an explicit upgrade decision.
-- **Verification:** compare every existing object's key, size, and SHA256 after
-  deployment; verify S3 connectivity and the reported MinIO release version.
-- **Last upstream review:** v1.4.3 (2026-10-29): **retain**. Upstream switched
-  its own Compose files to `docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z`
-  (#9963), a community MinIO fork. Adopting it is a storage-engine change that
-  needs a restored upload backup and an explicit decision; it is not part of
-  the v1.4.3 sync.
+- **Status:** retired on 2026-10-29 by the v1.4.3 update (branch
+  `sync/upstream-v1.4.3`); **replace with upstream's choice**. The owner chose
+  to adopt Silo. Retirement takes effect when that branch is deployed.
+- **Reason it existed:** the official Docker Hub and Quay image for MinIO
+  `RELEASE.2025-09-07T16-13-09Z` cannot be pulled; its binary download returns 410. `Dockerfile.minio` built that exact source release (commit
+  `07c3a429bfed433e49018cb0f78a52145d4bedeb`). The file is kept for rollback.
+- **Replacement:** `docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z`, index
+  digest `sha256:635197cb9f36d01bee221d34d1c7d7960f6a95c48b0b6c01d99cd13bdae51a46`,
+  as pinned by upstream Plane v1.4.3 (#9963). Silo is PGSTY's maintained MinIO
+  fork; its [migration guide](https://silo.pigsty.io/compatibility/migration/)
+  describes an in-place image swap with unchanged object layout, `.minio.sys`,
+  `MINIO_*` variables, and server flags. Only the legacy `fs` backend is rejected.
+- **Pre-switch inspection (2026-10-29, read-only Coolify task):** production
+  `.minio.sys/format.json` is `xl-single`; MinIO runs as root (uid 0) and the
+  data is root-owned; one bucket, `uploads`, holds 8 objects (about 3.4 MB).
+  The Silo image also runs as root and translates `server ...` to `silo server`.
+  No data migration is required.
+- **Rollout:** Silo may update `.minio.sys` metadata, so an older MinIO cannot be
+  assumed to read the volume afterwards. Before deploying, stop `plane-minio`,
+  archive the whole uploads volume (including `.minio.sys`) with ownership
+  preserved, record every object's key, size, and SHA256, and keep that archive
+  as the rollback point. Never run MinIO and Silo against the volume at once.
+- **Verification:** after deployment confirm the running image digest, that the
+  `uploads` bucket and all objects match the recorded keys, sizes, and SHA256,
+  and that uploading, viewing, and deleting a disposable attachment work in
+  Birdplane. Check `silo` logs for metadata or format warnings.
+- **Rollback:** restore the pre-switch volume archive and redeploy the previous
+  `compose.yml` (built from `Dockerfile.minio`); reconcile any uploads made in between.
 
 ### Project display names containing hyphens
 

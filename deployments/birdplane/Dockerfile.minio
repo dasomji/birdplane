@@ -1,5 +1,5 @@
-# The official image and binary downloads for this release are unavailable.
-# Build the same source release; do not change its version during cutover.
+# Rollback only: compose.yml now runs pgsty/silo. The official image and binary
+# downloads for this release are unavailable, so build the same source release.
 FROM golang:1.24-bookworm AS build
 RUN git clone --depth 1 --branch RELEASE.2025-09-07T16-13-09Z https://github.com/minio/minio.git /src
 WORKDIR /src
