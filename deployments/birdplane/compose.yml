@@ -124,6 +124,11 @@ services:
       SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in Coolify}
       AMQP_URL: ${AMQP_URL}
       API_KEY_RATE_LIMIT: ${API_KEY_RATE_LIMIT}
+      # Client identity behind Cloudflare -> Traefik -> Caddy. Traefik always
+      # overwrites X-Real-Ip with its TCP peer; Cf-Connecting-Ip is trusted only
+      # when that peer is a Cloudflare address. See plane/middleware/client_ip.py.
+      TRUSTED_PROXY_CLIENT_IP_HEADER: X-Real-Ip
+      TRUST_CLOUDFLARE_CLIENT_IP: "1"
       MINIO_ENDPOINT_SSL: ${MINIO_ENDPOINT_SSL}
       LIVE_SERVER_SECRET_KEY: ${LIVE_SERVER_SECRET_KEY:?Set LIVE_SERVER_SECRET_KEY
         in Coolify}
