@@ -251,7 +251,9 @@ class IssueSerializer(AgentAssignmentMixin, BaseSerializer):
 
     @transaction.atomic
     def update(self, instance, validated_data):
-        instance = Issue.issue_objects.select_for_update(of=("self",)).get(pk=instance.pk)
+        # Lock via Issue.objects: issue_objects hides triage, draft and archived
+        # issues, which callers may legitimately update (e.g. intake edits).
+        instance = Issue.objects.select_for_update(of=("self",)).get(pk=instance.pk)
         self.instance = instance
         self.validate_agent_assignment(validated_data)
         assignees = validated_data.pop("assignees", None)
