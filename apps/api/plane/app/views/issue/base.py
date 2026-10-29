@@ -986,7 +986,8 @@ class IssueDetailEndpoint(BaseAPIView):
 
     def apply_annotations(self, issues):
         return (
-            issues.select_related("agent").annotate(
+            issues.select_related("agent")
+            .annotate(
                 cycle_id=Subquery(
                     CycleIssue.objects.filter(issue=OuterRef("id"), deleted_at__isnull=True).values("cycle_id")[:1]
                 )
@@ -1073,14 +1074,24 @@ class IssueDetailEndpoint(BaseAPIView):
                 issue = issue.prefetch_related(
                     Prefetch(
                         "issue_relation",
-                        queryset=IssueRelation.objects.select_related("related_issue"),
+                        queryset=IssueRelation.objects.filter(
+                            related_issue__workspace__slug=slug,
+                            related_issue__project_id__in=ProjectMember.objects.filter(
+                                workspace__slug=slug, member=request.user, is_active=True
+                            ).values("project_id"),
+                        ).select_related("related_issue"),
                     )
                 )
             if "issue_related" in self.expand:
                 issue = issue.prefetch_related(
                     Prefetch(
                         "issue_related",
-                        queryset=IssueRelation.objects.select_related("issue"),
+                        queryset=IssueRelation.objects.filter(
+                            issue__workspace__slug=slug,
+                            issue__project_id__in=ProjectMember.objects.filter(
+                                workspace__slug=slug, member=request.user, is_active=True
+                            ).values("project_id"),
+                        ).select_related("issue"),
                     )
                 )
 

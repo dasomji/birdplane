@@ -118,8 +118,14 @@ INSTALLED_APPS = [
     "django_celery_beat",
 ]
 
+# Birdplane: opt-in client identity; the trusted proxy must overwrite this header.
+TRUSTED_PROXY_CLIENT_IP_HEADER = os.environ.get("TRUSTED_PROXY_CLIENT_IP_HEADER", "")
+TRUST_CLOUDFLARE_CLIENT_IP = os.environ.get("TRUST_CLOUDFLARE_CLIENT_IP", "0") == "1"
+CLOUDFLARE_IP_RANGES = os.environ.get("CLOUDFLARE_IP_RANGES", "")
+
 # Middlewares
 MIDDLEWARE = [
+    "plane.middleware.client_ip.ClientIPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",

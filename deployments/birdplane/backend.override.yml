@@ -1,4 +1,4 @@
-# Merge into an existing Plane v1.4.2 Compose stack. Preserve its volume names.
+# Merge into an existing Plane v1.4.3 Compose stack. Preserve its volume names.
 # Set BIRDPLANE_COMMIT to a full reviewed commit SHA before rendering with Compose.
 services:
   web:

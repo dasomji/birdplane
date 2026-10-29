@@ -1319,10 +1319,13 @@ class IssueLinkDetailAPIEndpoint(BaseAPIView):
         issue_link = IssueLink.objects.get(workspace__slug=slug, project_id=project_id, issue_id=issue_id, pk=pk)
         requested_data = json.dumps(request.data, cls=DjangoJSONEncoder)
         current_instance = json.dumps(IssueLinkSerializer(issue_link).data, cls=DjangoJSONEncoder)
+        previous_url = issue_link.url
         serializer = IssueLinkSerializer(issue_link, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            crawl_work_item_link_title.delay(serializer.data.get("id"), serializer.data.get("url"))
+            updated_url = serializer.data.get("url")
+            if updated_url and updated_url != previous_url:
+                crawl_work_item_link_title.delay(serializer.data.get("id"), updated_url)
             issue_activity.delay(
                 type="link.activity.updated",
                 requested_data=requested_data,
@@ -2402,8 +2405,12 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
         Retrieve all relationships for a work item organized by relation type.
         Returns a structured response with relations grouped by type.
         """
+        accessible_projects = ProjectMember.objects.filter(
+            workspace__slug=slug, member=request.user, is_active=True
+        ).values("project_id")
         relations = IssueRelation.objects.filter(
-            Q(issue_id=issue_id) | Q(related_issue_id=issue_id),
+            Q(issue_id=issue_id, related_issue__project_id__in=accessible_projects)
+            | Q(related_issue_id=issue_id, issue__project_id__in=accessible_projects),
             workspace__slug=slug,
         ).values(
             "relation_type",
@@ -2549,12 +2556,15 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
         actual_relation = get_actual_relation(relation_type)
         is_reverse = relation_type in ["blocking", "start_after", "finish_after"]
 
-        # Scope to workspace to prevent cross-tenant IDOR
-        # Relations can cross projects so only workspace scope is enforced
+        # Ignore inaccessible targets just like unknown IDs. Cross-project relations
+        # require active membership, including for workspace admins.
         issues = list(
             Issue.issue_objects.filter(
                 workspace__slug=slug,
                 pk__in=issues,
+                project_id__in=ProjectMember.objects.filter(
+                    workspace__slug=slug, member=request.user, is_active=True
+                ).values("project_id"),
             ).values_list("id", flat=True)
         )
 
@@ -2577,7 +2587,7 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
 
         issue_activity.delay(
             type="issue_relation.activity.created",
-            requested_data=json.dumps(request.data, cls=DjangoJSONEncoder),
+            requested_data=json.dumps({"relation_type": relation_type, "issues": issues}, cls=DjangoJSONEncoder),
             actor_id=str(request.user.id),
             issue_id=str(issue_id),
             project_id=str(project_id),
@@ -2631,7 +2641,8 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
         relation_type = serializer.validated_data["relation_type"]
         related_id = serializer.validated_data["related_issue"]
         # Do not mutate relations to an inaccessible or cross-workspace target.
-        Issue.issue_objects.get(
+        # Issue.objects so relations to archived or triage issues stay removable.
+        Issue.objects.get(
             pk=related_id,
             workspace__slug=slug,
             project_id__in=ProjectMember.objects.filter(

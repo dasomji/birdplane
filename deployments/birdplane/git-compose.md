@@ -33,10 +33,14 @@ mount these volumes. The web and backend use shared local image tags that are
 rebuilt from the checked-out commit; workers and migrations use that same backend
 image. Record the deployed commit from Coolify's deployment history.
 
-MinIO is built from the exact `RELEASE.2025-09-07T16-13-09Z` source commit because
-the former official container image and binary downloads are unavailable. This
-preserves its release version while making deployments independent of that
-removed image. See [Dockerfile.minio](Dockerfile.minio).
+Object storage runs [Silo](https://silo.pigsty.io), PGSTY's maintained MinIO fork,
+pinned to `docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z` by digest, the
+release upstream Plane v1.4.3 uses. It reuses the existing `xl-single` uploads
+volume in place, as root, like the MinIO it replaces. Until 2026-10-29 the stack
+ran MinIO built from the exact `RELEASE.2025-09-07T16-13-09Z` source commit, because
+that release's official image and binaries are unavailable.
+[Dockerfile.minio](Dockerfile.minio) is kept only for rollback and the legacy
+definition below.
 
 ## Migration
 

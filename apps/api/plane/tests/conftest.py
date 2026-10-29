@@ -3,10 +3,12 @@
 # See the LICENSE file for details.
 
 import pytest
+from django.core.cache import cache
 from rest_framework.test import APIClient
 from pytest_django.fixtures import django_db_setup
 
 from plane.db.models import User, Workspace, WorkspaceMember
+from plane.api.rate_limit import ApiKeyRateThrottle
 from plane.db.models.api import APIToken
 
 
@@ -54,7 +56,13 @@ def api_token(db, create_user):
         label="Test API Token",
         token="test-api-token-12345",
     )
-    return token
+    # Every test reuses this token string, and its ApiKeyRateThrottle history
+    # lives in the cache, which the DB rollback does not reset. Clear it so
+    # earlier tests cannot exhaust API_KEY_RATE_LIMIT and cause spurious 429s.
+    throttle_key = f"{ApiKeyRateThrottle.scope}:{token.token}"
+    cache.delete(throttle_key)
+    yield token
+    cache.delete(throttle_key)
 
 
 @pytest.fixture

@@ -23,6 +23,7 @@ from plane.app.serializers import IssueRelationSerializer, RelatedIssueSerialize
 from plane.app.permissions import ProjectEntityPermission
 from plane.db.models import (
     Project,
+    ProjectMember,
     IssueRelation,
     Issue,
     FileAsset,
@@ -100,7 +101,12 @@ class IssueRelationViewSet(BaseViewSet):
         )
 
         queryset = (
-            Issue.issue_objects.filter(workspace__slug=slug)
+            Issue.issue_objects.filter(
+                workspace__slug=slug,
+                project_id__in=ProjectMember.objects.filter(
+                    workspace__slug=slug, member=request.user, is_active=True
+                ).values("project_id"),
+            )
             .select_related("workspace", "project", "state", "parent")
             .prefetch_related("assignees", "labels", "issue_module__module")
             .annotate(
@@ -217,12 +223,15 @@ class IssueRelationViewSet(BaseViewSet):
         issues = request.data.get("issues", [])
         project = Project.objects.get(pk=project_id)
 
-        # Scope to workspace to prevent cross-tenant IDOR
-        # Relations can cross projects so only workspace scope is enforced
+        # Ignore inaccessible targets just like unknown IDs. Cross-project relations
+        # require active membership, including for workspace admins.
         issues = list(
             Issue.issue_objects.filter(
                 workspace__slug=slug,
                 pk__in=issues,
+                project_id__in=ProjectMember.objects.filter(
+                    workspace__slug=slug, member=request.user, is_active=True
+                ).values("project_id"),
             ).values_list("id", flat=True)
         )
 
@@ -247,7 +256,7 @@ class IssueRelationViewSet(BaseViewSet):
 
         issue_activity.delay(
             type="issue_relation.activity.created",
-            requested_data=json.dumps(request.data, cls=DjangoJSONEncoder),
+            requested_data=json.dumps({"relation_type": relation_type, "issues": issues}, cls=DjangoJSONEncoder),
             actor_id=str(request.user.id),
             issue_id=str(issue_id),
             project_id=str(project_id),
@@ -271,6 +280,14 @@ class IssueRelationViewSet(BaseViewSet):
     def remove_relation(self, request, slug, project_id, issue_id):
         related_issue = request.data.get("related_issue", None)
 
+        # Issue.objects so relations to archived or triage issues stay removable.
+        Issue.objects.get(
+            pk=related_issue,
+            workspace__slug=slug,
+            project_id__in=ProjectMember.objects.filter(
+                workspace__slug=slug, member=request.user, is_active=True
+            ).values("project_id"),
+        )
         issue_relations = IssueRelation.objects.filter(
             workspace__slug=slug,
         ).filter(

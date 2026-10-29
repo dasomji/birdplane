@@ -107,18 +107,32 @@ class IssueSerializer(AgentAssignmentMixin, BaseSerializer):
 
         # Validate assignees are from project
         if data.get("assignees", []):
-            data["assignees"] = ProjectMember.objects.filter(
-                project_id=self.context.get("project_id"),
-                is_active=True,
-                role__gte=15,
-                member_id__in=data["assignees"],
-            ).values_list("member_id", flat=True)
+            valid_assignee_ids = set(
+                ProjectMember.objects.filter(
+                    project_id=self.context.get("project_id"),
+                    is_active=True,
+                    role__gte=15,
+                    member_id__in=data["assignees"],
+                ).values_list("member_id", flat=True)
+            )
+            invalid_assignee_ids = set(data["assignees"]) - valid_assignee_ids
+            if invalid_assignee_ids:
+                raise serializers.ValidationError(
+                    f"Assignees {list(invalid_assignee_ids)} are not active members of this project"
+                )
+            data["assignees"] = list(valid_assignee_ids)
 
         # Validate labels are from project
         if data.get("labels", []):
-            data["labels"] = Label.objects.filter(
-                project_id=self.context.get("project_id"), id__in=data["labels"]
-            ).values_list("id", flat=True)
+            valid_label_ids = set(
+                Label.objects.filter(
+                    project_id=self.context.get("project_id"), id__in=data["labels"]
+                ).values_list("id", flat=True)
+            )
+            invalid_label_ids = set(data["labels"]) - valid_label_ids
+            if invalid_label_ids:
+                raise serializers.ValidationError(f"Labels {list(invalid_label_ids)} do not belong to this project")
+            data["labels"] = list(valid_label_ids)
 
         # Check state is from the project only else raise validation error
         if (
@@ -237,7 +251,9 @@ class IssueSerializer(AgentAssignmentMixin, BaseSerializer):
 
     @transaction.atomic
     def update(self, instance, validated_data):
-        instance = Issue.issue_objects.select_for_update(of=("self",)).get(pk=instance.pk)
+        # Lock via Issue.objects: issue_objects hides triage, draft and archived
+        # issues, which callers may legitimately update (e.g. intake edits).
+        instance = Issue.objects.select_for_update(of=("self",)).get(pk=instance.pk)
         self.instance = instance
         self.validate_agent_assignment(validated_data)
         assignees = validated_data.pop("assignees", None)
