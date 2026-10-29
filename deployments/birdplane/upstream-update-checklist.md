@@ -41,19 +41,20 @@ belong here solely because they differ from upstream.
 
 ### Project publish authorization (SECUR-247)
 
-- **Status:** local security backport prepared on 2026-10-26; deployment requires review.
-- **Upstream:** [fix #10034](https://github.com/makeplane/plane/pull/10034), included
-  in v1.4.3-rc2, commit `dc93e1699c7d6e770900c17fc24d04c4e89254e0`.
-- **Local implementation:** both `ProjectMemberPermission` implementations require
-  active membership in the URL project for POST; `DeployBoardViewSet.create`
-  also checks that the project belongs to the URL workspace.
-- **Remove when:** a reviewed upstream release includes these checks. Compare
-  the permission classes and publish handler before removing this backport.
-- **Verification:** run
-  `plane/tests/contract/app/test_deploy_board_project_scope_app.py`, including
-  rejection of non-project members and cross-workspace project IDs, no board
-  creation on denial, and successful publication by a project member. Also
-  verify external API label creation by project members.
+- **Status:** retired on 2026-10-29 by the v1.4.3 update (branch
+  `sync/upstream-v1.4.3`); **replace with upstream**.
+- **Upstream:** [fix #10034](https://github.com/makeplane/plane/pull/10034),
+  commit `dc93e1699c7d6e770900c17fc24d04c4e89254e0`, included in v1.4.3
+  (`37a15d99231042b3ff5a4401fed479fdbec9effe`).
+- **Evidence:** after merging v1.4.3, `apps/api/plane/app/permissions/project.py`,
+  `apps/api/plane/utils/permissions/project.py`,
+  `apps/api/plane/app/views/project/base.py`, and
+  `plane/tests/contract/app/test_deploy_board_project_scope_app.py` are
+  byte-identical to the v1.4.3 tag (`git diff v1.4.3 -- <files>` is empty).
+  No separate local implementation remains.
+- **Verification:** keep running
+  `plane/tests/contract/app/test_deploy_board_project_scope_app.py`; it is now
+  upstream's own regression test.
 
 ### MinIO release image unavailable
 
@@ -68,6 +69,11 @@ belong here solely because they differ from upstream.
   verified against a restored upload backup, with an explicit upgrade decision.
 - **Verification:** compare every existing object's key, size, and SHA256 after
   deployment; verify S3 connectivity and the reported MinIO release version.
+- **Last upstream review:** v1.4.3 (2026-10-29): **retain**. Upstream switched
+  its own Compose files to `docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z`
+  (#9963), a community MinIO fork. Adopting it is a storage-engine change that
+  needs a restored upload backup and an explicit decision; it is not part of
+  the v1.4.3 sync.
 
 ### Project display names containing hyphens
 
@@ -100,5 +106,8 @@ belong here solely because they differ from upstream.
   upstream's error format; do not automatically remove useful diagnostics
   when retiring the backend patch.
 - **Research and verification:** [project-name-validation.md](project-name-validation.md).
-- **Last upstream review:** 2026-09-16; no retirement decision yet. Record the
-  next reviewed release, outcome, and evidence here when performing an update.
+- **Last upstream review:** v1.4.3 (2026-10-29): **retain**. The tag's
+  `apps/api/plane/db/models/project.py` still has only
+  `FORBIDDEN_IDENTIFIER_CHARS_PATTERN` (which includes `-`) and applies it to
+  names, so hyphenated names would be rejected again without this patch.
+  Record the next reviewed release, outcome, and evidence here.

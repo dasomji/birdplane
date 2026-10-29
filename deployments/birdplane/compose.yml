@@ -23,7 +23,7 @@ services:
     container_name: web-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
       in Coolify}
   space:
-    image: makeplane/plane-space:v1.4.2
+    image: makeplane/plane-space:v1.4.3
     depends_on:
       - api
       - worker
@@ -60,7 +60,7 @@ services:
     container_name: admin-${BIRDPLANE_APPLICATION_UUID:?Set BIRDPLANE_APPLICATION_UUID
       in Coolify}
   live:
-    image: makeplane/plane-live:v1.4.2
+    image: makeplane/plane-live:v1.4.3
     environment:
       REDIS_HOST: ${REDIS_HOST}
       REDIS_PORT: ${REDIS_PORT}
@@ -344,7 +344,7 @@ services:
       in Coolify}
     pull_policy: never
   proxy:
-    image: makeplane/plane-proxy:v1.4.2
+    image: makeplane/plane-proxy:v1.4.3
     environment:
       APP_DOMAIN: ${APP_DOMAIN}
       FILE_SIZE_LIMIT: ${FILE_SIZE_LIMIT}

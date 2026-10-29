@@ -7,7 +7,9 @@ General Public License v3 as Plane; see [LICENSE.txt](LICENSE.txt).
 
 ## Upstream alignment
 
-The initial production baseline is Plane **v1.4.2**, commit
+The current upstream baseline is Plane **v1.4.3**, commit
+`37a15d99231042b3ff5a4401fed479fdbec9effe` (update prepared 2026-10-29). The initial
+production baseline was v1.4.2, commit
 `5f7d92784c403f76284f0f16718f320221dc7fec`. The `birdplane` branch carries our
 additions. Upstream history, license, notices, app code and build files are
 preserved. This is an independent community fork, not an official Plane release.
@@ -32,8 +34,9 @@ Do not merge upstream's moving preview branch directly into production.
 ## Deployment
 
 See [`deployments/birdplane/README.md`](deployments/birdplane/README.md).
-The deployment builds the backend, web app, and MCP from this repository, while
-using upstream v1.4.2 admin, space, live, and proxy images. Birdplane adds
+The Git-connected deployment builds the backend, web and admin apps, MinIO, and
+MCP from this repository, while using upstream v1.4.3 space, live, and proxy
+images. Birdplane adds
 `is`, `is not`, and `is empty` to Plane's existing filter UI and MCP; see
 [filter documentation](deployments/birdplane/filters.md).
 
