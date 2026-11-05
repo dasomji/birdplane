@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-import { createRequire } from "node:module";
 import path from "node:path";
 
 const rows = (data) => (Array.isArray(data) ? data : data.results);
@@ -16,8 +15,8 @@ export function journeys(ctx) {
     return await response.json();
   }
 
-  async function signIn(password) {
-    await ctx.page.goto(ctx.web);
+  async function signIn(password, { navigate = true } = {}) {
+    if (navigate) await ctx.page.goto(ctx.web);
     await ctx.page.locator('input[type="email"]').fill("admin@test.com");
     await ctx.page.locator('button[type="submit"]').click();
     await ctx.page.locator('input[name="password"]').fill(password);
@@ -28,18 +27,8 @@ export function journeys(ctx) {
     [
       "wrong password rejected and unauthenticated API denied",
       async () => {
-        const require = createRequire(path.join(ctx.runtime, "browser/package.json"));
-        const { chromium } = require("playwright");
-        ctx.browser = await chromium.launch({ headless: true });
-        ctx.page = await ctx.browser.newPage({ viewport: { width: 1440, height: 1000 } });
-        ctx.page.setDefaultTimeout(60_000);
-        ctx.page.on("pageerror", (error) => {
-          const detail = error.stack || String(error);
-          ctx.browserErrors.push(`${new Date().toISOString()} ${detail}`);
-          console.error(`Browser error: ${detail}`);
-        });
         try {
-          await signIn("wrong-password");
+          await signIn("wrong-password", { navigate: false });
           await ctx.page.waitForURL((url) => url.searchParams.has("error_code"), { timeout: 60_000 });
           const denied = await ctx.page.request.get(`${ctx.api}/api/users/me/`);
           assert.ok([401, 403].includes(denied.status()), `Anonymous /users/me returned ${denied.status()}`);

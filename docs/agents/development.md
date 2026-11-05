@@ -97,6 +97,14 @@ Journeys use real browser, HTTP API and MCP boundaries:
 
 1. Build the API environment, migrate an empty disposable database and seed D12.
 2. Build web workspace dependencies and boot API/worker/web; install pinned Playwright and MCP's locked environment.
+   Web readiness also launches the real browser and requires a visible login
+   form after startup network activity settles, within the original 60-second
+   budget. A same-origin Vite `504 Outdated Optimize Dep` triggers a fresh
+   navigation within that budget: a rejected startup module can leave a blank
+   document without loading the HMR client. Other blank pages fail without
+   reloads. Existing build/route output is retained; no checkout artifacts are
+   deleted to make verification pass. Readiness attempts and optimizer
+   invalidations are recorded in `results.json`.
 3. Reject an incorrect password through the browser and confirm unauthenticated
    app/public API requests return 401 or 403.
 4. Sign in as `admin@test.com` through the web form and confirm the authenticated
@@ -115,8 +123,12 @@ Journeys use real browser, HTTP API and MCP boundaries:
 
 Screenshots, bounded sanitized service/build logs, resource snapshots and textual
 results go to `.kitchen/evidence/verify-app/<full-sha>/<run>/`. Browser page errors
-are retained in `browser-errors.log` for review; successful journey assertions do
-not imply an error-free console. API tokens and
+are retained in `browser-errors.log`; `browser-diagnostics.log` retains console
+messages, failed requests and HTTP errors (bounded to the latest 500 entries of
+2,000 characters per stream, with request query strings omitted). The last page's
+HTML is saved as `last-page.html` alongside its screenshot. These local diagnostic
+files are sanitized against the run's generated secrets; successful journey
+assertions do not imply an error-free console. API tokens and
 generated secrets are withheld/redacted; no production data is involved.
 `--upload` uploads only the synthetic-data result summary
 using `evidence put ... --ticket BIRD-34 --note ... --markdown`, printing returned
@@ -131,7 +143,16 @@ removes its image/builder and runtime directory, and fails on cleanup errors.
 Never run a generic `docker compose down -v` on shared names.
 
 The runner's own guard/exit behavior is checked with
-`node --test scripts/kitchen/verify-app/*.test.mjs`.
+`node --test scripts/kitchen/verify-app/*.test.mjs`. Browser readiness/diagnostic
+regressions use real Chromium against local HTTP fixtures and opt in with the
+verifier's pinned browser install (otherwise those tests report skipped):
+
+```sh
+VERIFY_BROWSER_PACKAGE="$runtime/browser/package.json" \
+  node --test scripts/kitchen/verify-app/*.test.mjs
+```
+
+Run this while a `--keep` runtime is retained, before its cleanup.
 
 This is a functional smoke, not full product coverage: it does not launch the
 admin/space apps, live collaboration server, object storage/uploads, email,

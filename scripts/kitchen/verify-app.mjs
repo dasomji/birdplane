@@ -6,11 +6,13 @@ import { createHash, randomBytes } from "node:crypto";
 import { mkdir, readFile, writeFile, rm, statfs, readdir } from "node:fs/promises";
 import { openSync, closeSync } from "node:fs";
 import { homedir } from "node:os";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { assertDisposable } from "./verify-app/safety.mjs";
 import { verify } from "./verify-app/lifecycle.mjs";
 import { journeys } from "./verify-app/journeys.mjs";
+import { observeBrowser, waitForLogin } from "./verify-app/browser.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const support = path.join(root, "scripts/kitchen/verify-app");
@@ -210,6 +212,7 @@ async function main() {
     secrets,
     disk,
     browserErrors: [],
+    browserDiagnostics: [],
   };
   let interrupted = false;
   const interrupt = () => {
@@ -353,7 +356,16 @@ async function main() {
             }
             if (!ready) throw new Error(`Readiness timed out: ${url}`);
           }
-          return { web: ctx.web, api: ctx.api };
+          const require = createRequire(path.join(ctx.runtime, "browser/package.json"));
+          const { chromium } = require("playwright");
+          ctx.browser = await chromium.launch({ headless: true });
+          ctx.page = await ctx.browser.newPage({ viewport: { width: 1440, height: 1000 } });
+          ctx.page.setDefaultTimeout(60_000);
+          const diagnostics = observeBrowser(ctx.page);
+          ctx.browserErrors = diagnostics.pageErrors;
+          ctx.browserDiagnostics = diagnostics.events;
+          const login = await waitForLogin(ctx.page, ctx.web);
+          return { web: ctx.web, api: ctx.api, login };
         },
       ],
       ...journeys(ctx).map(([name, action]) => [
@@ -367,10 +379,6 @@ async function main() {
     cleanup: async () => {
       try {
         await compose(config, ["logs", "--no-color", "--tail", "200"], { log: path.join(evidence, "services.log") });
-        if (ctx.browserErrors.length)
-          await writeFile(path.join(evidence, "browser-errors.log"), sanitize(ctx.browserErrors.join("\n")), {
-            mode: 0o600,
-          });
         const owned = (await compose(config, ["ps", "-q"])).split(/\s+/).filter(Boolean);
         if (owned.length)
           await command(
@@ -383,8 +391,26 @@ async function main() {
           if (ctx.browser) {
             try {
               await ctx.page.screenshot({ path: path.join(evidence, "last-page.png") });
+              await writeFile(path.join(evidence, "last-page.html"), sanitize(await ctx.page.content()), {
+                mode: 0o600,
+              });
             } finally {
-              await ctx.browser.close();
+              try {
+                await Promise.all([
+                  writeFile(path.join(evidence, "browser-errors.log"), sanitize(ctx.browserErrors.join("\n")), {
+                    mode: 0o600,
+                  }),
+                  writeFile(
+                    path.join(evidence, "browser-diagnostics.log"),
+                    sanitize(ctx.browserDiagnostics.join("\n")),
+                    {
+                      mode: 0o600,
+                    }
+                  ),
+                ]);
+              } finally {
+                await ctx.browser.close();
+              }
             }
           }
         } finally {
