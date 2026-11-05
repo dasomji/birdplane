@@ -1,0 +1,48 @@
+# Standalone test stack; never combine this with production/upstream Compose.
+services:
+  verify-db:
+    image: postgres:15.7-alpine
+    # Test-only: no crash durability is required for an empty disposable DB.
+    command: [postgres, -c, fsync=off, -c, synchronous_commit=off, -c, full_page_writes=off]
+    environment:
+      POSTGRES_DB: verify
+      POSTGRES_USER: verify
+      POSTGRES_PASSWORD: ${VERIFY_DB_PASSWORD:?}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD, pg_isready, -U, verify, -d, verify]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  verify-redis:
+    image: valkey/valkey:7.2.11-alpine
+    command: [valkey-server, --save, "", --appendonly, "no"]
+    healthcheck:
+      test: [CMD, valkey-cli, ping]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  api: &api
+    image: ${VERIFY_IMAGE:?}
+    init: true
+    env_file: ${VERIFY_RUNTIME:?}/api.env
+    volumes:
+      - ${VERIFY_ROOT:?}/scripts/kitchen/verify-app:/verification:ro
+      - ${VERIFY_RUNTIME:?}:/runtime
+    tmpfs:
+      - /tmp
+    command: [python, manage.py, runserver, 0.0.0.0:8000, --noreload]
+    ports:
+      - "127.0.0.1::8000"
+    depends_on:
+      verify-db:
+        condition: service_healthy
+      verify-redis:
+        condition: service_healthy
+  worker:
+    <<: *api
+    ports: []
+    command: [celery, -A, plane, worker, --loglevel=WARNING, --concurrency=1]
+volumes:
+  pgdata:
