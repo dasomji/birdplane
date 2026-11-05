@@ -1,6 +1,6 @@
 # Birdplane filters
 
-Birdplane extends Plane v1.4.2's existing rich-filter framework with `is`, `is not`, and `is empty`. Existing saved filters keep working. Required properties (project, state, created/updated timestamps) do not offer `is empty`.
+Birdplane extends Plane's existing rich-filter framework (current source baseline: v1.4.3) with `is`, `is not`, and `is empty`. Existing saved filters keep working. Required properties (project, state, created/updated timestamps) do not offer `is empty`.
 
 - **is**: matches any selected value.
 - **is not**: matches none of the selected values, including tickets with no value.
@@ -14,7 +14,7 @@ The public project work-item endpoint accepts the same structured `filters` JSON
 { "and": [{ "label_id__not_in": "<label UUID>" }, { "assignee_id__is_empty": true }] }
 ```
 
-The MCP keeps its existing tool count and bounded responses. `list_issues` accepts up to 20 `filters`, resolves exact names internally, and sends them to the API:
+The MCP keeps bounded responses. `list_issues` accepts up to 20 `filters`, resolves exact names internally, and sends them to the API:
 
 ```json
 {
@@ -45,3 +45,6 @@ present. Follow cursors with identical arguments.
 - Web production build: `pnpm turbo run build --filter=web`.
 
 The source deployment override now builds both backend and web from the pinned Birdplane commit. Preserve existing Compose service names, environment, and named volumes. No database migration is introduced by these filters.
+
+Use the [agent verification guide](../../docs/agents/verify.md) for the complete
+fork gate and isolated app journeys; the component commands above do not replace it.

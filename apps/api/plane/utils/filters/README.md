@@ -78,3 +78,6 @@ it does not grant access to another project or workspace.
 
 Keep the raw `pql__exact` expression when saving filters. Do not replace it with
 resolved dates or a cached result from a previous request.
+
+See the [fork glossary](../../../../../GLOSSARY.md) and
+[agent verification guide](../../../../../docs/agents/verify.md) for repository work.

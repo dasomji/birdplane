@@ -34,7 +34,7 @@ Do not merge upstream's moving preview branch directly into production.
 ## Deployment
 
 See [`deployments/birdplane/README.md`](deployments/birdplane/README.md).
-The Git-connected deployment builds the backend, web and admin apps, MinIO, and
+The Git-connected deployment builds the backend, web and admin apps, Silo object storage, and
 MCP from this repository, while using upstream v1.4.3 space, live, and proxy
 images. Birdplane adds
 `is`, `is not`, and `is empty` to Plane's existing filter UI and MCP; see
@@ -43,3 +43,15 @@ images. Birdplane adds
 Recurring tasks are implemented in the isolated `plane.recurrence` Django app,
 with a management page and compact MCP tools. See
 [recurrence documentation](deployments/birdplane/recurrence.md).
+
+## Agent development
+
+Use the [development guide](docs/agents/development.md) for isolated environments,
+[verification guide](docs/agents/verify.md) for checks, [doors](docs/agents/doors.md)
+for review boundaries, and [GitHub targeting](docs/agents/fork-github.md) for fork
+operations. Shared terms live in [GLOSSARY.md](GLOSSARY.md); consequential choices
+live in [ADRs](docs/adr/). These guides do not authorize production operations.
+
+Birdplane changes product branding while retaining upstream `@plane/*` packages,
+Python `plane` modules, API routes/headers, environment and database values, and
+asset paths. PQL and upstream commercial product names retain their provider names.

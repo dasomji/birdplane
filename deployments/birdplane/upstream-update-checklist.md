@@ -89,7 +89,8 @@ belong here solely because they differ from upstream.
 
 ### Project display names containing hyphens
 
-- **Status:** active local fix; prepared on 2026-09-16, not deployed as of that date.
+- **Status:** active local fix. BIRD-20 records merge and deployment on 2026-09-16;
+  this is historical ticket evidence, not a fresh runtime inspection.
 - **Tracking:** BIRD-20.
 - **Reason:** upstream applies the ticket-identifier punctuation blacklist to
   display names, rejecting creation and rename of names such as `me-tracker-ts`.
@@ -117,9 +118,28 @@ belong here solely because they differ from upstream.
   `apps/mcp/sikku/plane.py` is not the hyphen workaround. Reassess it against
   upstream's error format; do not automatically remove useful diagnostics
   when retiring the backend patch.
-- **Research and verification:** [project-name-validation.md](project-name-validation.md).
+- **Rationale and lineage:** [original validation PR #8529](https://github.com/makeplane/plane/pull/8529)
+  introduced a shared blacklist. Its committed identifier regex includes hyphens;
+  the local display-name regex permits them while retaining all other existing
+  restrictions and preserving identifier validation. Underscores were already
+  allowed. The maintainer response linked above favors targeted validation over
+  removing every name restriction. Do not infer technical necessity for banning
+  display-name hyphens from that discussion.
+- **Historical outcome (2026-09-16):** investigation initially recorded 36
+  public/browser contract tests and 33 MCP tests passing. BIRD-20 subsequently
+  records merge/deployment of `78d893e250b61d3d52bc0d7e608dc9c8d236b799`, successful
+  live MCP project creation and disposable ticket cleanup. September's initial
+  “not deployed” statement is superseded. These are dated outcomes, not receipts
+  for a future update.
 - **Last upstream review:** v1.4.3 (2026-10-29): **retain**. The tag's
   `apps/api/plane/db/models/project.py` still has only
   `FORBIDDEN_IDENTIFIER_CHARS_PATTERN` (which includes `-`) and applies it to
   names, so hyphenated names would be rejected again without this patch.
   Record the next reviewed release, outcome, and evidence here.
+
+## Agent verification routing
+
+Use the [verification guide](../../docs/agents/verify.md) for current gate commands
+and the [doors](../../docs/agents/doors.md) for deployment/data review boundaries.
+The [fork-boundary ADR](../../docs/adr/0001-preserve-fork-boundaries-and-selected-releases.md)
+records the separate-file policy and inherited-document exception.

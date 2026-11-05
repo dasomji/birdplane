@@ -1,8 +1,12 @@
 # Agent Development Guide
 
+<!-- BEGIN BIRDPLANE FORK -->
+
+## Birdplane agent routing
+
 <!-- BEGIN PLANE PROJECT -->
 
-## Plane project
+### Plane project
 
 - Instance URL: https://plane.audiopoesis.com
 - Workspace: Personal
@@ -11,35 +15,21 @@
 - Name: Birdplane
 - Identifier: BIRD
 - Project ID: a5b675f4-e0b9-41f8-9600-cf0ad45daeb6
-- Instance URL: https://plane.audiopoesis.com
+
 <!-- END PLANE PROJECT -->
 
-## Upstream updates and temporary fixes
+- [Development and isolated environments](docs/agents/development.md),
+  [verification commands](docs/agents/verify.md), and [merge doors](docs/agents/doors.md).
+- [Fork GitHub targeting](docs/agents/fork-github.md): always use `--repo dasomji/birdplane`
+  and base `birdplane`. Release-branch pushes trigger production deployment.
+- [Glossary](GLOSSARY.md) and [decisions](docs/adr/), including the
+  [scoped upstream-body exception](docs/adr/0001-preserve-fork-boundaries-and-selected-releases.md).
+- Complete the [upstream-update checklist](deployments/birdplane/upstream-update-checklist.md)
+  before merging or deploying an upstream update; register each temporary workaround there.
+- Follow [backup and Coolify diagnostic rules](deployments/birdplane/backups.md).
+  Production Compose uses external production volumes; never use it for previews/tests.
 
-Before merging or deploying an upstream Plane update, complete
-[`deployments/birdplane/upstream-update-checklist.md`](deployments/birdplane/upstream-update-checklist.md)
-and record the disposition of each active temporary fix in the update PR.
-When adding a temporary upstream workaround, add its removal condition and
-regression checks to that document's register. Retire redundant local patches
-only after verifying equivalent behavior in the selected upstream release.
-
-## Coolify operations and backup verification
-
-Follow [`deployments/birdplane/backups.md`](deployments/birdplane/backups.md)
-for deployment backups and temporary checks. Keep genuine scheduled-task,
-backup, and service failure notifications enabled. Use direct container access
-for exploratory diagnostics when available; disabled Coolify tasks still send
-failure notifications when manually executed. If direct access is unavailable,
-use prevalidated, clearly named manual tasks with explicit connection settings,
-bounded timeouts, and no interactive password prompts. Preserve failed execution
-evidence before cleanup, and wait for terminal status before removing tasks.
-
-Use the local PostgreSQL socket consistently and pass `-w` to every client.
-Transfer backups as files or bounded chunks, never as a single execution-log
-payload. Match the downloaded file's size and SHA-256 to the server and restore
-that downloaded file into an isolated database with `--exit-on-error` before
-calling it verified. Never suppress a failure with `|| true`, globally mute
-alerts to test a command, or report a verified server dump as a verified download.
+<!-- END BIRDPLANE FORK -->
 
 ## Commands
 

@@ -2,7 +2,7 @@
 
 Take a new snapshot before each deployment. Keep database dumps, uploads,
 credentials, configuration snapshots, and manifests outside the repository in
-a private directory. A replacement backup taken after a deployment is a current
+private product-owned storage, never in a worktree. A replacement backup taken after a deployment is a current
 snapshot, not a recreation of the earlier rollback point; record its capture time.
 
 ## Capture and transfer

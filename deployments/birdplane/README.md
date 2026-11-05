@@ -39,7 +39,7 @@ The `/services/{uuid}/start` endpoint rejects services that are already running;
 the restart endpoint can stop containers before the build finishes.
 Build `web` from the same pinned commit using `apps/web/Dockerfile.web` and the
 repository root as build context; use `birdplane-web:COMMIT` with `pull_policy: never`.
-The overlay includes this definition. Keep admin/space/live/proxy images at
+The overlay includes this definition. For this legacy overlay, keep admin/space/live/proxy images at
 `makeplane/plane-*:v1.4.3`. The filter additions introduce no database migration;
 recurring tasks have their own additive migration.
 
@@ -96,4 +96,13 @@ Keep Clockwork's metadata caching, server-side filters, and Retry-After handling
 To roll back, restore `API_KEY_RATE_LIMIT=60/minute` on all four services and
 redeploy the same UUID. `API_KEY_RATE_LIMIT=60/minute` also overrides the overlay
 default. A rate-only rollback requires no image, credential, volume, or database
-restore. See the [BIRD-25 deployment evidence](api-rate-limit-2026-10-01.md).
+restore. Do not restore an older database over live writes for a rate-only rollback.
+
+## Isolated development and verification
+
+The Git-connected definition builds admin locally; the manual overlay above
+retains an upstream admin image. Its rate-limit instructions remain useful, but
+do not mistake the legacy topology for the Git-connected production definition.
+Use [agent development](../../docs/agents/development.md) and
+[verification](../../docs/agents/verify.md) for disposable environments, never the
+production Compose file. See the [storage decision](../../docs/adr/0002-isolate-production-storage-from-verification.md).
