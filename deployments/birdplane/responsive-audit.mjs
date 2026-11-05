@@ -2,9 +2,27 @@
 /* eslint-disable no-await-in-loop */
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+const repoRoot = fileURLToPath(new URL("../../", import.meta.url));
+if (process.argv.includes("--help")) {
+  console.log(`Usage: node deployments/birdplane/responsive-audit.mjs [before|after] [output-dir]
+Output: positional directory > AUDIT_OUTPUT_DIR > .kitchen/evidence/responsive-audit/
+Relative directories resolve from the repository root; absolute directories are unchanged.
+--print-output-dir prints the resolved directory without loading fixtures or a browser.`);
+  process.exit(0);
+}
+const out = path.resolve(
+  repoRoot,
+  process.argv.slice(2).filter((arg) => arg !== "--print-output-dir")[1] ||
+    process.env.AUDIT_OUTPUT_DIR ||
+    ".kitchen/evidence/responsive-audit"
+);
+if (process.argv.includes("--print-output-dir")) {
+  console.log(out);
+  process.exit(0);
+}
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE || "playwright");
 const phase = process.argv[2] || "before";
-const out = path.resolve(process.argv[3] || "reports/responsive-audit");
 const fixture = JSON.parse(await fs.readFile(process.env.AUDIT_FIXTURE, "utf8"));
 const base = process.env.AUDIT_BASE_URL || "http://localhost:18030";
 const w = process.env.AUDIT_WORKSPACE || "audit",
