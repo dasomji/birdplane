@@ -1,0 +1,10 @@
+FROM python:3.12.12-slim-bookworm
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_DISABLE_PIP_VERSION_CHECK=1
+WORKDIR /code
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential libpq-dev libffi-dev libxml2-dev libxslt1-dev libxmlsec1-dev pkg-config && rm -rf /var/lib/apt/lists/*
+COPY requirements/ requirements/
+RUN pip install --no-cache-dir -r requirements/test.txt
+COPY . /code/
+RUN mkdir -p plane/logs plane/static-assets/collected-static
+ENTRYPOINT []
+CMD ["pytest", "-o", "python_files=test_*.py tests.py", "--migrations", "--create-db", "-q"]
