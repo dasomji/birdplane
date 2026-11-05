@@ -14,13 +14,13 @@ resources. Temporary source snapshots and test data live outside the checkout.
 
 ## Commands and coverage
 
-| Rung     | Command                                  | Coverage                                                                                                                                   |
-| -------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| L0       | `node --test scripts/kitchen/*.test.mjs` | Gate selection and staged-index behavior. For product edits also run the affected module's focused tests/typecheck.                        |
-| L1       | `pnpm check:fast`                        | Staged formatting, lint, dependent-package typechecks/builds and related suites. Enforced after `pnpm lint-staged` by `.husky/pre-commit`. |
-| L2       | `pnpm check:full`                        | Named full phases listed below, with failing aggregate for any failed/blocked/missing phase.                                               |
-| L3       | `pnpm verify:app`                        | Functional journeys plus a failure case at the tested SHA. See [functional verification](development.md#functional-verification).          |
-| L3 smoke | `pnpm verify:app`                        | The same isolated smoke/journey contract; there is no separate reduced command claiming functional proof.                                  |
+| Rung     | Command                                  | Coverage                                                                                                                                          |
+| -------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| L0       | `node --test scripts/kitchen/*.test.mjs` | Gate selection, staged-index behavior and upstream exemption contracts. For product edits also run the affected module's focused tests/typecheck. |
+| L1       | `pnpm check:fast`                        | Staged formatting, lint, dependent-package typechecks/builds and related suites. Enforced after `pnpm lint-staged` by `.husky/pre-commit`.        |
+| L2       | `pnpm check:full`                        | Named full phases listed below, with failing aggregate for any failed/blocked/missing phase.                                                      |
+| L3       | `pnpm verify:app`                        | Functional journeys plus a failure case at the tested SHA. See [functional verification](development.md#functional-verification).                 |
+| L3 smoke | `pnpm verify:app`                        | The same isolated smoke/journey contract; there is no separate reduced command claiming functional proof.                                         |
 
 `check:fast` exports the entire Git index to a temporary directory, installs an
 offline frozen workspace there, and checks that snapshot. It never formats source
@@ -64,9 +64,10 @@ Birdplane's actual database/app checks remain required in L2 and L3.
 Turbo concurrency is capped at two to bound memory, without dropping tasks. Existing
 upstream per-package warning budgets stay exactly as declared in their scripts;
 this is an explicit compatibility policy, not an increased allowance. The full gate
-reports their real exit status. Newly staged JS/TS has zero warnings. No failure is
-converted to a warning or excluded to obtain green. Remote links/heading fragments
-are not network-validated by the offline relative-link check.
+reports their real exit status. Newly staged JS/TS has zero warnings. Only the exact
+unchanged-upstream violations registered below are exempted; every other diagnostic
+fails. Remote links/heading fragments are not network-validated by the offline
+relative-link check.
 
 The API stack is the standalone fork-owned
 `scripts/kitchen/compose/api-tests.yml`; never combine it with production Compose or
@@ -76,6 +77,41 @@ published, database/service data is temporary, and every run has its own project
 image tags and buildx builder. Cleanup waits for commands and contributes to the
 aggregate. A failed prerequisite marks dependent phases blocked. Independent phases
 still run to expose the full baseline.
+
+## Per-component justified exceptions
+
+The fork-owned [upstream exemption register](../../scripts/kitchen/upstream-exemptions.json)
+records individual violations, their check/rule, exact source locations and symbols
+where applicable, the selected `upstreamRef` (`v1.4.3`), its Git blob SHA and a
+one-line justification. It contains three API `F401` diagnostics (`Func`, `Q` and
+`User`) and the `SECURITY.md` oxfmt violation. These files remain byte-identical to
+the selected upstream release; no upstream source or document is rewritten.
+
+The `api-ruff` phase runs the entire API check without fixes, with Ruff's JSON
+output. Every diagnostic must match one register entry by file, code, symbol/message
+and start/end location, exactly once. Any additional diagnostic fails. The
+`root-docs-format` phase rechecks registered documents with oxfmt's
+`--list-different`, then excludes only those exact paths from its formatting check.
+Registered documents remain subject to the relative-link check.
+
+Both components compare `git hash-object <path>` against the recorded upstream blob
+without fetching tags or using the network. A changed or missing file fails: it is
+now fork-owned and must be fixed and removed from the register. An exemption whose
+violation no longer occurs also fails as stale and must be removed. Invalid and
+duplicate entries fail. The register can only shrink as these violations disappear;
+it is never a component-wide or repository-wide waiver. Each applied exemption is
+printed with its location, rule, blob and justification in the phase output/log.
+
+For cheap diagnostics, select any combination of `kitchen-tests`, `api-ruff`,
+`root-docs-format` and `root-docs-links`:
+
+```sh
+pnpm check:full --phase api-ruff --phase root-docs-format --phase root-docs-links
+```
+
+Cleanup still runs. Omitted phases keep the aggregate **blocked** and the command
+nonzero even when all selected phases pass; this is never a full L2 pass. Run the
+unfiltered gate after integration to measure the implementation contract.
 
 ## Measurements and evidence
 
@@ -125,14 +161,10 @@ blocked commits without moving HEAD; a successful hook preserved an unstaged
 hunk while committing the staged hunk. Product/package selections may take
 longer because their dependency builds and dependent typechecks are real.
 
-Current blockers, not suppressed or fixed outside this chunk's ownership:
-
-- API Ruff: `apps/api/plane/app/views/issue/sub_issue.py:10` has unused `Func`
-  and `Q`; `apps/api/plane/app/views/project/invite.py:31` has unused `User`.
-- Root docs: unchanged upstream `SECURITY.md` fails oxfmt. The migration's
-  upstream-preservation hold prevents modifying it in this chunk.
-- Integration: this guide's `development.md` target belongs to chunk 2b and is
-  absent in the isolated chunk-2a checkout. L3 is also pending that implementation.
+The baseline API Ruff and upstream `SECURITY.md` formatting failures are covered
+only by the exact, blob-guarded exemptions above. Integration still requires this
+guide's `development.md` target from chunk 2b, its L3 implementation, and a green
+unfiltered full-gate measurement. Missing links have no exemption.
 
 Per-phase durations and outcomes, minimum free disk, peak disk growth and sampled
 peak runner process-tree RSS are written to `.kitchen/evidence/check-full-<UTC>-<pid>/results.json`, beside complete

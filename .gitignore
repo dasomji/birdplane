@@ -123,3 +123,5 @@ packages/i18n/src/types/keys.generated.ts
 /scripts/*
 !/scripts/kitchen/
 .kitchen/
+!/CLAUDE.md
+!/packages/tailwind-config/CLAUDE.md

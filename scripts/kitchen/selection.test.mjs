@@ -1,6 +1,16 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { selectChecks } from "./lib/selection.mjs";
+import { selectChecks, selectFullPhases } from "./lib/selection.mjs";
+
+test("focused full-gate diagnostics accept only explicit independent phases", () => {
+  assert.equal(selectFullPhases([]), null);
+  assert.deepEqual(selectFullPhases(["--phase", "api-ruff", "--phase", "root-docs-links"]), [
+    "api-ruff",
+    "root-docs-links",
+  ]);
+  for (const args of [["--phase"], ["--phase", "api-pytest"], ["--skip", "api-ruff"]])
+    assert.throws(() => selectFullPhases(args), /Expected --phase/);
+});
 
 test("gate runner edits select their public contract tests", () => {
   const selection = selectChecks(["scripts/kitchen/check-fast.mjs"]);

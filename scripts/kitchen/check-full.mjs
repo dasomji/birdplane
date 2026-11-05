@@ -5,10 +5,15 @@ import { randomUUID } from "node:crypto";
 import { checkLinks } from "./lib/docs.mjs";
 import { trackedContext } from "./lib/context.mjs";
 import { Gate } from "./lib/process.mjs";
+import { selectFullPhases } from "./lib/selection.mjs";
 
 const root = execFileSync("git", ["rev-parse", "--show-toplevel"], { encoding: "utf8" }).trim();
 process.chdir(root);
+const selected = selectFullPhases(process.argv.slice(2));
 const gate = new Gate(root, "check-full");
+const phase = (name, work, options) =>
+  !selected || selected.includes(name) || name === "cleanup" ? gate.phase(name, work, options) : undefined;
+if (selected) console.log(`Focused diagnostics: ${selected.join(", ")}; full aggregate remains blocked.`);
 const id = `kitchen-${randomUUID().slice(0, 12)}`;
 const apiImage = `birdplane-api-${id}:test`;
 const mcpImage = `birdplane-mcp-${id}:test`;
@@ -43,22 +48,22 @@ let mcpContext;
 const images = new Set();
 try {
   const tracked = execFileSync("git", ["ls-files", "-z"], { encoding: "utf8" }).split("\0").filter(Boolean);
-  await gate.phase("kitchen-tests", async (run) => {
+  await phase("kitchen-tests", async (run) => {
     await run("pnpm", ["exec", "oxfmt", "--check", "scripts/kitchen", ".github/workflows/birdplane-checks.yml"]);
     await run("pnpm", ["exec", "oxlint", "--deny-warnings", "scripts/kitchen"]);
     await run("node", ["--test", ...tracked.filter((path) => /^scripts\/kitchen\/.*\.test\.mjs$/.test(path))]);
   });
   // Limit concurrency to bound peak memory; all upstream tasks still run.
-  await gate.phase("workspace-check", (run) => run("pnpm", ["check", "--concurrency=2"]));
-  await gate.phase("workspace-build", (run) => run("pnpm", ["build", "--concurrency=2"]));
-  await gate.phase("workspace-tests", (run) => run("pnpm", ["turbo", "run", "test", "--concurrency=2"]));
-  await gate.phase("branding", (run) => run("pnpm", ["test:branding"]));
-  await gate.phase("shared-state-filters", async (run) => {
+  await phase("workspace-check", (run) => run("pnpm", ["check", "--concurrency=2"]));
+  await phase("workspace-build", (run) => run("pnpm", ["build", "--concurrency=2"]));
+  await phase("workspace-tests", (run) => run("pnpm", ["turbo", "run", "test", "--concurrency=2"]));
+  await phase("branding", (run) => run("pnpm", ["test:branding"]));
+  await phase("shared-state-filters", async (run) => {
     await run("pnpm", ["turbo", "run", "build", "--filter=@plane/shared-state", "--concurrency=2"]);
     await run("node", ["--test", "packages/shared-state/filters.test.mjs"]);
   });
-  await gate.phase("api-ruff", (run) => run("uvx", ["--from", "ruff==0.9.7", "ruff", "check", "apps/api"]));
-  await gate.phase("api-image", async (run) => {
+  await phase("api-ruff", (run) => run("node", ["scripts/kitchen/check-upstream.mjs", "api-ruff"]));
+  await phase("api-image", async (run) => {
     // Own builder: its cache/container/volume can be removed without pruning anyone else's cache.
     await run("docker", ["buildx", "create", "--name", id, "--driver", "docker-container"]);
     builderCreated = true;
@@ -79,7 +84,7 @@ try {
       apiContext.directory,
     ]);
   });
-  await gate.phase(
+  await phase(
     "api-services",
     async (run) => {
       composeStarted = true;
@@ -91,7 +96,7 @@ try {
     },
     { requires: ["api-image"] }
   );
-  await gate.phase(
+  await phase(
     "api-pytest",
     (run) =>
       run(
@@ -113,7 +118,7 @@ try {
       ),
     { requires: ["api-services"] }
   );
-  await gate.phase(
+  await phase(
     "api-migration-boot",
     (run) =>
       run("docker", [...compose, "run", "--rm", "--no-deps", "api-tests", "python", "kitchen-smoke.py"], {
@@ -123,16 +128,16 @@ try {
     { requires: ["api-services"] }
   );
   const mcp = { cwd: join(root, "apps/mcp") };
-  await gate.phase("mcp-sync", (run) => run("uv", ["sync", "--frozen", "--python", "3.12"], mcp));
-  await gate.phase("mcp-pytest", (run) => run("uv", ["run", "--no-sync", "pytest", "-q"], mcp), {
+  await phase("mcp-sync", (run) => run("uv", ["sync", "--frozen", "--python", "3.12"], mcp));
+  await phase("mcp-pytest", (run) => run("uv", ["run", "--no-sync", "pytest", "-q"], mcp), {
     requires: ["mcp-sync"],
   });
-  await gate.phase(
+  await phase(
     "mcp-ruff",
     (run) => run("uv", ["run", "--no-sync", "ruff", "check", "sikku", "tests", "scripts/smoke_relations.py"], mcp),
     { requires: ["mcp-sync"] }
   );
-  await gate.phase(
+  await phase(
     "mcp-wheel-guidance",
     async (run) => {
       await run("uv", ["build", "--wheel", "--out-dir", join(gate.directory, "wheels")], mcp);
@@ -148,7 +153,7 @@ try {
     },
     { requires: ["mcp-sync"] }
   );
-  await gate.phase("mcp-docker-guidance", async (run) => {
+  await phase("mcp-docker-guidance", async (run) => {
     if (!builderCreated) throw new Error("Owned Docker builder unavailable");
     mcpContext = trackedContext(root, "apps/mcp/");
     images.add(mcpImage);
@@ -175,7 +180,7 @@ try {
       'from sikku.server import GUIDE; assert "Workspace slug:" in GUIDE and "AGENTS.md" in GUIDE; print("Docker bundled guidance present")',
     ]);
   });
-  await gate.phase("backup-tests-ruff", async (run) => {
+  await phase("backup-tests-ruff", async (run) => {
     await run("python3", [
       "-m",
       "unittest",
@@ -193,10 +198,10 @@ try {
   const docs = tracked.filter(
     (path) => path.endsWith(".md") && (!path.includes("/") || path.startsWith("docs/agents/"))
   );
-  await gate.phase("root-docs-format", (run) => run("pnpm", ["exec", "oxfmt", "--check", ...docs]));
-  await gate.phase("root-docs-links", async () => checkLinks(root, docs));
+  await phase("root-docs-format", (run) => run("node", ["scripts/kitchen/check-upstream.mjs", "docs-format", ...docs]));
+  await phase("root-docs-links", async () => checkLinks(root, docs));
 } finally {
-  await gate.phase("cleanup", async (run) => {
+  await phase("cleanup", async (run) => {
     const failures = [];
     const cleanup = async (command, args, options) => {
       try {

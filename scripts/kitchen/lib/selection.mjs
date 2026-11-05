@@ -1,3 +1,16 @@
+// Only independent, cheap diagnostics; a focused run never completes check:full.
+export function selectFullPhases(args) {
+  if (args.length === 0) return null;
+  const allowed = ["kitchen-tests", "api-ruff", "root-docs-format", "root-docs-links"];
+  const selected = new Set();
+  for (let index = 0; index < args.length; index += 2) {
+    if (args[index] !== "--phase" || !allowed.includes(args[index + 1]))
+      throw new Error(`Expected --phase ${allowed.join("|")}`);
+    selected.add(args[index + 1]);
+  }
+  return [...selected];
+}
+
 export function selectChecks(paths, { scriptsOnly = false } = {}) {
   const tests = new Set();
   let apiAtL2 = false;
