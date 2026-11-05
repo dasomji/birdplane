@@ -55,4 +55,9 @@ links `docs/agents/verify.md` but chunk 2 writes it.
   integration: add negations for tracked wrappers so future scoped wrappers aren't silently ignored.
 - Open candidates from the retired forum-findings doc filed as Backlog investigations:
   BIRD-35 (workspace-view favorites), BIRD-36 (cycle filtering in workspace views).
-- Link check: 23 refs to `docs/agents/{development,verify}.md` resolve only after 2a/2b merge.
+- Link check: refs to `docs/agents/{development,verify}.md` resolve after integration (root-docs-links pass).
+- `check:full` upstream exemptions (pinned blobs, fail closed): F401 x3 in two v1.4.3 API views; `SECURITY.md` format.
+- `check:fast` measured 5–7 s for docs commits but 109 s for a staged package/dependent-typecheck trial (> ~60 s target).
+- `verify:app` root cause at integration: Vite optimizer invalidation on cold start; verifier now proves login renders and keeps diagnostics.
+- `scripts/kitchen/verify-app/browser.test.mjs` (2 tests) skips unless `VERIFY_BROWSER_PACKAGE` is set, so check:full/CI don't execute it; behavior covered by `verify:app`. Reviewer to judge.
+- Upload CLI refuses raw check:full logs (lint excerpts trip its credential-pattern scanner); evidence uses phase results + log without lint excerpts.
