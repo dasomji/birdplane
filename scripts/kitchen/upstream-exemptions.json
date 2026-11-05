@@ -1,0 +1,49 @@
+[
+  {
+    "path": "apps/api/plane/app/views/issue/sub_issue.py",
+    "check": "api-ruff",
+    "rule": "F401",
+    "symbol": "django.db.models.Func",
+    "line": 10,
+    "column": 40,
+    "endLine": 10,
+    "endColumn": 44,
+    "upstreamRef": "v1.4.3",
+    "upstreamBlob": "e2bc7a89b73833cbb911368ec7985cb4d61b02e0",
+    "justification": "Preserve selected upstream source; upstream's fixing Ruff lane masks this unused import."
+  },
+  {
+    "path": "apps/api/plane/app/views/issue/sub_issue.py",
+    "check": "api-ruff",
+    "rule": "F401",
+    "symbol": "django.db.models.Q",
+    "line": 10,
+    "column": 49,
+    "endLine": 10,
+    "endColumn": 50,
+    "upstreamRef": "v1.4.3",
+    "upstreamBlob": "e2bc7a89b73833cbb911368ec7985cb4d61b02e0",
+    "justification": "Preserve selected upstream source; upstream's fixing Ruff lane masks this unused import."
+  },
+  {
+    "path": "apps/api/plane/app/views/project/invite.py",
+    "check": "api-ruff",
+    "rule": "F401",
+    "symbol": "plane.db.models.User",
+    "line": 31,
+    "column": 5,
+    "endLine": 31,
+    "endColumn": 9,
+    "upstreamRef": "v1.4.3",
+    "upstreamBlob": "6f6dc41fd268d1339dc099d4adb4283736ba4d7d",
+    "justification": "Preserve selected upstream source; upstream's fixing Ruff lane masks this unused import."
+  },
+  {
+    "path": "SECURITY.md",
+    "check": "docs-format",
+    "rule": "oxfmt",
+    "upstreamRef": "v1.4.3",
+    "upstreamBlob": "0e11bbb5570ab7c60b5385a1d574a0fce2d5f8df",
+    "justification": "Preserve the byte-identical selected upstream document under the upstream-docs hold."
+  }
+]

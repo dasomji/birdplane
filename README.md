@@ -4,6 +4,8 @@ Birdplane is a personal fork of [Plane](https://github.com/makeplane/plane), an 
 
 See [BIRDPLANE.md](BIRDPLANE.md) for the upstream baseline, included MCP server, deployment instructions, and update strategy. Follow the [upstream update checklist](deployments/birdplane/upstream-update-checklist.md) when updating Plane.
 
+Fork development and verification guides live in [docs/agents/development.md](docs/agents/development.md), [docs/agents/verify.md](docs/agents/verify.md) and [docs/agents/doors.md](docs/agents/doors.md); terms are in [GLOSSARY.md](GLOSSARY.md) and decisions in [docs/adr/](docs/adr/). Send issues and pull requests to [dasomji/birdplane](https://github.com/dasomji/birdplane) with base branch `birdplane`; see [GitHub targeting gotchas](docs/agents/fork-github.md).
+
 ## Development
 
 Use Node.js 22.22 or newer, pnpm (the version in `package.json`), and Docker Compose.

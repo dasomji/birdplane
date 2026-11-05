@@ -94,23 +94,7 @@ For upstream upgrades, retain the existing
 [upstream update checklist](upstream-update-checklist.md) and test with a restored
 backup before merging to the auto-deployed release branch.
 
-## Cutover verification — 2026-10-02
-
-- Production application: `r7leiczgbsrhh29agsk8oy2f`; legacy service retained
-  stopped: `hnslaatmrmfginhfa1kemiam`.
-- Auto Deploy follows `birdplane`, the fork's release/default branch. PR previews
-  are disabled. Custom build/start commands are cleared.
-- GitHub's merge push for PR #10 triggered deployment
-  `n7srkdq7ixwvfinbkwg98stc` with `is_webhook: true`; it finished at commit
-  `1cbfe98ab607a129c5d505e908fe94b3c5abcabc`.
-- Final PostgreSQL dump: 6,777,997 bytes; SHA256
-  `f7f3e6b8316c07516f1090289e1f9ad48dfa0f13ed5b5303324b7ec1adc0ce8c`.
-  Restored successfully with `pg_restore --exit-on-error` in an isolated database.
-- All 2 workspace, 24 project, and 229 issue table identities were retained,
-  including soft-deleted records. No schema migrations were pending.
-- All six uploaded objects matched the final backup by key, size, and SHA256.
-  MinIO reports the original release and exact source commit.
-- Signed-in production browser verification confirmed all five layout selectors,
-  rendered List, Calendar, Spreadsheet, and Gantt views, and Project grouping.
-- Backups and original configuration are stored privately outside the repository
-  under `~/.local/state/birdplane/BIRD-27-20261002/` on the operator workstation.
+For isolated development use the [development guide](../../docs/agents/development.md)
+and [verification guide](../../docs/agents/verify.md). The
+[storage ADR](../../docs/adr/0002-isolate-production-storage-from-verification.md)
+records why external production storage cannot be a preview/test harness.

@@ -1,6 +1,22 @@
+<!-- BEGIN BIRDPLANE FORK -->
+
 # Contributing to Birdplane
 
-Birdplane is a personal fork of Plane. Submit fork-specific issues and pull requests to [dasomji/birdplane](https://github.com/dasomji/birdplane). The development and translation conventions below come from upstream Plane.
+Submit fork-specific issues and pull requests to [dasomji/birdplane](https://github.com/dasomji/birdplane)
+with base `birdplane`. Clone `https://github.com/dasomji/birdplane.git` for fork work.
+Follow the fork's [development](docs/agents/development.md),
+[verification](docs/agents/verify.md), [merge doors](docs/agents/doors.md), and
+[GitHub targeting](docs/agents/fork-github.md) guides. The inherited instructions
+below describe upstream Plane; their repository URLs and workflow conventions
+are upstream references.
+
+<!-- END BIRDPLANE FORK -->
+
+<!-- prettier-ignore-start -->
+
+# Contributing to Plane
+
+Thank you for showing an interest in contributing to Plane! All kinds of contributions are valuable to us. In this guide, we will cover how you can quickly onboard and make your first contribution.
 
 ## Submitting an issue
 
@@ -53,7 +69,7 @@ The backend is a django project which is kept inside apps/api
 1. Clone the repo
 
 ```bash
-git clone https://github.com/dasomji/birdplane.git [folder-name]
+git clone https://github.com/makeplane/plane.git [folder-name]
 cd [folder-name]
 chmod +x setup.sh
 ```
@@ -245,3 +261,5 @@ Happy translating! 🌍✨
 ## Need help? Questions and suggestions
 
 Questions, suggestions, and thoughts are most welcome. We can also be reached in our [Forum](https://forum.plane.so).
+
+<!-- prettier-ignore-end -->

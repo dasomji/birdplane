@@ -1,0 +1,18 @@
+# Send only API source and the test settings module to this disposable builder.
+**
+!apps/
+!apps/api/
+!apps/api/**
+!scripts/
+!scripts/kitchen/
+!scripts/kitchen/verify-app/
+!scripts/kitchen/verify-app/verify_settings.py
+**/.env
+**/.env.*
+!**/.env.example
+**/.venv
+**/venv
+**/node_modules
+**/__pycache__
+**/*.pyc
+apps/api/plane/logs

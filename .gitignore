@@ -117,3 +117,11 @@ packages/i18n/src/types/keys.generated.ts
 
 # Local security notes (not for version control)
 /security/
+
+# Fork-owned kitchen gates (upstream ignores scripts/).
+!/scripts/
+/scripts/*
+!/scripts/kitchen/
+.kitchen/
+!/CLAUDE.md
+!/packages/tailwind-config/CLAUDE.md

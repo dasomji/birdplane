@@ -1,0 +1,51 @@
+name: birdplane-checks
+
+on:
+  pull_request:
+    branches: [birdplane]
+  push:
+    branches: [birdplane]
+
+permissions:
+  contents: read
+
+jobs:
+  check-full:
+    name: check-full
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Reclaim disk on ephemeral GitHub runner
+        run: |
+          df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
+          docker image prune --all --force
+          df -h /
+      - uses: actions/checkout@v4
+      - name: Read repository Node pin
+        id: runtime
+        run: python3 -c 'import tomllib; print("node=" + tomllib.load(open(".mise.toml", "rb"))["tools"]["node"])' >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.runtime.outputs.node }}
+      - name: Fetch selected upstream release for exemption authentication
+        run: |
+          upstream_ref=$(node -p 'require("./scripts/kitchen/upstream-exemptions.json")[0]?.upstreamRef ?? ""')
+          if [ -n "$upstream_ref" ]; then
+            git fetch --no-tags --depth=1 https://github.com/makeplane/plane.git "refs/tags/$upstream_ref:refs/tags/$upstream_ref"
+          fi
+      # Reads the exact version (and integrity) from packageManager; no floating pnpm.
+      - uses: pnpm/action-setup@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.8.22"
+          python-version: "3.12"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check:full
+      - name: Retain phase results and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: check-full-evidence
+          path: .kitchen/evidence/check-full-*
+          retention-days: 7
