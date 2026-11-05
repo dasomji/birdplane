@@ -3,11 +3,31 @@
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+const repoRoot = fileURLToPath(new URL("../../", import.meta.url));
+if (process.argv.includes("--help")) {
+  console.log(`Usage: node deployments/birdplane/verify-responsive.mjs [output-dir]
+Output: positional directory > AUDIT_OUTPUT_DIR > .kitchen/evidence/responsive-audit/
+Relative directories resolve from the repository root; absolute directories are unchanged.
+--print-output-dir prints the resolved directory without loading fixtures or a browser.`);
+  process.exit(0);
+}
+const out = path.resolve(
+  repoRoot,
+  process.argv.slice(2).find((arg) => arg !== "--print-output-dir") ||
+    process.env.AUDIT_OUTPUT_DIR ||
+    ".kitchen/evidence/responsive-audit"
+);
+if (process.argv.includes("--print-output-dir")) {
+  console.log(out);
+  process.exit(0);
+}
 const { chromium, devices } = await import(process.env.PLAYWRIGHT_MODULE || "playwright");
 const fixture = JSON.parse(await fs.readFile(process.env.AUDIT_FIXTURE, "utf8"));
 const base = process.env.AUDIT_BASE_URL || "http://localhost:18031";
 const workspace = process.env.AUDIT_WORKSPACE || "audit";
 const project = `/${workspace}/projects/${fixture.projects[0].id}`;
+await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const results = [];
 const touch = process.env.AUDIT_TOUCH === "1";
@@ -185,14 +205,12 @@ for (const width of touch ? [390, 768] : [320, 360, 390, 414, 768, 820, 1024, 12
     console.log(`PASS ${width}px`);
   } catch (error) {
     results.push({ width, passed: false, error: String(error), stack: error.stack });
-    await page.screenshot({ path: `/tmp/bird29-verification-${width}.png` });
+    await page.screenshot({ path: path.join(out, `bird29-verification-${width}.png`) });
     console.log(`FAIL ${width}px ${error}`);
   }
   await context.close();
 }
 await browser.close();
-const out = path.resolve(process.argv[2] || "reports/responsive-audit");
-await fs.mkdir(out, { recursive: true });
 await fs.writeFile(
   path.join(out, touch ? "touch-verification.json" : "verification.json"),
   JSON.stringify(results, null, 2)

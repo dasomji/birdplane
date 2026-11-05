@@ -1,12 +1,30 @@
 """Build a self-contained report from the checked responsive audit evidence."""
+import argparse
 import base64
 import html
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
-import sys
 
-root = Path(sys.argv[1] if len(sys.argv) > 1 else "reports/responsive-audit")
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument(
+    "output_dir",
+    nargs="?",
+    help="Input/output directory; overrides AUDIT_OUTPUT_DIR (default: .kitchen/evidence/responsive-audit/). "
+         "Relative directories resolve from the repository root; absolute directories are unchanged.",
+)
+parser.add_argument(
+    "--print-output-dir", action="store_true",
+    help="Print the resolved directory without reading evidence.",
+)
+args = parser.parse_args()
+root = (Path(__file__).resolve().parents[2] / (
+    args.output_dir or os.environ.get("AUDIT_OUTPUT_DIR") or ".kitchen/evidence/responsive-audit"
+)).resolve()
+if args.print_output_dir:
+    print(root)
+    parser.exit()
 before = {row["key"]: row for row in json.loads((root / "before.json").read_text())}
 after = {row["key"]: row for row in json.loads((root / "after.json").read_text())}
 verification = json.loads((root / "verification.json").read_text())

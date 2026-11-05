@@ -2,6 +2,26 @@
 /* eslint-disable no-await-in-loop */
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+const repoRoot = fileURLToPath(new URL("../../", import.meta.url));
+if (process.argv.includes("--help")) {
+  console.log(`Usage: node deployments/birdplane/verify-scroll-surfaces.mjs [output-dir]
+Output: positional directory > AUDIT_OUTPUT_DIR > .kitchen/evidence/responsive-audit/
+Relative directories resolve from the repository root; absolute directories are unchanged.
+--print-output-dir prints the resolved directory without loading fixtures or a browser.`);
+  process.exit(0);
+}
+const out = path.resolve(
+  repoRoot,
+  process.argv.slice(2).find((arg) => arg !== "--print-output-dir") ||
+    process.env.AUDIT_OUTPUT_DIR ||
+    ".kitchen/evidence/responsive-audit"
+);
+if (process.argv.includes("--print-output-dir")) {
+  console.log(out);
+  process.exit(0);
+}
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE || "playwright");
 const f = JSON.parse(fs.readFileSync(process.env.AUDIT_FIXTURE));
 const base = process.env.AUDIT_BASE_URL || "http://localhost:18031";
@@ -37,8 +57,6 @@ for (const width of [390, 768])
     console.log("PASS", width, name);
     await c.close();
   }
-fs.writeFileSync(
-  `${process.argv[2] || "reports/responsive-audit"}/intentional-scroll-verification.json`,
-  JSON.stringify(results, null, 2)
-);
+fs.mkdirSync(out, { recursive: true });
+fs.writeFileSync(path.join(out, "intentional-scroll-verification.json"), JSON.stringify(results, null, 2));
 await b.close();
