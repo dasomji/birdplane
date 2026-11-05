@@ -114,7 +114,9 @@ Journeys use real browser, HTTP API and MCP boundaries:
    `list_issues`; the created work item must be present.
 
 Screenshots, bounded sanitized service/build logs, resource snapshots and textual
-results go to `.kitchen/evidence/verify-app/<full-sha>/<run>/`. API tokens and
+results go to `.kitchen/evidence/verify-app/<full-sha>/<run>/`. Browser page errors
+are retained in `browser-errors.log` for review; successful journey assertions do
+not imply an error-free console. API tokens and
 generated secrets are withheld/redacted; no production data is involved.
 `--upload` uploads only the synthetic-data result summary
 using `evidence put ... --ticket BIRD-34 --note ... --markdown`, printing returned
