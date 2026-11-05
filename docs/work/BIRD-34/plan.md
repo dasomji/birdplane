@@ -49,4 +49,10 @@ links `docs/agents/verify.md` but chunk 2 writes it.
 
 ## Findings / follow-ups
 
-- (none yet)
+- Chunk 1 restored upstream's README body, reversing BIRD-24's fork branding. Fixed in
+  scope: README stays fork-owned with routing links; ADR 0001 records the exception.
+- `.gitignore` line `CLAUDE.md` ignores wrappers; chunk 1 force-added both. Chunk 2a/
+  integration: add negations for tracked wrappers so future scoped wrappers aren't silently ignored.
+- Open candidates from the retired forum-findings doc filed as Backlog investigations:
+  BIRD-35 (workspace-view favorites), BIRD-36 (cycle filtering in workspace views).
+- Link check: 23 refs to `docs/agents/{development,verify}.md` resolve only after 2a/2b merge.
