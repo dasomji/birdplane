@@ -419,7 +419,15 @@ async function main() {
     // The result schema contains synthetic data and redacted errors. Screenshots
     // need visual review before a separate evidence put; never auto-publish logs.
     // The evidence service accepts LOG/TXT, not JSON extensions.
-    await writeFile(path.join(evidence, "results.log"), await readFile(path.join(evidence, "results.json")));
+    const publicLines = [
+      `Tested git SHA ${sha}`,
+      `Clean tracked tree ${!summary.dirty}`,
+      `Duration seconds ${summary.durationSeconds}`,
+      ...result.results.map((r) => `${r.result.toUpperCase()} ${r.name} (${r.seconds.toFixed(2)}s)`),
+    ];
+    // Publish statuses only: structured details/raw errors stay local and can
+    // resemble credential assignments to the evidence service's secret scanner.
+    await writeFile(path.join(evidence, "results.log"), publicLines.join("\n") + "\n");
     for (const file of ["results.log"]) {
       console.log(
         await command("/home/dev/.local/bin/evidence", [
