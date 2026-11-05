@@ -6,6 +6,9 @@
   "license": "AGPL-3.0",
   "repository": "https://github.com/dasomji/birdplane.git",
   "scripts": {
+    "check:fast": "node scripts/kitchen/check-fast.mjs",
+    "check:full": "node scripts/kitchen/check-full.mjs",
+    "verify:app": "node scripts/kitchen/verify-app.mjs",
     "test:branding": "node --test tests/branding.test.mjs",
     "build": "turbo run build",
     "dev": "turbo run dev --concurrency=18",

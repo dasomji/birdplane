@@ -1,0 +1,74 @@
+# Standalone fork-owned test stack. Never combine with production/upstream Compose.
+services:
+  db:
+    image: postgres:15.7-alpine
+    environment:
+      POSTGRES_USER: plane
+      POSTGRES_PASSWORD: plane
+      POSTGRES_DB: plane
+    tmpfs: [/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U plane -d plane]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  redis:
+    image: valkey/valkey:7.2.11-alpine
+    tmpfs: [/data]
+    healthcheck:
+      test: [CMD, valkey-cli, ping]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  mq:
+    image: rabbitmq:3.13.6-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: plane
+      RABBITMQ_DEFAULT_PASS: plane
+      RABBITMQ_DEFAULT_VHOST: plane
+    tmpfs: [/var/lib/rabbitmq]
+    healthcheck:
+      test: [CMD, rabbitmq-diagnostics, -q, ping]
+      interval: 5s
+      timeout: 10s
+      retries: 30
+  object-store:
+    image: docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z
+    environment:
+      MINIO_ROOT_USER: access-key
+      MINIO_ROOT_PASSWORD: secret-key
+    entrypoint: [/bin/sh, -ec]
+    command:
+      - mkdir -p /export/uploads; exec silo server /export --console-address ':9090'
+    tmpfs: [/export]
+    healthcheck:
+      test: [CMD-SHELL, "mc alias set local http://localhost:9000 access-key secret-key >/dev/null && mc ready local"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+  api-tests:
+    image: ${KITCHEN_API_IMAGE:?runner must supply a unique image}
+    environment:
+      DJANGO_SETTINGS_MODULE: plane.settings.test
+      DATABASE_URL: postgresql://plane:plane@db:5432/plane
+      REDIS_URL: redis://redis:6379/0
+      RABBITMQ_HOST: mq
+      RABBITMQ_USER: plane
+      RABBITMQ_PASSWORD: plane
+      RABBITMQ_VHOST: plane
+      AWS_ACCESS_KEY_ID: access-key
+      AWS_SECRET_ACCESS_KEY: secret-key
+      AWS_S3_BUCKET_NAME: uploads
+      AWS_S3_ENDPOINT_URL: http://object-store:9000
+      USE_MINIO: "1"
+      EMAIL_HOST: test-smtp.invalid
+      SECRET_KEY: kitchen-isolated-tests-only
+      WEB_URL: http://localhost:3000
+      DEBUG: "1"
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      mq: { condition: service_healthy }
+      object-store: { condition: service_healthy }
+    # All source is COPYed from tracked files; no env_file, host ports or bind mounts.
+    working_dir: /code
