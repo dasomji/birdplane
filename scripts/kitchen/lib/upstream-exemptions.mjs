@@ -1,5 +1,10 @@
 import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+
+// The register owns the selected release; entries must all use that same tag.
+const upstreamRef = JSON.parse(readFileSync(new URL("../upstream-exemptions.json", import.meta.url), "utf8"))[0]
+  ?.upstreamRef;
 
 function guardedEntries(root, entries, check) {
   if (!Array.isArray(entries)) throw new Error("Invalid upstream exemption register: expected array");
@@ -9,7 +14,8 @@ function guardedEntries(root, entries, check) {
       !entry ||
       typeof entry.path !== "string" ||
       !/^(?!\/)(?!.*(?:^|\/)\.\.(?:\/|$))[\w./-]+$/.test(entry.path) ||
-      entry.upstreamRef !== "v1.4.3" ||
+      entry.upstreamRef !== upstreamRef ||
+      !/^v[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?$/.test(entry.upstreamRef ?? "") ||
       !/^[a-f0-9]{40}$/.test(entry.upstreamBlob ?? "") ||
       typeof entry.justification !== "string" ||
       !entry.justification.trim() ||

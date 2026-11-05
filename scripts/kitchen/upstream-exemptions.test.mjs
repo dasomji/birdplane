@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -113,4 +113,32 @@ test("a locally available release tag must independently authenticate the regist
   writeFileSync(join(root, entry.path), "# altered fork\nfrom example import User\n");
   const forged = { ...entry, upstreamBlob: git("hash-object", entry.path).trim() };
   assert.throws(() => verifyRuffExemptions(root, [forged], [diagnostic]), /tag.*blob mismatch/);
+});
+
+test("re-pinning the register selects the new release without changing the library", async (t) => {
+  const { root, entry, diagnostic } = fixture(t);
+  mkdirSync(join(root, "lib"));
+  cpSync(new URL("./lib/upstream-exemptions.mjs", import.meta.url), join(root, "lib/upstream-exemptions.mjs"));
+  const repinned = { ...entry, upstreamRef: "v1.4.4" };
+  writeFileSync(join(root, "upstream-exemptions.json"), JSON.stringify([repinned]));
+  const git = (...args) => execFileSync("git", args, { cwd: root, encoding: "utf8" });
+  git("add", ".");
+  git(
+    "-c",
+    "user.name=Fixture",
+    "-c",
+    "user.email=test@example.invalid",
+    "-c",
+    "core.hooksPath=/dev/null",
+    "commit",
+    "-qm",
+    "next upstream release"
+  );
+  git("tag", repinned.upstreamRef);
+  const { verifyRuffExemptions: verifyRepinned } = await import(join(root, "lib/upstream-exemptions.mjs"));
+  assert.deepEqual(verifyRepinned(root, [repinned], [diagnostic]), [repinned]);
+  assert.throws(() => verifyRepinned(root, [entry], [diagnostic]), /Invalid upstream exemption/);
+  writeFileSync(join(root, entry.path), "# fork modification\nfrom example import User\n");
+  const forged = { ...repinned, upstreamBlob: git("hash-object", entry.path).trim() };
+  assert.throws(() => verifyRepinned(root, [forged], [diagnostic]), /tag.*blob mismatch/);
 });

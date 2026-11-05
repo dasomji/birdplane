@@ -22,14 +22,18 @@ jobs:
           docker image prune --all --force
           df -h /
       - uses: actions/checkout@v4
-      - name: Fetch selected upstream release for exemption authentication
-        run: git fetch --no-tags --depth=1 https://github.com/makeplane/plane.git refs/tags/v1.4.3:refs/tags/v1.4.3
       - name: Read repository Node pin
         id: runtime
         run: python3 -c 'import tomllib; print("node=" + tomllib.load(open(".mise.toml", "rb"))["tools"]["node"])' >> "$GITHUB_OUTPUT"
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ steps.runtime.outputs.node }}
+      - name: Fetch selected upstream release for exemption authentication
+        run: |
+          upstream_ref=$(node -p 'require("./scripts/kitchen/upstream-exemptions.json")[0]?.upstreamRef ?? ""')
+          if [ -n "$upstream_ref" ]; then
+            git fetch --no-tags --depth=1 https://github.com/makeplane/plane.git "refs/tags/$upstream_ref:refs/tags/$upstream_ref"
+          fi
       # Reads the exact version (and integrity) from packageManager; no floating pnpm.
       - uses: pnpm/action-setup@v4
       - uses: astral-sh/setup-uv@v6

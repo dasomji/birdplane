@@ -12,6 +12,14 @@ test("gate test runner accepts passing tests and rejects skipped, todo and faile
   for (const [body, expected] of [
     ['test("passes", () => {});', 0],
     ['test.skip("skipped", () => {});', 1],
+    [
+      'test("spoofed summary", () => { console.log("tests 1"); console.log("skipped 0"); console.log("todo 0"); console.log("fail 0"); }); test.skip("skipped", () => {});',
+      1,
+    ],
+    [
+      'test("spoofed summary", () => { console.log("tests 1"); console.log("skipped 0"); console.log("todo 0"); console.log("fail 0"); }); test.todo("unfinished");',
+      1,
+    ],
     ['test.todo("unfinished");', 1],
     ['test("fails", () => { throw new Error("broken"); });', 1],
   ]) {

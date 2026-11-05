@@ -14,7 +14,8 @@ Keep at least 8 GiB free on `/`. The runners refuse work below this reserve and
 terminate their child process group if it drops below it. Never prune shared Docker
 resources. Staged source snapshots live under ignored `.kitchen/tmp/` on the repository
 filesystem so offline pnpm imports do not cross filesystem boundaries; they are
-removed after each run. Build contexts and disposable product data live outside
+removed after each run. Inside a `.kitchen/tmp/` snapshot, Git-aware tools resolve
+to the parent repository. Build contexts and disposable product data live outside
 the checkout.
 
 ## Commands and coverage
@@ -35,7 +36,10 @@ fixture repositories. A regression test injects those overrides and verifies tha
 the invoking repository's HEAD/index stay unchanged. Renames select both old/new paths; deletions still select related
 checks. `lint-staged` retains its existing stash/partial-staging behavior.
 JS/TS/CSS/Markdown/JSON/YAML use oxfmt; JS/TS use OxLint with zero warnings. Python
-under API, MCP, deployment scripts and kitchen scripts uses Ruff check and format check. Root Markdown
+under MCP, deployment scripts and kitchen scripts uses Ruff check and format check.
+API Python uses Ruff **check only** at L2, with the exemption register applied;
+L1 defers all API Ruff checks via `apiAtL2` rather than imposing stricter formatting.
+Neither L1 nor L2 runs API Ruff formatting checks. Root Markdown
 also gets an offline relative-destination link check. Dependency installs must have
 populated pnpm's local store before the offline snapshot install.
 
@@ -47,7 +51,9 @@ suite; backup edits select backup unittests. Scripts-only root package changes a
 gate metadata select gate contract tests. Unknown infrastructure paths fail closed:
 add a reviewed selection contract instead of bypassing the hook. During an
 upstream merge (`MERGE_HEAD` exists), mapped paths still run their normal checks;
-unmapped upstream paths are printed and deferred to mandatory L2 `check:full`.
+unmapped paths are listed as having no fast check. They are covered only by
+whichever `check:full` phases include them and by review; `check:full` has no
+catch-all phase for arbitrary paths.
 Unknown fork deployment paths still fail closed. Outside merges every unknown
 path fails closed.
 
@@ -65,7 +71,8 @@ images is L2 work. No Dockerfile build instructions execute.
 
 API pytest is mandatory L2 coverage, rather than host pytest in a commit hook:
 starting PostgreSQL, Valkey, RabbitMQ and object storage plus migrations is outside
-the roughly 60-second L1 target. L1 still checks changed Python with Ruff. MCP unit
+the roughly 60-second L1 target. API Ruff is also deferred to L2 so its
+check-only and exact upstream-exemption policy has one execution path. MCP unit
 and packaging checks need no database because its tests mock Plane's HTTP boundary;
 Birdplane's actual database/app checks remain required in L2 and L3.
 
@@ -121,15 +128,19 @@ and start/end location, exactly once. Any additional diagnostic fails. The
 Registered documents remain subject to the relative-link check.
 
 Both components compare `git hash-object <path>` against the recorded upstream blob
-without using the network. When `v1.4.3` is available locally they also require
-`git rev-parse refs/tags/v1.4.3:<path>` to equal the registered blob, so editing
+without using the network. When the register's selected release tag is available locally they also require
+`git rev-parse refs/tags/<upstreamRef>:<path>` to equal the registered blob, so editing
 both the source and register cannot forge provenance. A missing local tag prints
 an explicit tag-cross-check-unavailable message; the file blob check still runs.
-CI fetches only the selected upstream release tag at depth one for this cross-check. A changed or missing file fails: it is
+The register JSON is the single source of truth for that tag; the library and CI
+read it there. All entries must select the same release. CI fetches only that
+release tag at depth one for this cross-check. A changed or missing file fails: it is
 now fork-owned and must be fixed and removed from the register. An exemption whose
 violation no longer occurs also fails as stale and must be removed. Invalid and
-duplicate entries fail. The register can only shrink as these violations disappear;
-it is never a component-wide or repository-wide waiver. Each applied exemption is
+duplicate entries fail. The register shrinks as these violations disappear.
+Re-pinning is allowed only during an upstream update through the
+[temporary-workaround checklist](../../deployments/birdplane/upstream-update-checklist.md#upstream-verification-exemptions);
+never re-pin a fork-modified file. It is never a component-wide or repository-wide waiver. Each applied exemption is
 printed with its location, rule, blob and justification in the phase output/log.
 
 For cheap diagnostics, select any combination of `kitchen-tests`, `api-ruff`,

@@ -174,6 +174,8 @@ async function main() {
       pr: { type: "string" },
     },
   });
+  if (!values.upload && (values.ticket !== undefined || values.pr !== undefined))
+    throw new Error("--ticket and --pr require --upload");
   let evidenceCommand;
   if (values.upload) {
     if (!/^[A-Z][A-Z0-9]*-[1-9][0-9]*$/.test(values.ticket ?? "")) throw new Error("--upload requires --ticket <ID>");

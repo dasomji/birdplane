@@ -137,6 +137,41 @@ belong here solely because they differ from upstream.
   names, so hyphenated names would be rejected again without this patch.
   Record the next reviewed release, outcome, and evidence here.
 
+### Upstream verification exemptions
+
+- **Status:** active; BIRD-34.
+- **Reason:** selected upstream source has three API Ruff `F401` diagnostics and
+  `SECURITY.md` formatting drift. Exact, blob-guarded exceptions preserve upstream
+  files without waiving any other diagnostic or formatting failure.
+- **Upstream:** the selected release in the fork-owned
+  [exemption register](../../scripts/kitchen/upstream-exemptions.json), currently
+  v1.4.3. This register is the single source of truth for the release ref read by
+  the exemption library and CI tag fetch.
+- **Local implementation:** `scripts/kitchen/upstream-exemptions.json`,
+  `scripts/kitchen/lib/upstream-exemptions.mjs` and
+  `scripts/kitchen/check-upstream.mjs`; see the
+  [verification contract](../../docs/agents/verify.md#per-component-justified-exceptions).
+- **Re-pin during an upstream update only:** inspect every entry against the
+  target release, including whether its file changed upstream. For each changed
+  upstream file, either the new upstream file still has the exact registered
+  violation (same rule, symbol/message and location), in which case update
+  `upstreamRef` and `upstreamBlob`, or it no longer does, in which case delete the
+  entry and fix any unregistered violation normally. Verify each retained blob
+  with `git rev-parse <tag>:<path>` and confirm the fork file is byte-identical to
+  that target upstream blob. Advance every retained entry's `upstreamRef` to the
+  same target tag, including unchanged files; verify their blobs too. Never pin
+  a fork-modified file. Record retain/remove decisions and evidence in the update
+  PR; a changed diagnostic does not justify expanding the register.
+- **Remove when:** upstream eliminates each exact violation, or the file becomes
+  fork-modified and must satisfy the normal check. Remove stale entries as they
+  disappear; retire this workaround when the register is empty.
+- **Regression checks:** run `node scripts/kitchen/run-tests.mjs
+scripts/kitchen/upstream-exemptions.test.mjs scripts/kitchen/fast.test.mjs`,
+  then the unfiltered `pnpm check:full`. Confirm `api-ruff` and `root-docs-format`
+  authenticate every retained blob/tag and reject stale, changed, duplicate or
+  additional violations. API Ruff remains check-only at L2; L1 defers via
+  `apiAtL2`.
+
 ## Agent verification routing
 
 Use the [verification guide](../../docs/agents/verify.md) for current gate commands

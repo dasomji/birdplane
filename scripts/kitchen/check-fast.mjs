@@ -32,14 +32,15 @@ try {
       timeout: 120_000,
     });
     if (selection.deferred.length)
-      console.log(`Merge-only upstream paths deferred to mandatory L2 check:full: ${selection.deferred.join(", ")}`);
+      console.log(
+        `Unmapped paths in a merge commit have no fast check: ${selection.deferred.join(", ")}. They are covered only by whichever check:full phases include them and by review.`
+      );
     const live = paths.filter((path) => !selection.deferred.includes(path) && existsSync(join(directory, path)));
     const formatted = live.filter((path) => /\.(?:[cm]?[jt]sx?|css|md|json|ya?ml)$/.test(path));
     if (formatted.length) await run("pnpm", ["exec", "oxfmt", "--check", ...formatted]);
     const linted = live.filter((path) => /\.[cm]?[jt]sx?$/.test(path));
     if (linted.length) await run("pnpm", ["exec", "oxlint", "--deny-warnings", ...linted]);
     for (const [prefix, version] of [
-      ["apps/api/", "0.9.7"],
       ["apps/mcp/", "0.16.10"],
       ["deployments/birdplane/", "0.16.10"],
       ["scripts/kitchen/", "0.16.10"],
@@ -123,7 +124,7 @@ try {
       );
     if (selection.apiAtL2)
       console.log(
-        "API pytest/migrations/boot require isolated services: mandatory L2 check:full coverage; no host pytest at L1."
+        "API Ruff check-only (with upstream exemptions), pytest/migrations/boot: mandatory L2 check:full coverage."
       );
   }
   console.log(`check:fast PASS (${((Date.now() - started) / 1000).toFixed(2)}s)`);
