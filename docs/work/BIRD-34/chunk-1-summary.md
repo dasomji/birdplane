@@ -21,8 +21,9 @@ lean-AGENTS exception) and production storage isolation. Root AGENTS retains its
 inherited Commands/Code Style/Backend tests body and reduces fork content to
 routing, mapping and unusual facts. The duplicate URL is gone. Existing backup
 rules already cover the root's detailed paragraph; they remain in `backups.md`.
-README's inherited upstream body, replaced before this ticket, is restored from
-v1.4.3. CONTRIBUTING's scattered fork edits move into a delimited section.
+README stays the fork-owned Birdplane entry point from BIRD-24 and only gains
+routing links (orchestrator correction: restoring the upstream body reversed the
+fork branding decision). CONTRIBUTING's scattered fork edits move into a delimited section.
 Range-ignore comments protect those inherited bodies from formatter churn; fork
 sections remain checked. CLAUDE wrappers are regular files with exactly
 `@AGENTS.md` plus newline; the existing ignore rule requires force-adding these
@@ -44,7 +45,7 @@ new contract files are outside this original denominator.
 | Source                                                          | Class; producer → reader                                     | Action / destination                                                                                                                                        |
 | --------------------------------------------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `AGENTS.md`                                                     | Durable; upstream/fork maintainers → agents                  | Keep inherited body; lean delimited fork section routes to agent guides, glossary, ADRs, backups and update register.                                       |
-| `README.md`                                                     | Durable; maintainers → contributors/users                    | Restore inherited body; small delimited fork identity/license/routing section. Fork compatibility detail lives in `BIRDPLANE.md`.                           |
+| `README.md`                                                     | Durable; maintainers → contributors/users                    | Keep fork-owned entry point (BIRD-24); add routing links only. Fork compatibility detail lives in `BIRDPLANE.md`.                                           |
 | `BIRDPLANE.md`                                                  | Durable; fork maintainers → contributors/operators           | Retain baseline and AGPL/fork notices; correct object-storage name to Silo, link agent guides, preserve compatibility explanation.                          |
 | `CONTRIBUTING.md`                                               | Durable; upstream/fork maintainers → contributors            | Preserve inherited guide; move fork clone/PR instructions into a small delimited section with guide links.                                                  |
 | `apps/api/plane/utils/filters/README.md`                        | Durable; filter maintainers → API/MCP developers             | Retain product contract; link-only glossary/verification additions.                                                                                         |

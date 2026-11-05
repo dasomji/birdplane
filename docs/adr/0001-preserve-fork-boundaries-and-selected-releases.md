@@ -34,12 +34,14 @@ facts. Keep the inherited body intact; this exception does not license copying
 more shared policy into it. Root and tailwind-scoped CLAUDE wrappers contain only
 `@AGENTS.md` plus a newline; the tailwind AGENTS itself remains untouched.
 
-[README](../../README.md) and [CONTRIBUTING](../../CONTRIBUTING.md) likewise put
-fork instructions in small delimited sections and retain the inherited body.
-README's previously replaced upstream body is restored from the selected tag;
-CONTRIBUTING's scattered fork edits move to its fork section. Markdown range-ignore
-comments preserve inherited formatting while allowing the fork sections to be
-formatted. This avoids a recurring upstream formatting diff.
+[CONTRIBUTING](../../CONTRIBUTING.md) likewise puts fork instructions in a small
+delimited section and retains the inherited body; its scattered fork edits move to
+that section. Markdown range-ignore comments preserve inherited formatting while
+allowing the fork section to be formatted. This avoids a recurring upstream
+formatting diff. [README](../../README.md) is the exception: BIRD-24 deliberately
+replaced the upstream body with Birdplane's own entry point, so it stays
+fork-owned and only gains routing links. Resolve upstream README changes by
+keeping the fork version.
 
 ## Consequences and sources
 
