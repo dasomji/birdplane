@@ -130,9 +130,11 @@ HTML is saved as `last-page.html` alongside its screenshot. These local diagnost
 files are sanitized against the run's generated secrets; successful journey
 assertions do not imply an error-free console. API tokens and
 generated secrets are withheld/redacted; no production data is involved.
-`--upload` uploads only the synthetic-data result summary
-using `evidence put ... --ticket BIRD-34 --note ... --markdown`, printing returned
-links. Visually review screenshots before uploading them separately with the same
+`--upload` requires `--ticket <ticket>` and an executable `evidence` on `PATH`;
+both are checked before builds or services start. Optional `--pr <url>` associates
+the upload with a GitHub PR. It uploads only the synthetic-data result summary
+using `evidence put ... --ticket <ticket> --note ... --markdown`, printing returned
+links. For example: `pnpm verify:app --upload --ticket <ticket> --pr <url>`. Visually review screenshots before uploading them separately with the same
 `evidence put` command; raw logs/configuration are never uploaded. Evidence links expire; retain the textual result with the link.
 
 `--keep` retains this run's services and private runtime data for debugging.
@@ -142,17 +144,21 @@ project's containers/volume/network, verifies empty resource-label queries,
 removes its image/builder and runtime directory, and fails on cleanup errors.
 Never run a generic `docker compose down -v` on shared names.
 
-The runner's own guard/exit behavior is checked with
-`node --test scripts/kitchen/verify-app/*.test.mjs`. Browser readiness/diagnostic
-regressions use real Chromium against local HTTP fixtures and opt in with the
-verifier's pinned browser install (otherwise those tests report skipped):
+The runner executes real-Chromium browser readiness/diagnostic regression tests
+as the named `browser startup regression tests` journey, using its pinned browser
+install before cleanup. A failure fails the run; missing browser prerequisites
+fail instead of silently skipping. L1/L2 kitchen tests exclude this one browser
+suite and reject any skipped or todo tests in the remaining suites.
+
+For focused L0 checks while a `--keep` runtime is retained:
 
 ```sh
 VERIFY_BROWSER_PACKAGE="$runtime/browser/package.json" \
-  node --test scripts/kitchen/verify-app/*.test.mjs
+  node scripts/kitchen/run-tests.mjs scripts/kitchen/*.test.mjs scripts/kitchen/verify-app/*.test.mjs
 ```
 
-Run this while a `--keep` runtime is retained, before its cleanup.
+Run this before cleaning up the retained runtime. Every test must pass with zero
+skipped or todo tests.
 
 This is a functional smoke, not full product coverage: it does not launch the
 admin/space apps, live collaboration server, object storage/uploads, email,

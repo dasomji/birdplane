@@ -16,14 +16,14 @@ export function assertDisk() {
 export function execute(
   command,
   args = [],
-  { cwd = process.cwd(), env = {}, log, timeout = 30 * 60_000, checkDisk = true } = {}
+  { cwd = process.cwd(), env = {}, log, timeout = 30 * 60_000, checkDisk = true, inheritEnv = true } = {}
 ) {
   console.log(`$ ${command} ${args.map((arg) => JSON.stringify(arg)).join(" ")}`);
   return new Promise((resolve, reject) => {
     if (checkDisk) assertDisk();
     const child = spawn(command, args, {
       cwd,
-      env: { ...isolatedEnvironment(), ...env },
+      env: { ...(inheritEnv ? isolatedEnvironment() : {}), ...env },
       detached: true,
       stdio: ["ignore", "pipe", "pipe"],
     });

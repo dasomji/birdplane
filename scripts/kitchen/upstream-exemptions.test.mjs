@@ -9,6 +9,7 @@ import { docsFormatPaths, verifyRuffExemptions } from "./lib/upstream-exemptions
 function fixture(t) {
   const root = mkdtempSync(join(tmpdir(), "kitchen-upstream-"));
   t.after(() => rmSync(root, { recursive: true, force: true }));
+  execFileSync("git", ["init", "-q", root]);
   writeFileSync(join(root, "upstream.py"), "from example import User\n");
   const entry = {
     path: "upstream.py",
@@ -89,4 +90,27 @@ test("invalid or duplicate register entries cannot silently bypass checking", (t
   const docs = { ...entry, check: "docs-format", rule: "oxfmt" };
   assert.throws(() => docsFormatPaths(root, [docs, docs], [entry.path], [entry.path]), /Duplicate upstream exemption/);
   assert.throws(() => verifyRuffExemptions(root, [entry, entry], [diagnostic]), /Duplicate upstream exemption/);
+});
+
+test("a locally available release tag must independently authenticate the registered blob", (t) => {
+  const { root, entry, diagnostic } = fixture(t);
+  const git = (...args) => execFileSync("git", args, { cwd: root, encoding: "utf8" });
+  git("init", "-q");
+  git("add", ".");
+  git(
+    "-c",
+    "user.name=Fixture",
+    "-c",
+    "user.email=test@example.invalid",
+    "-c",
+    "core.hooksPath=/dev/null",
+    "commit",
+    "-qm",
+    "release"
+  );
+  git("tag", "v1.4.3");
+  assert.deepEqual(verifyRuffExemptions(root, [entry], [diagnostic]), [entry]);
+  writeFileSync(join(root, entry.path), "# altered fork\nfrom example import User\n");
+  const forged = { ...entry, upstreamBlob: git("hash-object", entry.path).trim() };
+  assert.throws(() => verifyRuffExemptions(root, [forged], [diagnostic]), /tag.*blob mismatch/);
 });

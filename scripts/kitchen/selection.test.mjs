@@ -65,3 +65,33 @@ test("product metadata and app manifests select branding assertions", () => {
   assert.deepEqual(selectChecks(["packages/constants/src/metadata.ts"]).tests, ["branding", "filters", "workspace"]);
   assert.deepEqual(selectChecks(["apps/web/public/manifest.json"]).tests, ["branding", "workspace"]);
 });
+
+test("deployment scripts, Compose, Dockerfiles and all workflows have explicit contracts", () => {
+  const selection = selectChecks([
+    "deployments/birdplane/responsive-audit.mjs",
+    "deployments/birdplane/verify-responsive.mjs",
+    "deployments/birdplane/verify-scroll-surfaces.mjs",
+    "deployments/birdplane/build-responsive-report.py",
+    "deployments/birdplane/compose.yml",
+    "deployments/birdplane/Dockerfile.minio",
+    "docker-compose-test.yml",
+    ".github/workflows/codeql.yml",
+  ]);
+  assert.deepEqual(selection.infrastructure, [
+    ".github/workflows/codeql.yml",
+    "deployments/birdplane/Dockerfile.minio",
+    "deployments/birdplane/compose.yml",
+    "docker-compose-test.yml",
+  ]);
+  assert.deepEqual(selection.deferred, []);
+});
+
+test("merge selection keeps mapped checks and defers only unmapped upstream paths to L2", () => {
+  const selection = selectChecks(["upstream/new-tool.sh", "apps/web/app/page.tsx", "docker-compose.yml"], {
+    merging: true,
+  });
+  assert.deepEqual(selection.deferred, ["upstream/new-tool.sh"]);
+  assert.deepEqual(selection.packages, ["web"]);
+  assert.deepEqual(selection.infrastructure, ["docker-compose.yml"]);
+  assert.throws(() => selectChecks(["deployments/birdplane/unknown.sh"], { merging: true }), /No fast-check contract/);
+});

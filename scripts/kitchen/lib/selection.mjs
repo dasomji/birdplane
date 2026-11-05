@@ -11,7 +11,9 @@ export function selectFullPhases(args) {
   return [...selected];
 }
 
-export function selectChecks(paths, { scriptsOnly = false } = {}) {
+export function selectChecks(paths, { scriptsOnly = false, merging = false } = {}) {
+  const infrastructure = new Set();
+  const deferred = new Set();
   const tests = new Set();
   let apiAtL2 = false;
   const packages = new Set();
@@ -22,6 +24,11 @@ export function selectChecks(paths, { scriptsOnly = false } = {}) {
       continue;
     }
     if (path.endsWith(".md")) continue;
+    if (isInfrastructure(path)) {
+      infrastructure.add(path);
+      if (path === ".github/workflows/birdplane-checks.yml") tests.add("kitchen");
+      continue;
+    }
     if (
       [".gitignore", ".husky/pre-commit", ".github/workflows/birdplane-checks.yml"].includes(path) ||
       (path === "package.json" && scriptsOnly)
@@ -44,13 +51,31 @@ export function selectChecks(paths, { scriptsOnly = false } = {}) {
     } else if (path.startsWith("scripts/kitchen/")) tests.add("kitchen");
     else if (path === "tests/branding.test.mjs") tests.add("branding");
     else if (/^deployments\/birdplane\/(backup-postgres|test_backup_postgres)\.py$/.test(path)) tests.add("backups");
+    else if (/^deployments\/birdplane\/[^/]+\.(?:mjs|py)$/.test(path)) continue;
     else if (path.startsWith("apps/api/")) apiAtL2 = true;
     else if (/^(packages|apps)\/[^/]+\//.test(path)) {
       const [, kind, name] = path.match(/^(packages|apps)\/([^/]+)\//);
       packages.add(kind === "packages" ? `@plane/${name}` : name);
       tests.add("workspace");
       if (kind === "packages") tests.add("filters");
-    } else throw new Error(`No fast-check contract for ${path}; run check:full and add an explicit mapping`);
+    } else if (merging && !path.startsWith("scripts/kitchen/") && !path.startsWith("deployments/birdplane/"))
+      deferred.add(path);
+    else throw new Error(`No fast-check contract for ${path}; run check:full and add an explicit mapping`);
   }
-  return { tests: [...tests].toSorted(), packages: [...packages].toSorted(), apiAtL2 };
+  return {
+    infrastructure: [...infrastructure].toSorted(),
+    deferred: [...deferred].toSorted(),
+    tests: [...tests].toSorted(),
+    packages: [...packages].toSorted(),
+    apiAtL2,
+  };
+}
+
+export function isInfrastructure(path) {
+  return (
+    /^docker-compose[^/]*\.ya?ml$/.test(path) ||
+    /^deployments\/birdplane\/compose[^/]*\.ya?ml$/.test(path) ||
+    /^\.github\/workflows\/[^/]+\.ya?ml$/.test(path) ||
+    /^deployments\/birdplane\/Dockerfile(?:\.[^/]+)?$/.test(path)
+  );
 }

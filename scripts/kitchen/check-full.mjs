@@ -2,10 +2,11 @@ import { execFileSync } from "node:child_process";
 import { cpSync } from "node:fs";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
+import { checkCompose, checkWorkflows } from "./lib/infrastructure.mjs";
 import { checkLinks } from "./lib/docs.mjs";
 import { trackedContext } from "./lib/context.mjs";
 import { Gate } from "./lib/process.mjs";
-import { selectFullPhases } from "./lib/selection.mjs";
+import { isInfrastructure, selectFullPhases } from "./lib/selection.mjs";
 
 const root = execFileSync("git", ["rev-parse", "--show-toplevel"], { encoding: "utf8" }).trim();
 process.chdir(root);
@@ -37,6 +38,11 @@ const phases = [
   "mcp-wheel-guidance",
   "mcp-docker-guidance",
   "backup-tests-ruff",
+  "deployment-javascript",
+  "deployment-python",
+  "compose-config",
+  "workflow-yaml",
+  "deployment-dockerfiles",
   "root-docs-format",
   "root-docs-links",
   "cleanup",
@@ -51,7 +57,12 @@ try {
   await phase("kitchen-tests", async (run) => {
     await run("pnpm", ["exec", "oxfmt", "--check", "scripts/kitchen", ".github/workflows/birdplane-checks.yml"]);
     await run("pnpm", ["exec", "oxlint", "--deny-warnings", "scripts/kitchen"]);
-    await run("node", ["--test", ...tracked.filter((path) => /^scripts\/kitchen\/.*\.test\.mjs$/.test(path))]);
+    await run("node", [
+      "scripts/kitchen/run-tests.mjs",
+      ...tracked.filter(
+        (path) => /^scripts\/kitchen\/.*\.test\.mjs$/.test(path) && !path.endsWith("/browser.test.mjs")
+      ),
+    ]);
   });
   // Limit concurrency to bound peak memory; all upstream tasks still run.
   await phase("workspace-check", (run) => run("pnpm", ["check", "--concurrency=2"]));
@@ -195,6 +206,59 @@ try {
     await run("uvx", ["--from", "ruff==0.16.10", "ruff", "format", "--check", ...files]);
     await run("uvx", ["--from", "ruff==0.16.10", "ruff", "check", "scripts/kitchen/lib/api-smoke.py"]);
   });
+  await phase("deployment-javascript", async (run) => {
+    const files = tracked.filter((path) => /^deployments\/birdplane\/[^/]+\.mjs$/.test(path));
+    await run("pnpm", ["exec", "oxfmt", "--check", ...files]);
+    await run("pnpm", ["exec", "oxlint", "--deny-warnings", ...files]);
+  });
+  await phase("deployment-python", async (run) => {
+    const files = tracked.filter((path) => /^deployments\/birdplane\/[^/]+\.py$/.test(path));
+    await run("uvx", ["--from", "ruff==0.16.10", "ruff", "check", ...files]);
+    await run("uvx", ["--from", "ruff==0.16.10", "ruff", "format", "--check", ...files]);
+  });
+  await phase("compose-config", async (run) => {
+    for (const file of tracked.filter(
+      (path) =>
+        (isInfrastructure(path) || path.startsWith("scripts/kitchen/")) &&
+        /\.ya?ml$/.test(path) &&
+        !path.startsWith(".github/")
+    )) {
+      // oxlint-disable-next-line no-await-in-loop -- Validate each definition without daemon/network access.
+      await checkCompose(root, file, run);
+    }
+  });
+  await phase("workflow-yaml", (run) =>
+    checkWorkflows(
+      root,
+      tracked.filter((path) => /^\.github\/workflows\/[^/]+\.ya?ml$/.test(path)),
+      run
+    )
+  );
+  await phase(
+    "deployment-dockerfiles",
+    async (run) => {
+      const context = trackedContext(root, "deployments/birdplane/");
+      try {
+        for (const file of tracked.filter((path) => isInfrastructure(path) && /Dockerfile/.test(path))) {
+          // oxlint-disable-next-line no-await-in-loop -- Bound BuildKit work to one Dockerfile at a time.
+          await run("docker", [
+            "buildx",
+            "build",
+            "--builder",
+            id,
+            "--check",
+            "--network=none",
+            "-f",
+            file,
+            context.directory,
+          ]);
+        }
+      } finally {
+        context.cleanup();
+      }
+    },
+    { requires: ["api-image"] }
+  );
   const docs = tracked.filter(
     (path) => path.endsWith(".md") && (!path.includes("/") || path.startsWith("docs/agents/"))
   );

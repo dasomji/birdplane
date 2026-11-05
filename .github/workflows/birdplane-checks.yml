@@ -15,7 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
+      - name: Reclaim disk on ephemeral GitHub runner
+        run: |
+          df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
+          docker image prune --all --force
+          df -h /
       - uses: actions/checkout@v4
+      - name: Fetch selected upstream release for exemption authentication
+        run: git fetch --no-tags --depth=1 https://github.com/makeplane/plane.git refs/tags/v1.4.3:refs/tags/v1.4.3
       - name: Read repository Node pin
         id: runtime
         run: python3 -c 'import tomllib; print("node=" + tomllib.load(open(".mise.toml", "rb"))["tools"]["node"])' >> "$GITHUB_OUTPUT"

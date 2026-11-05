@@ -25,6 +25,15 @@ test("snapshot reads staged bytes, retains deleted and both renamed paths, leave
     const before = git("diff");
     const snapshot = stagedSnapshot(repo);
     try {
+      assert.ok(snapshot.directory.startsWith(join(repo, ".kitchen/tmp") + "/"));
+      assert.equal(snapshot.merging, false);
+      writeFileSync(join(repo, ".git/MERGE_HEAD"), git("rev-parse", "HEAD"));
+      const mergingSnapshot = stagedSnapshot(repo);
+      try {
+        assert.equal(mergingSnapshot.merging, true);
+      } finally {
+        mergingSnapshot.cleanup();
+      }
       assert.deepEqual(snapshot.paths.toSorted(), ["delete.md", "new.md", "old.md", "partial.md"]);
       assert.equal(readFileSync(join(snapshot.directory, "partial.md"), "utf8"), "staged\n");
       assert.equal(git("diff"), before);

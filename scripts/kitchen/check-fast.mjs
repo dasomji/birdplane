@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { checkCompose, checkWorkflows } from "./lib/infrastructure.mjs";
 import { checkLinks } from "./lib/docs.mjs";
 import { assertDisk, execute } from "./lib/process.mjs";
 import { selectChecks } from "./lib/selection.mjs";
@@ -19,7 +20,10 @@ try {
     const stagedPackage = JSON.parse(readFileSync(join(directory, "package.json"), "utf8"));
     delete baseline.scripts;
     delete stagedPackage.scripts;
-    const selection = selectChecks(paths, { scriptsOnly: JSON.stringify(baseline) === JSON.stringify(stagedPackage) });
+    const selection = selectChecks(paths, {
+      merging: snapshot.merging,
+      scriptsOnly: JSON.stringify(baseline) === JSON.stringify(stagedPackage),
+    });
     console.log(`Staged selection: ${JSON.stringify(selection)}`);
     const run = (command, args, options = {}) => execute(command, args, { cwd: directory, ...options });
     // Real workspace links in an independent install: no builds or typecheck read unstaged source.
@@ -27,7 +31,9 @@ try {
       env: { HUSKY: "0" },
       timeout: 120_000,
     });
-    const live = paths.filter((path) => existsSync(join(directory, path)));
+    if (selection.deferred.length)
+      console.log(`Merge-only upstream paths deferred to mandatory L2 check:full: ${selection.deferred.join(", ")}`);
+    const live = paths.filter((path) => !selection.deferred.includes(path) && existsSync(join(directory, path)));
     const formatted = live.filter((path) => /\.(?:[cm]?[jt]sx?|css|md|json|ya?ml)$/.test(path));
     if (formatted.length) await run("pnpm", ["exec", "oxfmt", "--check", ...formatted]);
     const linted = live.filter((path) => /\.[cm]?[jt]sx?$/.test(path));
@@ -77,9 +83,12 @@ try {
       await run("pnpm", ["test:branding"]);
     if (selection.tests.includes("kitchen"))
       await run("node", [
-        "--test",
+        "scripts/kitchen/run-tests.mjs",
         ...tracked.filter(
-          (path) => /^scripts\/kitchen\/.*\.test\.mjs$/.test(path) && existsSync(join(directory, path))
+          (path) =>
+            /^scripts\/kitchen\/.*\.test\.mjs$/.test(path) &&
+            !path.endsWith("/browser.test.mjs") &&
+            existsSync(join(directory, path))
         ),
       ]);
     if (selection.tests.includes("mcp")) {
@@ -96,11 +105,21 @@ try {
         "-p",
         "test_backup_postgres.py",
       ]);
-    if (paths.some((path) => path.startsWith("scripts/kitchen/compose/")))
-      await run(
-        "docker",
-        ["compose", "--env-file", "/dev/null", "-f", "scripts/kitchen/compose/api-tests.yml", "config", "--quiet"],
-        { env: { KITCHEN_API_IMAGE: "kitchen-config-only" } }
+    const infrastructure = live.filter(
+      (path) => selection.infrastructure.includes(path) || /^scripts\/kitchen\/.*\.ya?ml$/.test(path)
+    );
+    for (const file of infrastructure.filter((path) => !path.startsWith(".github/") && /\.ya?ml$/.test(path))) {
+      // oxlint-disable-next-line no-await-in-loop -- Sequential offline config checks.
+      await checkCompose(directory, file, run);
+    }
+    await checkWorkflows(
+      directory,
+      infrastructure.filter((path) => path.startsWith(".github/")),
+      run
+    );
+    if (infrastructure.some((path) => /Dockerfile/.test(path)))
+      console.log(
+        "Deployment Dockerfile selects mandatory L2 deployment-dockerfiles BuildKit checks; no image resolution in L1."
       );
     if (selection.apiAtL2)
       console.log(

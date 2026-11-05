@@ -38,7 +38,32 @@ function guardedEntries(root, entries, check) {
     seen.add(key);
   }
   const selected = entries.filter((entry) => entry.check === check);
+  const tags = new Map();
   for (const entry of selected) {
+    if (!tags.has(entry.upstreamRef)) {
+      try {
+        execFileSync("git", ["show-ref", "--verify", "--quiet", `refs/tags/${entry.upstreamRef}`], {
+          cwd: root,
+          stdio: "pipe",
+        });
+        tags.set(entry.upstreamRef, true);
+      } catch (error) {
+        if (error.status !== 1) throw error;
+        tags.set(entry.upstreamRef, false);
+        console.log(
+          `Upstream tag cross-check skipped: ${entry.upstreamRef} unavailable locally; file blob guard still required`
+        );
+      }
+    }
+    if (tags.get(entry.upstreamRef)) {
+      const taggedBlob = execFileSync("git", ["rev-parse", `refs/tags/${entry.upstreamRef}:${entry.path}`], {
+        cwd: root,
+        encoding: "utf8",
+        stdio: "pipe",
+      }).trim();
+      if (taggedBlob !== entry.upstreamBlob)
+        throw new Error(`Upstream tag/blob mismatch: ${entry.upstreamRef}:${entry.path}`);
+    }
     const blob = execFileSync("git", ["hash-object", "--", entry.path], {
       cwd: root,
       encoding: "utf8",

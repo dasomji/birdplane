@@ -4,10 +4,11 @@
 import { spawn, execFileSync } from "node:child_process";
 import { createHash, randomBytes } from "node:crypto";
 import { mkdir, readFile, writeFile, rm, statfs, readdir } from "node:fs/promises";
-import { openSync, closeSync } from "node:fs";
+import { accessSync, constants, openSync, closeSync } from "node:fs";
 import { homedir } from "node:os";
 import { createRequire } from "node:module";
 import path from "node:path";
+import { parseArgs } from "node:util";
 import { fileURLToPath } from "node:url";
 import { assertDisposable } from "./verify-app/safety.mjs";
 import { verify } from "./verify-app/lifecycle.mjs";
@@ -155,7 +156,7 @@ async function main() {
   const args = process.argv.slice(2);
   if (args.includes("--help")) {
     console.log(
-      "verify-app [--keep] [--upload] | --cleanup <run-name>\nRuns disposable browser/API/MCP journeys; requires pnpm install, Docker, uv and Node >=22.18."
+      "verify-app [--keep] [--upload --ticket <ID> [--pr <url>]] | --cleanup <run-name>\nRuns disposable browser/API/MCP journeys; requires pnpm install, Docker, uv and Node >=22.18."
     );
     return;
   }
@@ -164,7 +165,34 @@ async function main() {
     console.log(JSON.stringify(await cleanup(config)));
     return;
   }
-  if (args.some((arg) => !["--keep", "--upload"].includes(arg))) throw new Error("Unknown argument; see --help");
+  const { values } = parseArgs({
+    args,
+    options: {
+      keep: { type: "boolean" },
+      upload: { type: "boolean" },
+      ticket: { type: "string" },
+      pr: { type: "string" },
+    },
+  });
+  let evidenceCommand;
+  if (values.upload) {
+    if (!/^[A-Z][A-Z0-9]*-[1-9][0-9]*$/.test(values.ticket ?? "")) throw new Error("--upload requires --ticket <ID>");
+    if (values.pr && !/^https:\/\/github\.com\/[^/]+\/[^/]+\/pull\/[1-9][0-9]*$/.test(values.pr))
+      throw new Error("--pr requires a GitHub PR URL");
+    evidenceCommand = (env.PATH ?? "")
+      .split(path.delimiter)
+      .filter(Boolean)
+      .map((dir) => path.join(dir, "evidence"))
+      .find((file) => {
+        try {
+          accessSync(file, constants.X_OK);
+          return true;
+        } catch {
+          return false;
+        }
+      });
+    if (!evidenceCommand) throw new Error("evidence executable is required on PATH for --upload");
+  }
   const sha = execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim();
   console.log(`Tested git SHA: ${sha}`);
   // Vite and some upstream Django startup paths load .env implicitly. Refuse them.
@@ -368,6 +396,16 @@ async function main() {
           return { web: ctx.web, api: ctx.api, login };
         },
       ],
+      [
+        "browser startup regression tests",
+        async () => {
+          await command("node", ["scripts/kitchen/run-tests.mjs", "scripts/kitchen/verify-app/browser.test.mjs"], {
+            extraEnv: { VERIFY_BROWSER_PACKAGE: path.join(runtime, "browser/package.json") },
+            log: path.join(evidence, "browser-tests.log"),
+          });
+          return "real Chromium regression fixtures passed with zero skips/todos";
+        },
+      ],
       ...journeys(ctx).map(([name, action]) => [
         name,
         async () => {
@@ -456,11 +494,12 @@ async function main() {
     await writeFile(path.join(evidence, "results.log"), publicLines.join("\n") + "\n");
     for (const file of ["results.log"]) {
       console.log(
-        await command("/home/dev/.local/bin/evidence", [
+        await command(evidenceCommand, [
           "put",
           path.join(evidence, file),
           "--ticket",
-          "BIRD-34",
+          values.ticket,
+          ...(values.pr ? ["--pr", values.pr] : []),
           "--note",
           `Disposable verification ${file} at ${sha}`,
           "--markdown",

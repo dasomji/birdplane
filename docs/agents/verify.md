@@ -1,8 +1,10 @@
 # Verification
 
-`check:full` is **blocked as an implementation contract until measured green**.
-A nonzero aggregate, failed phase, missing prerequisite or unexpected skip is not a
-passing L2 receipt. This migration hands back in evidence mode for Daniel's review.
+`check:full` was measured green on Coolify: **20/20 phases**, **1064 seconds**
+at `e2c7c0a2f260a87f50c7f396237a575b0e4bcc3f`, with the four pinned
+upstream exemptions below applied. A nonzero aggregate, failed phase, missing
+prerequisite or unexpected skip is not a passing L2 receipt. A green L5 run on
+GitHub at the PR head is still required before merge.
 
 Run on Coolify with Node from `.mise.toml` (22.18.0; engines >=22.18.0), pnpm from
 `packageManager` (11.10.0), Python 3.12, uv and Docker with Compose v2/buildx.
@@ -10,7 +12,10 @@ Install dependencies with `pnpm install --frozen-lockfile`. CI pins uv 0.8.22;
 Ruff is pinned per component to match the existing lanes/API development tooling.
 Keep at least 8 GiB free on `/`. The runners refuse work below this reserve and
 terminate their child process group if it drops below it. Never prune shared Docker
-resources. Temporary source snapshots and test data live outside the checkout.
+resources. Staged source snapshots live under ignored `.kitchen/tmp/` on the repository
+filesystem so offline pnpm imports do not cross filesystem boundaries; they are
+removed after each run. Build contexts and disposable product data live outside
+the checkout.
 
 ## Commands and coverage
 
@@ -22,7 +27,7 @@ resources. Temporary source snapshots and test data live outside the checkout.
 | L3       | `pnpm verify:app`                        | Functional journeys plus a failure case at the tested SHA. See [functional verification](development.md#functional-verification).                 |
 | L3 smoke | `pnpm verify:app`                        | The same isolated smoke/journey contract; there is no separate reduced command claiming functional proof.                                         |
 
-`check:fast` exports the entire Git index to a temporary directory, installs an
+`check:fast` exports the entire Git index under `.kitchen/tmp/`, installs an
 offline frozen workspace there, and checks that snapshot. It never formats source
 in the checkout. Child checks strip Git's exported repository/index overrides:
 worktree hooks export an absolute `GIT_DIR`, which must never leak into temporary
@@ -30,7 +35,7 @@ fixture repositories. A regression test injects those overrides and verifies tha
 the invoking repository's HEAD/index stay unchanged. Renames select both old/new paths; deletions still select related
 checks. `lint-staged` retains its existing stash/partial-staging behavior.
 JS/TS/CSS/Markdown/JSON/YAML use oxfmt; JS/TS use OxLint with zero warnings. Python
-under API, MCP and backup scripts uses Ruff check and format check. Root Markdown
+under API, MCP, deployment scripts and kitchen scripts uses Ruff check and format check. Root Markdown
 also gets an offline relative-destination link check. Dependency installs must have
 populated pnpm's local store before the offline snapshot install.
 
@@ -40,7 +45,23 @@ same dependent filter. Package edits also build shared-state before its explicit
 Node filter tests. Branding paths select branding tests; MCP selects its full unit
 suite; backup edits select backup unittests. Scripts-only root package changes and
 gate metadata select gate contract tests. Unknown infrastructure paths fail closed:
-add a reviewed selection contract instead of bypassing the hook.
+add a reviewed selection contract instead of bypassing the hook. During an
+upstream merge (`MERGE_HEAD` exists), mapped paths still run their normal checks;
+unmapped upstream paths are printed and deferred to mandatory L2 `check:full`.
+Unknown fork deployment paths still fail closed. Outside merges every unknown
+path fails closed.
+
+Deployment `.mjs` files get oxfmt/OxLint; deployment `.py` files get pinned Ruff
+check and format check. Root `docker-compose*.yml`, deployment Compose and kitchen
+Compose definitions get `docker compose --env-file /dev/null -f <temporary-copy>
+config --quiet`: copies replace service `env_file` declarations with `/dev/null`,
+use synthetic interpolation values and a clean environment, and never start
+services or access a daemon/network. External Compose includes/extends fail closed
+until they have an explicit isolated contract. Workflow YAML is parsed with the frozen
+workspace's YAML parser (Vite's locked optional peer); actionlint also runs when
+already on `PATH`, with no hook download. Deployment Dockerfiles explicitly select
+L2 BuildKit `--check --network=none` in the owned builder; resolving pinned base
+images is L2 work. No Dockerfile build instructions execute.
 
 API pytest is mandatory L2 coverage, rather than host pytest in a commit hook:
 starting PostgreSQL, Valkey, RabbitMQ and object storage plus migrations is outside
@@ -50,7 +71,8 @@ Birdplane's actual database/app checks remain required in L2 and L3.
 
 `check:full` runs, in order:
 
-1. Gate Node contract tests; `pnpm check`; `pnpm build`; `pnpm turbo run test`;
+1. Gate Node contract tests with zero skipped/todo tests (real-browser regressions
+   run under `verify:app` with its pinned install); `pnpm check`; `pnpm build`; `pnpm turbo run test`;
    branding; explicit shared-state build and Node filter tests.
 2. Full API Ruff **check only**, isolated image build, healthy test services,
    unrestricted pytest discovery with `-o "python_files=test_*.py tests.py"` and
@@ -58,8 +80,12 @@ Birdplane's actual database/app checks remain required in L2 and L3.
    apply/check and real API HTTP health success plus unreachable-database refusal.
 3. MCP frozen sync, all pytest, Ruff, wheel build with source/bundled guidance byte
    equality, Docker build and bundled guidance assertions matching the existing lane.
-4. Backup unittests plus Ruff check/format check; root/agent Markdown formatting and
-   relative local-link destinations; owned-resource cleanup.
+4. Backup unittests plus Ruff check/format check; deployment JavaScript format/lint,
+   all deployment Python Ruff check/format, all Compose config, all workflow YAML
+   and deployment Dockerfile checks; root/agent Markdown formatting and relative
+   local-link destinations; owned-resource cleanup. These add five named phases:
+   `deployment-javascript`, `deployment-python`, `compose-config`, `workflow-yaml`
+   and `deployment-dockerfiles` (25 total).
 
 Turbo concurrency is capped at two to bound memory, without dropping tasks. Existing
 upstream per-package warning budgets stay exactly as declared in their scripts;
@@ -95,7 +121,11 @@ and start/end location, exactly once. Any additional diagnostic fails. The
 Registered documents remain subject to the relative-link check.
 
 Both components compare `git hash-object <path>` against the recorded upstream blob
-without fetching tags or using the network. A changed or missing file fails: it is
+without using the network. When `v1.4.3` is available locally they also require
+`git rev-parse refs/tags/v1.4.3:<path>` to equal the registered blob, so editing
+both the source and register cannot forge provenance. A missing local tag prints
+an explicit tag-cross-check-unavailable message; the file blob check still runs.
+CI fetches only the selected upstream release tag at depth one for this cross-check. A changed or missing file fails: it is
 now fork-owned and must be fixed and removed from the register. An exemption whose
 violation no longer occurs also fails as stale and must be removed. Invalid and
 duplicate entries fail. The register can only shrink as these violations disappear;
@@ -115,45 +145,25 @@ unfiltered gate after integration to measure the implementation contract.
 
 ## Measurements and evidence
 
-Coolify's initial diagnostic baseline on 2026-11-05 took **1319.44 seconds
-(21 min 59 s)** and returned **blocked**. It ran against base `55a18ee93` plus the
-uncommitted gate implementation, using Node 22.22.2, pnpm 11.10.0 and uv 0.11.14.
-This diagnostic run collected 852 API tests; the final runner expands discovery to
-include recurrence's `tests.py`. Use the report/receipt for the actual handoff SHA,
-not this pre-commit benchmark, as execution evidence.
+The historical unfiltered Coolify run at
+`e2c7c0a2f260a87f50c7f396237a575b0e4bcc3f` passed **20/20 phases in 1064 seconds**
+with the three API F401 and one SECURITY.md formatting exemptions applied.
+This is a measured baseline, not a receipt for a later commit. The expanded gate
+has 25 phases; use its same-SHA report for handoff timings and results.
 
-| Phase                  | Seconds | Result |
-| ---------------------- | ------- | ------ |
-| `kitchen-tests`        | 2.48    | pass   |
-| `workspace-check`      | 104.45  | pass   |
-| `workspace-build`      | 93.25   | pass   |
-| `workspace-tests`      | 14.21   | pass   |
-| `branding`             | 0.80    | pass   |
-| `shared-state-filters` | 2.56    | pass   |
-| `api-ruff`             | 0.36    | fail   |
-| `api-image`            | 355.49  | pass   |
-| `api-services`         | 8.34    | pass   |
-| `api-pytest`           | 440.60  | pass   |
-| `api-migration-boot`   | 188.01  | pass   |
-| `mcp-sync`             | 0.66    | pass   |
-| `mcp-pytest`           | 4.53    | pass   |
-| `mcp-ruff`             | 0.09    | pass   |
-| `mcp-wheel-guidance`   | 0.44    | pass   |
-| `mcp-docker-guidance`  | 60.88   | pass   |
-| `backup-tests-ruff`    | 0.93    | pass   |
-| `root-docs-format`     | 1.55    | fail   |
-| `root-docs-links`      | 0.01    | fail   |
-| `cleanup`              | 39.75   | pass   |
+An expanded-gate diagnostic on Coolify on 2026-11-05 passed **25/25 phases in
+828.92 seconds**, with 19.92 GiB minimum free disk. It ran on the staged
+implementation based on `eda9dcf59181b0be79e1e8b63964313dc5ad038a`;
+this pre-commit measurement is a capacity benchmark, not a same-SHA handoff receipt.
+The new phases measured:
 
-The API suite passed 852 tests with 92 warnings; MCP passed 68 tests with two
-warnings; backup unittests passed 12 tests. Pytest retains its existing visible
-warning/exit policy; no warning filters or increased budgets were added. The
-full gate observed 2964.4 MiB peak sampled runner-process-tree RSS, 21856.2 MiB
-peak host used memory, 5.24 GiB maximum root-filesystem growth, and 18.57 GiB
-minimum free disk. Host memory and disk figures include concurrent workloads;
-these are reserve/capacity observations, not exclusive allocation measurements.
-Docker/BuildKit memory is outside process-tree RSS. Cleanup passed and removed
-this run's Compose stack, output image tags and private builder/cache.
+| Phase                    | Seconds | Result |
+| ------------------------ | ------- | ------ |
+| `deployment-javascript`  | 1.54    | pass   |
+| `deployment-python`      | 0.17    | pass   |
+| `compose-config`         | 0.71    | pass   |
+| `workflow-yaml`          | 0.05    | pass   |
+| `deployment-dockerfiles` | 1.39    | pass   |
 
 The gate-only fast check took **10.38 seconds** in the disposable clone. Both
 syntax rejection (lint-staged) and a valid-but-failing staged test (check:fast)
@@ -161,10 +171,8 @@ blocked commits without moving HEAD; a successful hook preserved an unstaged
 hunk while committing the staged hunk. Product/package selections may take
 longer because their dependency builds and dependent typechecks are real.
 
-The baseline API Ruff and upstream `SECURITY.md` formatting failures are covered
-only by the exact, blob-guarded exemptions above. Integration still requires this
-guide's `development.md` target from chunk 2b, its L3 implementation, and a green
-unfiltered full-gate measurement. Missing links have no exemption.
+The API Ruff and upstream `SECURITY.md` formatting violations are covered only by
+the exact, blob-guarded exemptions above. Missing links have no exemption.
 
 Per-phase durations and outcomes, minimum free disk, peak disk growth and sampled
 peak runner process-tree RSS are written to `.kitchen/evidence/check-full-<UTC>-<pid>/results.json`, beside complete
@@ -186,10 +194,16 @@ explanation and are not new executions. Evidence lives in ignored
 `.kitchen/evidence/`, never Git. Review logs/captures for sensitive data, then upload:
 
 ```sh
-evidence put .kitchen/evidence/<file> --ticket BIRD-34 --note '<verified result>' --markdown
+evidence put .kitchen/evidence/<file> --ticket <ticket> --note '<verified result>' --markdown
 ```
 
 Add `--pr <url>` when a PR exists. Keep textual outcomes beside links because uploaded
 evidence expires. The Ubuntu `birdplane-checks / check-full` lane runs this same L2
 command on every PR targeting `birdplane` and every push to it, including docs-only
 changes. Existing focused lanes remain enabled. CI has no deploy/publish step.
+
+The first GitHub run of the new full-gate workflow occurs on the PR. Its green
+`birdplane-checks / check-full` result is a merge precondition and cannot be
+inferred from Coolify results. The ephemeral GitHub runner reclaims preinstalled
+toolchains/images before installation and prints free disk before/after; shared
+Coolify resources must never be pruned this way.
