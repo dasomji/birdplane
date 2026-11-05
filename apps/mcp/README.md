@@ -208,3 +208,6 @@ Use `list_recurring_tasks` to inspect schedules and their last generated ticket.
 Use `save_recurring_task` with `id` to edit, pause/resume, or end a schedule;
 `delete_recurring_task` removes the schedule and keeps generated tickets.
 See [recurrence semantics](../../deployments/birdplane/recurrence.md).
+
+For repository work, see [agent development](../../docs/agents/development.md),
+[verification](../../docs/agents/verify.md), and the [glossary](../../GLOSSARY.md).

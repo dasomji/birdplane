@@ -2,8 +2,8 @@
 
 Birdplane adds recurrence in `apps/api/plane/recurrence`, with its own tables and
 migration. Only Django app registration, URL inclusion, and Celery configuration
-extend upstream files. Plane's latest stable baseline remains v1.4.2 (upstream
-master was checked on 2026-09-10).
+extend upstream files. The fork's selected source baseline is v1.4.3; see
+[upstream alignment](../../BIRDPLANE.md#upstream-alignment).
 
 ## Use
 
@@ -79,3 +79,7 @@ cd apps/mcp && uv run pytest && uv run ruff check .
 Live verification must use disposable templates/schedules, wait for the actual
 Celery worker to generate a ticket, read the ticket through MCP, exercise
 pause/resume/edit/end, and delete the schedules and disposable tickets afterwards.
+
+Use the [agent verification guide](../../docs/agents/verify.md) for complete gate
+coverage and the [development guide](../../docs/agents/development.md) for isolated
+boot and seeds. Historical rollout test counts are not current verification receipts.
