@@ -5,8 +5,10 @@ headers, settings controls and side panels. It also fixes archive lists that
 remain in their loading state after a direct visit.
 
 The BIRD-34 migration PR's evidence summary contains the historical audit's
-sanitized downloads and textual results. Evidence links expire after 30 days;
-keep the textual outcomes in the PR. Generated evidence is not tracked in git.
+sanitized downloads and textual results; its links expire on 2026-12-05. The
+originals stay in git history: `git show d83d613d1:reports/responsive-audit/<file>`
+(for example `report.html` or `before.json`). Generated evidence is no longer
+tracked in git; keep textual outcomes in each PR.
 
 All four producers default to `.kitchen/evidence/responsive-audit/` relative to
 the repository root, regardless of the current working directory. The HTML
@@ -128,9 +130,9 @@ report offline or parse the manifests. Publish PNGs individually in a batch:
 ```bash
 evidence check
 evidence put /tmp/reviewed-audit/report.html.txt /tmp/reviewed-audit/*.json.txt \
-  --ticket BIRD-34 --note "Reviewed responsive report and measurements" --markdown
+  --ticket <ticket> --note "Reviewed responsive report and measurements" --markdown
 evidence put .kitchen/evidence/responsive-audit/screenshots/*.png \
-  --ticket BIRD-34 --note "Reviewed mobile/tablet comparisons" --markdown
+  --ticket <ticket> --note "Reviewed mobile/tablet comparisons" --markdown
 ```
 
 Use the current ticket for subsequent audits. Each file must be under 100 MB.
