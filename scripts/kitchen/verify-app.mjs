@@ -418,7 +418,9 @@ async function main() {
   if (args.includes("--upload")) {
     // The result schema contains synthetic data and redacted errors. Screenshots
     // need visual review before a separate evidence put; never auto-publish logs.
-    for (const file of ["results.json"]) {
+    // The evidence service accepts LOG/TXT, not JSON extensions.
+    await writeFile(path.join(evidence, "results.log"), await readFile(path.join(evidence, "results.json")));
+    for (const file of ["results.log"]) {
       console.log(
         await command("/home/dev/.local/bin/evidence", [
           "put",
